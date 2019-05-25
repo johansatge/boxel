@@ -1,0 +1,31 @@
+{
+  "name": "ledberry-pi",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johansatge/ledberry-pi.git"
+  },
+  "keywords": [
+    "dashboard",
+    "raspberry",
+    "raspberrypi",
+    "led",
+    "matrix",
+    "dyi"
+  ],
+  "author": {
+    "name": "Johan Satgé"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johansatge/ledberry-pi/issues"
+  },
+  "homepage": "https://github.com/johansatge/ledberry-pi#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "netatmo": "^2.1.0",
+    "node-rpi-rgb-led-matrix": "^0.1.0"
+  }
+}
