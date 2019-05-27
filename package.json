@@ -25,6 +25,7 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
+    "jimp": "^0.6.4",
     "netatmo": "^2.1.0",
     "node-rpi-rgb-led-matrix": "^0.1.0"
   }
