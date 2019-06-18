@@ -6,6 +6,13 @@ module.exports = {
       b : Math.floor(Math.random() * 256),
     }
   },
+  white : () => {
+    return {
+      r : 255,
+      g : 255,
+      b : 255,
+    }
+  },
   lightGrey : () => {
     return {
       r : 200,

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= viewTitle %></title>
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+    <p>Current mode: <em><%= currentMode.getTitle() %></em></p>
+    <ul>
+      <% modes.forEach(function(mode) { %>
+        <li>
+          <a href="/setmode/<%= mode.getId() %>"><%= mode.getTitle() %></a>
+        </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>
