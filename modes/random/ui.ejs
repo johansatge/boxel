@@ -1,0 +1,9 @@
+<button class="js-randomize">Randomize</button>
+<script>
+  document.querySelector('.js-randomize').addEventListener('click', () => {
+    doAction({action: 'randomize'})
+  })
+  function didAction(response) {
+    console.log('didAction', response)
+  }
+</script>

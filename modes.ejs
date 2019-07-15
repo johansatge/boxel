@@ -14,5 +14,25 @@
         </li>
       <% }) %>
     </ul>
+    <p>
+      <%- include('modes/' + currentMode.getId() + '/ui'); %>
+    </p>
+    <script>
+      function doAction(params) {
+        var qs = Object.keys(params).reduce((arr, param) => {
+          arr.push(param + '=' + encodeURIComponent(params[param]))
+          return arr
+        }, []).join('&')
+        fetch('/doaction?' + qs)
+          .then((rawResponse) => {
+            return rawResponse.json()
+          })
+          .then((response) => {
+            if (typeof didAction === 'function') {
+              didAction(response)
+            }
+          })
+      }
+    </script>
   </body>
 </html>
