@@ -1,3 +1,5 @@
+const colors = require('../../helpers/colors.js')
+
 const m = {}
 module.exports = m
 
@@ -10,7 +12,8 @@ m.getTitle = function() {
 }
 
 m.start = function(matrix) {
-  matrix.fill(255, 255, 255)
+  const white = colors.white()
+  matrix.fill(white.r, white.g, white.b)
 }
 
 m.stop = function(matrix) {

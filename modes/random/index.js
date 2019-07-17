@@ -1,3 +1,5 @@
+const colors = require('../../helpers/colors.js')
+
 const m = {}
 module.exports = m
 
@@ -31,16 +33,8 @@ m.stop = function(matrix) {
 function randomize() {
   for(let y = 0; y < 32; y += 1) {
     for(let x = 0; x < 32; x += 1) {
-      const color = getRandomColor()
+      const color = colors.random()
       ledMatrix.setPixel(x, y, color.r, color.g, color.b)
     }
-  }
-}
-
-function getRandomColor() {
-  return {
-    r : Math.floor(Math.random() * 256),
-    g : Math.floor(Math.random() * 256),
-    b : Math.floor(Math.random() * 256),
   }
 }

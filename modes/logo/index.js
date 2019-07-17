@@ -1,4 +1,5 @@
 const jimp = require('jimp')
+const path = require('path')
 
 const m = {}
 module.exports = m
@@ -12,7 +13,7 @@ m.getTitle = function() {
 }
 
 m.start = function(matrix) {
-  jimp.read('logo.png').then((image) => {
+  jimp.read(path.join(__dirname, 'logo.png')).then((image) => {
     for(let x = 0; x < image.bitmap.width; x += 1) {
       for(let y = 0; y < image.bitmap.height; y += 1) {
         const pixel = jimp.intToRGBA(image.getPixelColor(x, y))
