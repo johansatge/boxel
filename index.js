@@ -1,7 +1,8 @@
 const express = require('express')
-const log = require('./log.js')
+const log = require('./helpers/log.js')
 const path = require('path')
 const pkg = require('./package.json')
+const { getState, setState } = require('./helpers/state.js')
 
 require('dotenv').config()
 
@@ -29,6 +30,7 @@ function setCurrentMode(mode) {
   currentMode = mode
   log('Starting mode ' + currentMode.getId())
   currentMode.start(matrix)
+  setState(currentMode.getId(), {})
 }
 
 app.get('/', (request, response) => {
@@ -51,8 +53,9 @@ app.get('/setstate', (request, response) => {
     return response.status(500).json({status: 'ko', error: 'No state listener for this mode'})
   }
   currentMode.setState(request.query)
-    .then((state) => {
-      response.status(200).json({status: 'ok', response: state})
+    .then((stateData) => {
+      setState(currentMode.getId(), stateData || {})
+      response.status(200).json({status: 'ok', response: stateData || {}})
     })
     .catch((error) => {
       response.status(500).json({status: 'ko', error: error.message})
@@ -62,5 +65,8 @@ app.get('/setstate', (request, response) => {
 const port = 3030
 app.listen(port, function () {
   log(`Listening on port ${port}`)
-  setCurrentMode(modes[0])
+  getState(modes[0].getId()).then((state) => {
+    const targetMode = modes.find((mode) => mode.getId() === state.mode)
+    setCurrentMode(targetMode)
+  })
 })
