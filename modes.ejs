@@ -18,18 +18,18 @@
       <%- include('modes/' + currentMode.getId() + '/ui'); %>
     </p>
     <script>
-      function doAction(params) {
+      function setState(params) {
         var qs = Object.keys(params).reduce((arr, param) => {
           arr.push(param + '=' + encodeURIComponent(params[param]))
           return arr
         }, []).join('&')
-        fetch('/doaction?' + qs)
+        fetch('/setstate?' + qs)
           .then((rawResponse) => {
             return rawResponse.json()
           })
           .then((response) => {
-            if (typeof didAction === 'function') {
-              didAction(response)
+            if (typeof didSetState === 'function') {
+              didSetState(response)
             }
           })
       }

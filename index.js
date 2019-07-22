@@ -46,13 +46,13 @@ app.get('/setmode/:id', (request, response) => {
   }
 })
 
-app.get('/doaction', (request, response) => {
-  if (typeof currentMode.doAction !== 'function') {
-    return response.status(500).json({status: 'ko', error: 'No action listener for this mode'})
+app.get('/setstate', (request, response) => {
+  if (typeof currentMode.setState !== 'function') {
+    return response.status(500).json({status: 'ko', error: 'No state listener for this mode'})
   }
-  currentMode.doAction(request.query)
-    .then((actionData) => {
-      response.status(200).json({status: 'ok', response: actionData})
+  currentMode.setState(request.query)
+    .then((state) => {
+      response.status(200).json({status: 'ok', response: state})
     })
     .catch((error) => {
       response.status(500).json({status: 'ko', error: error.message})

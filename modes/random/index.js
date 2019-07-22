@@ -18,7 +18,7 @@ m.start = function(matrix) {
   randomize()
 }
 
-m.doAction = function(params) {
+m.setState = function(params) {
   if (params.action === 'randomize') {
     randomize()
   }
