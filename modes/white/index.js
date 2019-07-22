@@ -12,7 +12,7 @@ m.getTitle = function() {
 }
 
 m.start = function(matrix) {
-  const white = colors.white()
+  const white = colors.lightGrey()
   matrix.fill(white.r, white.g, white.b)
 }
 
