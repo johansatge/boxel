@@ -16,6 +16,7 @@ const modes = [
   require('./modes/random/index.js'),
   require('./modes/logo/index.js'),
   require('./modes/netatmo/index.js'),
+  require('./modes/clock/index.js'),
 ]
 let currentMode = null
 
