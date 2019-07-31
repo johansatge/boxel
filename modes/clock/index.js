@@ -32,11 +32,13 @@ m.stop = function(matrix) {
 function setTime() {
   ledMatrix.clear()
   const date = new Date()
-  const readableTime = `${date.getHours()}:${date.getMinutes()}`
-  const readableSeconds = date.getSeconds() > 9 ? date.getSeconds() : `0${date.getSeconds()}`
-  writeLine(ledMatrix, getChars(readableTime), 2, 2)
-  writeLine(ledMatrix, getChars(readableSeconds), 2, 23)
+  writeLine(ledMatrix, getChars(`${prependZero(date.getHours())}:${prependZero(date.getMinutes())}`), 2, 2)
+  writeLine(ledMatrix, getChars(prependZero(date.getSeconds())), 2, 23)
   timeout = setTimeout(setTime, 1000)
+}
+
+function prependZero(value) {
+  return value > 9 ? value : `0${value}`
 }
 
 function writeLine(matrix, chars, startX, startY) {
