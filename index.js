@@ -1,3 +1,4 @@
+const exec = require('child_process').exec
 const express = require('express')
 const log = require('./helpers/log.js')
 const path = require('path')
@@ -36,6 +37,12 @@ function setCurrentMode(mode) {
 
 app.get('/', (request, response) => {
   response.status(200).render('modes', {viewTitle: pkg.name, modes, currentMode})
+})
+
+app.get('/shutdown', (request, response) => {
+  log('Shutting down')
+  exec('sudo shutdown -h now')
+  response.status(200).json({status: 'ok'})
 })
 
 app.get('/setmode/:id', (request, response) => {
