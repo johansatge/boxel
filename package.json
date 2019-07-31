@@ -1,10 +1,10 @@
 {
-  "name": "ledberry-pi",
+  "name": "boxel",
   "version": "1.0.0",
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johansatge/ledberry-pi.git"
+    "url": "git+https://github.com/johansatge/boxel.git"
   },
   "keywords": [
     "dashboard",
@@ -19,9 +19,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/johansatge/ledberry-pi/issues"
+    "url": "https://github.com/johansatge/boxel/issues"
   },
-  "homepage": "https://github.com/johansatge/ledberry-pi#readme",
+  "homepage": "https://github.com/johansatge/boxel#readme",
   "dependencies": {
     "dotenv": "^4.0.0",
     "ejs": "^2.6.2",
