@@ -18,7 +18,7 @@ m.setState = (mode, stateData) => {
   })
 }
 
-m.getState = (defaultMode) => {
+m.getState = ({ defaultMode }) => {
   return new Promise((resolve, reject) => {
     fs.readFile(statePath, 'utf8', (error, contents) => {
       if (error) {

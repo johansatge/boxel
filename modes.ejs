@@ -15,9 +15,9 @@
         </li>
       <% }) %>
     </ul>
-    <p>
+    <div>
       <%- include('modes/' + currentMode.getId() + '/ui'); %>
-    </p>
+    </div>
     <script>
       function setState(params) {
         var qs = Object.keys(params).reduce((arr, param) => {

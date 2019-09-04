@@ -18,6 +18,7 @@ const modes = [
   require('./modes/logo/index.js'),
   require('./modes/netatmo/index.js'),
   require('./modes/clock/index.js'),
+  require('./modes/freegrid/index.js'),
 ]
 let currentMode = null
 
@@ -29,7 +30,7 @@ app.get('/', responseHome)
 app.get('/shutdown', responseShutdown)
 app.get('/setmode/:id', responseSetMode)
 app.get('/setstate', responseSetState)
-getState(modes[0].getId()).then((state) => {
+getState({ defaultMode: modes[0].getId() }).then((state) => {
   const targetMode = modes.find((mode) => mode.getId() === state.mode)
   setCurrentMode(targetMode)
   app.listen(port, function () {
