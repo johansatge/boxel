@@ -1,5 +1,3 @@
-const jimp = require('jimp')
-
 const m = {}
 module.exports = m
 
@@ -11,10 +9,14 @@ m.getTitle = function() {
   return 'Idle'
 }
 
-m.start = function(matrix) {
-  // do nothing for now
+m.getDescription = function() {
+  return 'Default mode with LED screen off'
 }
 
-m.stop = function(matrix) {
-  matrix.clear()
-}
+// m.start = function(matrix) {
+//   // do nothing for now
+// }
+
+// m.stop = function(matrix) {
+//   matrix.clear()
+// }

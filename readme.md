@@ -1,3 +1,2 @@
-Node v6.10.2
+# Boxel
 
-sudo node index.js

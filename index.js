@@ -1,15 +1,15 @@
-const exec = require('child_process').exec
 const express = require('express')
-const log = require('./helpers/log.js')
+const { log } = require('./helpers/log.js')
+const {
+  registerSseClient,
+  sendSseEventToClient,
+  sendSseEventToClients,
+  startSsePing,
+} = require('./helpers/sse.js')
 const path = require('path')
 const pkg = require('./package.json')
 const { getState, setState } = require('./helpers/state.js')
-
-require('dotenv').config()
-
-const app = express()
-app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, '.'))
+const { requestShutdown, isDryRun } = require('./helpers/system.js')
 
 const modes = [
   require('./modes/idle/index.js'),
@@ -20,66 +20,75 @@ const modes = [
   require('./modes/clock/index.js'),
   require('./modes/freegrid/index.js'),
 ]
-let currentMode = null
+const defaultMode = 'idle'
 
-const LedMatrix = require('node-rpi-rgb-led-matrix')
-const matrix = new LedMatrix(32)
+const app = express()
 const port = 3030
+
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '.'))
 
 app.get('/', responseHome)
 app.get('/shutdown', responseShutdown)
-app.get('/setmode/:id', responseSetMode)
+app.get('/setmode/:mode', responseSetMode)
 app.get('/setstate', responseSetState)
-getState({ defaultMode: modes[0].getId() }).then((state) => {
-  const targetMode = modes.find((mode) => mode.getId() === state.mode)
-  setCurrentMode(targetMode)
-  app.listen(port, function () {
-    log(`Listening on port ${port}`)
-  })
+app.get('/sse', responseSse)
+app.get('/state', responseState)
+app.use('/static', express.static(path.join(__dirname, 'static')))
+
+app.listen(port, function () {
+  log(`Server started on http://localhost:${port} (${isDryRun() ? 'DRY' : 'LIVE'})`)
+  startSsePing()
 })
 
 function responseHome(request, response) {
-  response.status(200).render('modes', {viewTitle: pkg.name, modes, currentMode})
-}
-
-function responseSetState(request, response) {
-  if (typeof currentMode.setState !== 'function') {
-    return response.status(500).json({status: 'ko', error: 'No state listener for this mode'})
+  const data = {
+    viewTitle: pkg.name,
+    modes,
   }
-  currentMode.setState(request.query)
-    .then((stateData) => {
-      setState(currentMode.getId(), stateData || {})
-      response.status(200).json({status: 'ok', response: stateData || {}})
-    })
-    .catch((error) => {
-      response.status(500).json({status: 'ko', error: error.message})
-    })
+  response.status(200).render('index', data)
 }
 
 function responseSetMode(request, response) {
-  const mode = modes.find((mode) => mode.getId() === request.params.id)
-  if (mode) {
-    setCurrentMode(mode)
-    response.redirect(302, '/')
-  }
-  else {
-    response.status(500).send('Mode not found')
-  }
+  getState({ defaultMode })
+    .then((state) => {
+      return setState({ currentMode: request.params.mode, stateData: state.data })
+    })
+    .then((state) => {
+      sendSseEventToClients({ eventName: 'stateUpdate', data: state })
+      response.status(200).send('ok')
+    })
+}
+
+function responseSetState(request, response) {
+  const mode = request.query.mode
+  const data = JSON.parse(request.query.data)
+  getState({ defaultMode })
+    .then((state) => {
+      state.data[mode] = data
+      return setState({ currentMode: state.currentMode, stateData: state.data })
+    })
+    .then((state) => {
+      sendSseEventToClients({ eventName: 'stateUpdate', data: state })
+      response.status(200).send('ok')
+    })
 }
 
 function responseShutdown(request, response) {
-  log('Shutting down')
-  exec('sudo shutdown -h now')
-  response.status(200).json({status: 'ok'})
+  requestShutdown()
+  response.status(200).send('ok')
 }
 
-function setCurrentMode(mode) {
-  if (currentMode) {
-    log('Stopping mode ' + currentMode.getId())
-    currentMode.stop(matrix)
-  }
-  currentMode = mode
-  log('Starting mode ' + currentMode.getId())
-  currentMode.start(matrix)
-  setState(currentMode.getId(), {})
+function responseState(request, response) {
+  getState({ defaultMode }).then((state) => {
+    response.status(200).json(state)
+  })
 }
+
+function responseSse(request, response) {
+  const clientId = registerSseClient({ request, response })
+  getState({ defaultMode }).then((state) => {
+    sendSseEventToClient({ clientId, eventName: 'stateUpdate', data: state })
+  })
+}
+

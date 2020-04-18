@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= viewTitle %></title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 110'><text y='90px' font-size='90px'>🔌</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="/static/styles.css" rel="stylesheet">
+    <script>window.BoxelModes = {}</script>
+  </head>
+  <body>
+    <div class="global">
+      <h1 class="title"><%= viewTitle %></h1>
+      <% modes.forEach((mode) => { %>
+        <div class="mode js-mode" data-mode="<%= mode.getId() %>">
+          <h2 class="mode-title">
+            <%= mode.getTitle() %>
+            <span class="mode-description">
+              <%= mode.getDescription() %>
+            </span>
+            <button class="mode-set js-mode-set" data-mode="<%= mode.getId() %>">Set mode</button>
+          </h2>
+          <div class="mode-inner">
+            <%- include('modes/' + mode.getId() + '/ui'); %>
+          </div>
+        </div>
+      <% }) %>
+      <div class="system">
+        <button class="system-button js-shutdown">Shutdown</button>
+        <a class="system-button" href="/state">View state</a>
+      </div>
+      <div class="footer">
+        <a class="footer-link" href="https://github.com/johansatge/boxel">Source code</a>
+        <br>
+        Made with ♥ in Antibes
+      </div>
+    </div>
+    <script src="/static/ui.js"></script>
+    <script>
+      window.BoxelInitUi()
+    </script>
+  </body>
+</html>

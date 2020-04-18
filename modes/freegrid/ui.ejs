@@ -7,14 +7,21 @@
   <% } %>
 </div>
 <script>
-  document.querySelector('.js-pixels').addEventListener('click', (evt) => {
-    const x = evt.target.dataset.x
-    const y = evt.target.dataset.y
-    if (x && y) {
-      setState({action: 'setPixel', x, y})
+  (() => {
+    const m = {}
+    window.BoxelModes.freegrid = m
+    m.setUiFromState = function(data) {
+      console.log('update freegrid from', data)
     }
-  })
-  function didSetState(state) {
-    console.log('didSetState', state)
-  }
+  })()
+  // document.querySelector('.js-pixels').addEventListener('click', (evt) => {
+  //   const x = evt.target.dataset.x
+  //   const y = evt.target.dataset.y
+  //   if (x && y) {
+  //     setState({action: 'setPixel', x, y})
+  //   }
+  // })
+  // function didSetState(state) {
+  //   console.log('didSetState', state)
+  // }
 </script>

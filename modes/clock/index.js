@@ -1,5 +1,5 @@
-const chars = require('../../helpers/characters.js')
-const colors = require('../../helpers/colors.js')
+// const chars = require('../../helpers/characters.js')
+// const colors = require('../../helpers/colors.js')
 
 const m = {}
 module.exports = m
@@ -15,43 +15,47 @@ m.getTitle = function() {
   return 'Digital clock'
 }
 
-m.start = function(matrix) {
-  ledMatrix = matrix
-  setTime()
+m.getDescription = function() {
+  return '@todo description'
 }
 
-m.stop = function(matrix) {
-  matrix.clear()
-  ledMatrix = null
-  if (timeout) {
-    clearTimeout(timeout)
-    timeout = null
-  }
-}
+// m.start = function(matrix) {
+//   ledMatrix = matrix
+//   setTime()
+// }
 
-function setTime() {
-  ledMatrix.clear()
-  const date = new Date()
-  writeLine(ledMatrix, getChars(`${prependZero(date.getHours())}:${prependZero(date.getMinutes())}`), 2, 2)
-  writeLine(ledMatrix, getChars(prependZero(date.getSeconds())), 2, 23)
-  timeout = setTimeout(setTime, 1000)
-}
+// m.stop = function(matrix) {
+//   matrix.clear()
+//   ledMatrix = null
+//   if (timeout) {
+//     clearTimeout(timeout)
+//     timeout = null
+//   }
+// }
 
-function prependZero(value) {
-  return value > 9 ? value : `0${value}`
-}
+// function setTime() {
+//   ledMatrix.clear()
+//   const date = new Date()
+//   writeLine(ledMatrix, getChars(`${prependZero(date.getHours())}:${prependZero(date.getMinutes())}`), 2, 2)
+//   writeLine(ledMatrix, getChars(prependZero(date.getSeconds())), 2, 23)
+//   timeout = setTimeout(setTime, 1000)
+// }
 
-function writeLine(matrix, chars, startX, startY) {
-  chars.map((char) => {
-    // const color = colors.random()
-    const color = colors.middleGrey()
-    char.pixels.map((pixel) => {
-      matrix.setPixel(startX + pixel.x, startY + pixel.y, color.r, color.g, color.b)
-    })
-    startX += char.maxX + 1
-  })
-}
+// function prependZero(value) {
+//   return value > 9 ? value : `0${value}`
+// }
 
-function getChars(text) {
-  return String(text).split('').map((char) => chars.get(char))
-}
+// function writeLine(matrix, chars, startX, startY) {
+//   chars.map((char) => {
+//     // const color = colors.random()
+//     const color = colors.middleGrey()
+//     char.pixels.map((pixel) => {
+//       matrix.setPixel(startX + pixel.x, startY + pixel.y, color.r, color.g, color.b)
+//     })
+//     startX += char.maxX + 1
+//   })
+// }
+
+// function getChars(text) {
+//   return String(text).split('').map((char) => chars.get(char))
+// }

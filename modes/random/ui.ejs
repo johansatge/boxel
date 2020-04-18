@@ -1,9 +1,18 @@
-<button class="js-randomize">Randomize</button>
+<button class="mode-inner-button js-randomize">Randomize</button>
 <script>
-  document.querySelector('.js-randomize').addEventListener('click', () => {
-    setState({action: 'randomize'})
-  })
-  function didSetState(state) {
-    console.log('didSetState', state)
-  }
+  (() => {
+    const m = {}
+    window.BoxelModes.random = m
+    m.setUiFromState = function(data) {
+      console.log('update random from', data)
+    }
+    document.querySelector('.js-randomize').addEventListener('click', () => {
+      window.BoxelSetStateFromUi({
+        mode: 'random',
+        data: {
+          someDate: new Date().toString(),
+        },
+      })
+    })
+  })()
 </script>
