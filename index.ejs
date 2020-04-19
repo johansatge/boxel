@@ -22,7 +22,7 @@
             <span class="mode-description">
               <%= mode.getDescription() %>
             </span>
-            <button class="mode-set js-mode-set" data-mode="<%= mode.getId() %>">Set mode</button>
+            <button class="button button-orange mode-set js-mode-set" data-mode="<%= mode.getId() %>">Set</button>
           </h2>
           <div class="mode-inner">
             <%- include('modes/' + mode.getId() + '/ui'); %>
@@ -30,8 +30,8 @@
         </div>
       <% }) %>
       <div class="system">
-        <button class="system-button js-shutdown">Shutdown</button>
-        <a class="system-button" href="/viewstate">View state</a>
+        <button class="button button-grey js-shutdown">Shutdown</button>
+        <a class="button button-grey" href="/viewstate">View state</a>
       </div>
       <div class="footer">
         <a class="footer-link" href="https://github.com/johansatge/boxel">Source code</a>

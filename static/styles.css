@@ -11,10 +11,36 @@ html, body, div, p, h1, h2, h3, span, button, input, a {
   text-decoration: none;
 }
 
+html, body {
+  background: #efefef;
+}
+
 .global {
   max-width: 500px;
   margin: 0 auto 15px auto;
-  padding: 75px 10px 0 10px;
+  padding: 80px 10px 0 10px;
+}
+
+.button {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 7px 14px 7px 14px;
+  border-radius: 4px;
+}
+
+.button-orange {
+  color: #ffffff;  
+  background: linear-gradient(180deg, rgba(240,93,53,1) 0%, rgba(222,88,51,1) 100%);
+  box-shadow: inset 0px -1px 0px 0px #00000017;
+}
+
+.button-grey {
+  color: #ffffff;
+  background: linear-gradient(180deg, #3f3f3f 0%, #333333 100%);
+  box-shadow: inset 0px -1px 0px 0px #202020;
 }
 
 .title {
@@ -86,36 +112,32 @@ html, body, div, p, h1, h2, h3, span, button, input, a {
 }
 
 .mode {
-  margin: 0 5px 5px 5px;
+  margin: 0 5px 10px 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #0000000d;
+}
+.mode.js-current-mode {
+  box-shadow: 0 0 20px #0000000d;
 }
 
 .mode-title {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
   font-size: 22px;
-  color: #ffffff;
-  background: #333333;
-  padding: 5px 8px 9px 15px;
+  color: #333333;
+  background: #ffffff;
+  padding: 9px 8px 13px 15px;
   border-radius: 5px;
 }
 .mode.js-current-mode .mode-title {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  background: #de5833;
+  background: linear-gradient(180deg, rgba(240,93,53,1) 0%, rgba(222,88,51,1) 100%);
+  color: #ffffff;
 }
 
 .mode-set {
-  display: inline-block;
-  background: #ffffff;
-  font-size: 15px;
-  color: #000000;
-  font-weight: 500;
-  text-transform: uppercase;
-  cursor: pointer;
   float: right;
-  padding: 3px 8px 3px 8px;
-  border-radius: 3px;
-  margin: 3px 0 0 0;
 }
 .mode.js-current-mode .mode-set {
   display: none;
@@ -126,8 +148,8 @@ html, body, div, p, h1, h2, h3, span, button, input, a {
 }
 .mode.js-current-mode .mode-inner {
   display: block;
-  background: #efefef;
-  border: 2px solid #de5833;
+  background: #ffffff;
+  border: 2px solid rgba(222,88,51,1);
   border-top: 0;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -143,41 +165,16 @@ html, body, div, p, h1, h2, h3, span, button, input, a {
   font-size: 14px;
   color: #ffffff;
   font-style: italic;
-  margin: -2px 0 0 0;
-}
-
-.mode-inner-button {
-  display: inline-block;
-  background: #de5833;
-  font-size: 15px;
-  color: #ffffff;
-  font-weight: 500;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 7px 14px 7px 14px;
-  border-radius: 4px;
 }
 
 .mode-inner-text {
-  font-size: 15px;
+  font-size: 16px;
   color: #333333;
 }
 
 .system {
-  margin: 15px 0 0 0;
+  margin: 30px 0 0 0;
   text-align: center;
-}
-
-.system-button {
-  display: inline-block;
-  background: #333333;
-  font-size: 15px;
-  color: #ffffff;
-  font-weight: 500;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 7px 14px 7px 14px;
-  border-radius: 4px;
 }
 
 .footer {
