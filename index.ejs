@@ -11,7 +11,10 @@
   </head>
   <body>
     <div class="global">
-      <h1 class="title"><%= viewTitle %></h1>
+      <h1 class="title js-title">
+        <span class="title-text"><%= viewTitle %></span>
+        <div class="spinner"></div>
+        </h1>
       <% modes.forEach((mode) => { %>
         <div class="mode js-mode" data-mode="<%= mode.getId() %>">
           <h2 class="mode-title">

@@ -3,6 +3,7 @@
   window.BoxelInitUi = function() {
     const shutdownButtonNode = document.querySelector('.js-shutdown')
     shutdownButtonNode.addEventListener('click', onShutdownRequest)
+    setSpinner(true)
     const evtSource = new EventSource('/sse')
     evtSource.addEventListener('stateUpdate', onSseStateUpdate)
     evtSource.addEventListener('ping', onSsePing)
@@ -12,8 +13,14 @@
   }
 
   window.BoxelSetStateFromUi = function({ mode, data }) {
+    setSpinner(true)
     const encodedData = encodeURIComponent(JSON.stringify(data))
     window.fetch('/setstate?mode=' + mode + '&data=' + encodedData)
+  }
+
+  function setSpinner(isDisplayed) {
+    const titleNode = document.querySelector('.js-title')
+    titleNode.classList[isDisplayed ? 'add' : 'remove']('js-has-spinner')
   }
 
   function onShutdownRequest() {
@@ -27,10 +34,12 @@
   }
 
   function onSetMode(evt) {
+    setSpinner(true)
     fetch('/setmode/' + evt.currentTarget.dataset.mode)
   }
 
   function onSseStateUpdate(evt) {
+    setSpinner(false)
     const state = JSON.parse(evt.data)
     console.log('Received state', state)
     document.querySelectorAll('.js-mode').forEach((modeNode) => {
@@ -46,4 +55,5 @@
   function onSsePing() {
     console.log('Received ping')
   }
+
 })()
