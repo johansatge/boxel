@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { log } = require('./log.js')
 const path = require('path')
+const { getDefaultMode } = require('./modes.js')
 
 const m = {}
 module.exports = m
@@ -19,7 +20,7 @@ m.setState = ({ currentMode, stateData }) => {
   })
 }
 
-m.getState = ({ defaultMode }) => {
+m.getState = () => {
   return new Promise((resolve, reject) => {
     fs.readFile(statePath, 'utf8', (error, contents) => {
       if (!error) {
@@ -27,9 +28,9 @@ m.getState = ({ defaultMode }) => {
         resolve(state)
       }
       else {
-        log(`Could not read state, defaulting to ${defaultMode} (${error.message})`)
+        log(`Could not read state, defaulting to ${getDefaultMode()} (${error.message})`)
         resolve({
-          currentMode: defaultMode,
+          currentMode: getDefaultMode(),
           data: {},
         })
       }

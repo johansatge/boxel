@@ -1,5 +1,6 @@
 const express = require('express')
 const { log } = require('./helpers/log.js')
+const { getAvailableModes, getDefaultMode } = require('./helpers/modes.js')
 const {
   registerSseClient,
   sendSseEventToClient,
@@ -10,17 +11,6 @@ const path = require('path')
 const pkg = require('./package.json')
 const { getState, setState } = require('./helpers/state.js')
 const { requestShutdown, isDryRun } = require('./helpers/system.js')
-
-const modes = [
-  require('./modes/idle/index.js'),
-  require('./modes/white/index.js'),
-  require('./modes/random/index.js'),
-  require('./modes/logo/index.js'),
-  require('./modes/netatmo/index.js'),
-  require('./modes/clock/index.js'),
-  require('./modes/freegrid/index.js'),
-]
-const defaultMode = 'idle'
 
 const app = express()
 const port = 3030
@@ -42,15 +32,17 @@ app.listen(port, function () {
 })
 
 function responseHome(request, response) {
-  const data = {
-    viewTitle: pkg.name,
-    modes,
-  }
-  response.status(200).render('index', data)
+  getAvailableModes()
+    .then((modes) => {
+      response.status(200).render('index', { viewTitle: pkg.name, modes })
+    })
+    .catch((error) => {
+      response.status(500).send(`Could not get modes (${error.message})`)
+    })
 }
 
 function responseSetMode(request, response) {
-  getState({ defaultMode })
+  getState()
     .then((state) => {
       return setState({ currentMode: request.params.mode, stateData: state.data })
     })
@@ -63,7 +55,7 @@ function responseSetMode(request, response) {
 function responseSetState(request, response) {
   const mode = request.query.mode
   const data = JSON.parse(request.query.data)
-  getState({ defaultMode })
+  getState()
     .then((state) => {
       state.data[mode] = data
       return setState({ currentMode: state.currentMode, stateData: state.data })
@@ -80,14 +72,14 @@ function responseShutdown(request, response) {
 }
 
 function responseState(request, response) {
-  getState({ defaultMode }).then((state) => {
+  getState().then((state) => {
     response.status(200).json(state)
   })
 }
 
 function responseSse(request, response) {
   const clientId = registerSseClient({ request, response })
-  getState({ defaultMode }).then((state) => {
+  getState().then((state) => {
     sendSseEventToClient({ clientId, eventName: 'stateUpdate', data: state })
   })
 }
