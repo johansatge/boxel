@@ -52,7 +52,8 @@ html, body {
   padding: 8px 0 0 0;
   box-sizing: border-box;
   margin: 0 0 0 -250px;
-  background: #333333;
+  background: linear-gradient(180deg, #3f3f3f 0%, #333333 100%);
+  box-shadow: inset 0px -2px 0px 0px #202020;
   text-align: center;
   color: #ffffff;
   border-bottom-left-radius: 5px;
@@ -144,16 +145,15 @@ html, body {
 }
 
 .mode-inner {
-  display: none;
-}
-.mode.js-current-mode .mode-inner {
-  display: block;
   background: #ffffff;
-  border: 2px solid rgba(222,88,51,1);
   border-top: 0;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 15px 15px 15px 15px;
+  display: none;
+}
+.mode.js-current-mode .mode-inner {
+  display: block;
 }
 
 .mode-description {
