@@ -15,7 +15,7 @@
   window.BoxelSetStateFromUi = function({ mode, data }) {
     setSpinner(true)
     const encodedData = encodeURIComponent(JSON.stringify(data))
-    window.fetch('/setstate?mode=' + mode + '&data=' + encodedData)
+    fetchAndCatchError('/setmodestate/' + mode + '/' + encodedData)
   }
 
   function setSpinner(isDisplayed) {
@@ -27,15 +27,13 @@
     const confirmed = window.confirm('Are you sure?')
     if (confirmed) {
       shutdownButtonNode.disabled = true
-      window.fetch('/shutdown').then(() => {
-        shutdownButtonNode.disabled = false
-      })
+      fetchAndCatchError('/shutdown')
     }
   }
 
   function onSetMode(evt) {
     setSpinner(true)
-    fetch('/setmode/' + evt.currentTarget.dataset.mode)
+    fetchAndCatchError('/setmode/' + evt.currentTarget.dataset.mode)
   }
 
   function onSseStateUpdate(evt) {
@@ -50,6 +48,20 @@
         window.BoxelModes[modeId].setUiFromState(state.data[modeId])
       }
     })
+  }
+
+  function fetchAndCatchError(url) {
+    window.fetch(url)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.error) {
+          throw new Error(json.error)
+        }
+      })
+      .catch((error) => {
+        setSpinner(false)
+        console.warn(`Error when requesting ${url}`, error)
+      })
   }
 
   function onSsePing() {
