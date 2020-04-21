@@ -3,11 +3,11 @@
   (() => {
     const m = {}
     window.BoxelModes.random = m
-    m.setUiFromState = function(data) {
+    m.onStateUpdate = function(data) {
       console.log('update random from', data)
     }
     document.querySelector('.js-randomize').addEventListener('click', () => {
-      window.BoxelSetStateFromUi({
+      window.BoxelSetModeData({
         mode: 'random',
         data: {
           someDate: new Date().toString(),

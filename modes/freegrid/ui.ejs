@@ -10,7 +10,7 @@
   (() => {
     const m = {}
     window.BoxelModes.freegrid = m
-    m.setUiFromState = function(data) {
+    m.onStateUpdate = function(data) {
       console.log('update freegrid from', data)
     }
   })()

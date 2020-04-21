@@ -22,8 +22,8 @@ m.startServer = function({ port }) {
 
   app.get('/', responseHome)
   app.get('/shutdown', responseShutdown)
-  app.get('/setmode/:mode', responseSetMode)
-  app.get('/setmodestate/:mode/:data', responseSetModeState)
+  app.get('/setcurrentmode/:mode', responseSetCurrentMode)
+  app.get('/setmodedata/:mode/:data', responseSetModeData)
   app.get('/sse', responseSse)
   app.get('/viewstate', responseViewState)
   app.use('/static', express.static(path.join(__dirname, '../static')))
@@ -44,7 +44,7 @@ function responseHome(request, response) {
     })
 }
 
-function responseSetMode(request, response) {
+function responseSetCurrentMode(request, response) {
   getState()
     .then((state) => {
       if (!isValidMode(request.params.mode)) {
@@ -61,14 +61,14 @@ function responseSetMode(request, response) {
     })
 }
 
-function responseSetModeState(request, response) {
+function responseSetModeData(request, response) {
   getState()
     .then((state) => {
       const mode = request.params.mode
       if (!isValidMode(mode)) {
         throw new Error('Unknown mode')
       }
-      const data = JSON.parse(request.params.data) // @todo sanitize and process state through the right mode
+      const data = JSON.parse(request.params.data) // @todo sanitize and process data through the right mode
       state.data[mode] = data
       return setState({ currentMode: state.currentMode, stateData: state.data })
     })
