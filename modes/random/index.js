@@ -5,10 +5,6 @@ module.exports = m
 
 let ledMatrix = null
 
-m.getId = function() {
-  return 'random'
-}
-
 m.getTitle = function() {
   return 'Random colors'
 }

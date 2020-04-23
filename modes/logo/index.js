@@ -4,10 +4,6 @@
 const m = {}
 module.exports = m
 
-m.getId = function() {
-  return 'logo'
-}
-
 m.getTitle = function() {
   return 'Logo'
 }

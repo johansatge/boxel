@@ -1,10 +1,6 @@
 const m = {}
 module.exports = m
 
-m.getId = function() {
-  return 'idle'
-}
-
 m.getTitle = function() {
   return 'Idle'
 }

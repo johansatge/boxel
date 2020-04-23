@@ -7,10 +7,6 @@ module.exports = m
 let ledMatrix = null
 let timeout = null
 
-m.getId = function() {
-  return 'clock'
-}
-
 m.getTitle = function() {
   return 'Digital clock'
 }

@@ -6,10 +6,6 @@ module.exports = m
 // let ledMatrix = null
 // const pixels = {}
 
-m.getId = function() {
-  return 'freegrid'
-}
-
 m.getTitle = function() {
   return 'Free grid'
 }

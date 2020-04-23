@@ -12,10 +12,6 @@ module.exports = m
 //   password: process.env.NETATMO_PASSWORD,
 // })
 
-m.getId = function() {
-  return 'netatmo'
-}
-
 m.getTitle = function() {
   return 'Netatmo weather'
 }

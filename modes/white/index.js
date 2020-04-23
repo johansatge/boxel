@@ -3,10 +3,6 @@
 const m = {}
 module.exports = m
 
-m.getId = function() {
-  return 'white'
-}
-
 m.getTitle = function() {
   return 'White screen'
 }
