@@ -46,7 +46,7 @@ async function responseSetCurrentMode(request, response) {
     }
     const state = await getState()
     const updatedState = await setState({ currentMode: request.params.mode, stateData: state.data })
-    sendSseEventToClients({ eventName: 'stateUpdate', data: state })
+    sendSseEventToClients({ eventName: 'stateUpdate', data: updatedState })
     response.status(200).json({ error: null })
   }
   catch(error) {
