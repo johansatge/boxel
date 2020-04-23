@@ -34,67 +34,62 @@ m.startServer = function({ port }) {
   })
 }
 
-function responseHome(request, response) {
+async function responseHome(request, response) {
   const modes = getAvailableModes()
   response.status(200).render('index', { viewTitle: pkg.name, modes })
 }
 
-function responseSetCurrentMode(request, response) {
-  getState()
-    .then((state) => {
-      if (!isValidMode(request.params.mode)) {
-        throw new Error('Unknown mode')
-      }
-      return setState({ currentMode: request.params.mode, stateData: state.data })
-    })
-    .then((state) => {
-      sendSseEventToClients({ eventName: 'stateUpdate', data: state })
-      response.status(200).json({ error: null })
-    })
-    .catch((error) => {
-      response.status(500).json({ error: error.message })
-    })
+async function responseSetCurrentMode(request, response) {
+  try {
+    if (!isValidMode(request.params.mode)) {
+      throw new Error('Unknown mode')
+    }
+    const state = await getState()
+    const updatedState = await setState({ currentMode: request.params.mode, stateData: state.data })
+    sendSseEventToClients({ eventName: 'stateUpdate', data: state })
+    response.status(200).json({ error: null })
+  }
+  catch(error) {
+    response.status(500).json({ error: error.message })
+  }
 }
 
-function responseSetModeData(request, response) {
-  getState()
-    .then((state) => {
-      const mode = request.params.mode
-      if (!isValidMode(mode)) {
-        throw new Error('Unknown mode')
-      }
-      const data = JSON.parse(request.params.data) // @todo sanitize and process data through the right mode
-      state.data[mode] = data
-      return setState({ currentMode: state.currentMode, stateData: state.data })
-    })
-    .then((state) => {
-      sendSseEventToClients({ eventName: 'stateUpdate', data: state })
-      response.status(200).json({ error: null })
-    })
-    .catch((error) => {
-      response.status(500).json({ error: error.message })
-    })
+async function responseSetModeData(request, response) {
+  try {
+    const mode = request.params.mode
+    if (!isValidMode(mode)) {
+      throw new Error('Unknown mode')
+    }
+    const state = await getState()
+    const data = JSON.parse(request.params.data) // @todo sanitize and process data through the right mode
+    state.data[mode] = data
+    const updatedData = await setState({ currentMode: state.currentMode, stateData: state.data })
+    sendSseEventToClients({ eventName: 'stateUpdate', data: updatedData })
+    response.status(200).json({ error: null })
+  }
+  catch(error) {
+    response.status(500).json({ error: error.message })
+  }
 }
 
-function responseShutdown(request, response) {
+async function responseShutdown(request, response) {
   requestShutdown()
   response.status(200).json({ error: null })
 }
 
-function responseViewState(request, response) {
-  getState()
-    .then((state) => {
-      response.status(200).json(state)
-    })
-    .catch((error) => {
-      response.status(500).send(error.message)
-    })
+async function responseViewState(request, response) {
+  try {
+    const state = await getState()
+    response.status(200).json(state)
+  }
+  catch(error) {
+    response.status(500).send(error.message)
+  }
 }
 
-function responseSse(request, response) {
+async function responseSse(request, response) {
   const clientId = registerSseClient({ request, response })
-  getState().then((state) => {
-    sendSseEventToClient({ clientId, eventName: 'stateUpdate', data: state })
-  })
+  const state = await getState()
+  sendSseEventToClient({ clientId, eventName: 'stateUpdate', data: state })
 }
 
