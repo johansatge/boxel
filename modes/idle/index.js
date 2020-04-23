@@ -9,6 +9,14 @@ m.getDescription = function() {
   return 'Default mode with LED screen off'
 }
 
+m.start = function() {
+  return Promise.resolve()
+}
+
+m.stop = function() {
+  return Promise.resolve()
+}
+
 // m.start = function(matrix) {
 //   // do nothing for now
 // }

@@ -12,6 +12,14 @@ m.getDescription = function() {
   return '@todo description'
 }
 
+m.start = function() {
+  return Promise.resolve()
+}
+
+m.stop = function() {
+  return Promise.resolve()
+}
+
 // m.start = function(matrix) {
 //   jimp.read(path.join(__dirname, 'logo.png')).then((image) => {
 //     for(let x = 0; x < image.bitmap.width; x += 1) {

@@ -14,6 +14,14 @@ m.getDescription = function() {
   return '@todo description'
 }
 
+m.start = function() {
+  return Promise.resolve()
+}
+
+m.stop = function() {
+  return Promise.resolve()
+}
+
 // m.start = function(matrix) {
 //   ledMatrix = matrix
 // }
