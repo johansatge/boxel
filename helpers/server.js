@@ -35,13 +35,8 @@ m.startServer = function({ port }) {
 }
 
 function responseHome(request, response) {
-  getAvailableModes()
-    .then((modes) => {
-      response.status(200).render('index', { viewTitle: pkg.name, modes })
-    })
-    .catch((error) => {
-      response.status(500).send(`Could not get modes (${error.message})`)
-    })
+  const modes = getAvailableModes()
+  response.status(200).render('index', { viewTitle: pkg.name, modes })
 }
 
 function responseSetCurrentMode(request, response) {

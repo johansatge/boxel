@@ -1,20 +1,17 @@
 const fs = require('fs')
 const path = require('path')
+const { log } = require('./log.js')
 
 const m = {}
 module.exports = m
 
-let cachedModes = null
+let cachedModes = {}
 
 m.getDefaultMode = function() {
   return 'idle'
 }
 
-m.getAvailableModes = function() {
-  if (cachedModes !== null) {
-    return Promise.resolve(cachedModes)
-  }
-  cachedModes = {}
+m.loadModes = function() {
   return new Promise((resolve, reject) => {
     fs.readdir(path.join(__dirname, '../modes'), { withFileTypes: true }, (error, list) => {
       if (error) {
@@ -24,9 +21,14 @@ m.getAvailableModes = function() {
         const modeModule = require(path.join(__dirname, '../modes', entry.name, '/index.js'))
         cachedModes[entry.name] = modeModule
       })
+      log(`Loaded modes ${Object.keys(cachedModes).join(', ')}`)
       resolve(cachedModes)
     })
   })
+}
+
+m.getAvailableModes = function() {
+  return cachedModes
 }
 
 m.isValidMode = function(modeId) {
