@@ -10,12 +10,12 @@ const {
 const path = require('path')
 const pkg = require('../package.json')
 const { getState, setStateCurrentMode, setStateModeData } = require('./state.js')
-const { requestShutdown, isDryRun } = require('./system.js')
+const { requestShutdown, isDryRun, getUrls, getPort } = require('./system.js')
 
 const m = {}
 module.exports = m
 
-m.startServer = async function({ port }) {
+m.startServer = async function() {
   const app = express()
   app.set('view engine', 'ejs')
   app.set('views', path.join(__dirname, '..'))
@@ -28,8 +28,8 @@ m.startServer = async function({ port }) {
   app.get('/viewstate', responseViewState)
   app.use('/static', express.static(path.join(__dirname, '../static')))
 
-  app.listen(port, function () {
-    log(`Server started on http://localhost:${port} (${isDryRun() ? 'DRY' : 'LIVE'})`)
+  app.listen(getPort(), function () {
+    log(`Server started (${isDryRun() ? 'DRY' : 'LIVE'}) (${getUrls().join(', ')})`)
     startSsePing()
   })
 }
