@@ -19,6 +19,8 @@ m.start = function() {
   blink()
 }
 
+m.update = function() {}
+
 m.stop = function() {
   if (waitInterval) {
     clearTimeout(waitInterval)

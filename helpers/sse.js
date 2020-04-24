@@ -28,16 +28,17 @@ m.registerSseClient = function({ request, response }) {
   return clientId
 }
 
-m.sendSseEventToClient = function({ clientId, eventName, data }) {
-  log(`Sending ${eventName} to ${clientId}`)
-  sendEventToClient({ clientId, eventName, data})
-}
-
-m.sendSseEventToClients = function({ eventName, data }) {
-  log(`Sending ${eventName} to ${Object.keys(sseClients).length} client(s)`)
-  Object.keys(sseClients).forEach((clientId) => {
+m.sendSseEventToClients = function({ clientId, eventName, data }) {
+  if (clientId) {
+    log(`Sending ${eventName} event to ${clientId}`)
     sendEventToClient({ clientId, eventName, data })
-  })
+  }
+  else {
+    log(`Sending ${eventName} event to ${Object.keys(sseClients).length} client(s)`)
+    Object.keys(sseClients).forEach((clientId) => {
+      sendEventToClient({ clientId, eventName, data })
+    })
+  }
 }
 
 function sendEventToClient({ clientId, eventName, data }) {

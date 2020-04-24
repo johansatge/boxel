@@ -12,10 +12,10 @@
     })
   }
 
-  window.BoxelSetModeData = function({ mode, data }) {
+  window.BoxelSetCurrentModeData = function(data) {
     setSpinner(true)
     const encodedData = encodeURIComponent(JSON.stringify(data))
-    fetchAndCatchError('/setmodedata/' + mode + '/' + encodedData)
+    fetchAndCatchError('/setcurrentmodedata/' + encodedData)
   }
 
   function setSpinner(isDisplayed) {
@@ -42,11 +42,11 @@
     console.log('Received state', state)
     document.querySelectorAll('.js-mode').forEach((modeNode) => {
       const modeId = modeNode.dataset.mode
-      const method = modeId === state.currentMode ? 'add' : 'remove'
+      const method = modeId === state.currentModeId ? 'add' : 'remove'
       modeNode.classList[method]('js-current-mode')
       // @todo only update state if it changed
-      if (state.data[modeId] && window.BoxelModes[modeId] && window.BoxelModes[modeId].onStateUpdate) {
-        window.BoxelModes[modeId].onStateUpdate(state.data[modeId])
+      if (modeId === state.currentModeId && window.BoxelModes[modeId] && window.BoxelModes[modeId].onStateUpdate) {
+        window.BoxelModes[modeId].onStateUpdate(state.currentModeData)
       }
     })
   }

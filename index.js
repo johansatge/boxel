@@ -1,15 +1,15 @@
-const { loadModes, startMode } = require('./helpers/modes.js')
+const { loadModes, startCurrentMode } = require('./helpers/modes.js')
 const { startServer } = require('./helpers/server.js')
-const { getState } = require('./helpers/state.js')
-const { initMatrix } = require('./helpers/matrix.js')
+const { loadMatrix } = require('./helpers/matrix.js')
+const { loadState } = require('./helpers/state.js')
 
 ;(async () => {
   try {
-    await initMatrix()
+    await loadState()
+    await loadMatrix()
     await loadModes()
-    const state = await getState()
-    await startMode(state.currentMode)
-    await startServer()
+    startCurrentMode()
+    startServer()
   }
   catch(error) {
     console.log(`Could not start app (${error.message})`)

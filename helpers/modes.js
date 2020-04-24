@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { log } = require('./log.js')
 const { isDryRun } = require('./system.js')
+const { getCurrentModeId, getCurrentModeData } = require('./state.js')
 
 const m = {}
 module.exports = m
@@ -13,17 +14,26 @@ m.getDefaultModeId = function() {
   return 'idle'
 }
 
-m.startMode = function(modeId) {
+m.startCurrentMode = function() {
   if (isDryRun()) {
+    log(`Ignoring start mode ${getCurrentModeId()}`)
     return
   }
   if (currentStartedModeId !== null) {
     log(`Stopping mode ${currentStartedModeId}`)
     cachedModes[currentStartedModeId].stop()
   }
-  currentStartedModeId = modeId
-  log(`Starting mode ${currentStartedModeId}`)
-  cachedModes[modeId].start()
+  log(`Starting mode ${getCurrentModeId()}`)
+  cachedModes[getCurrentModeId()].start(getCurrentModeData())
+  currentStartedModeId = getCurrentModeId()
+}
+
+m.updateCurrentMode = function() {
+  if (isDryRun()) {
+    log(`Ignoring update mode ${getCurrentModeId()}`)
+    return
+  }
+  cachedModes[currentStartedModeId].update(getCurrentModeData())
 }
 
 m.loadModes = function() {

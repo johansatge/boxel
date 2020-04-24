@@ -12,7 +12,7 @@ m.getMatrix = function() {
   return matrix
 }
 
-m.initMatrix = function() {
+m.loadMatrix = function() {
   if (isDryRun()) {
     log('Ignoring matrix init')
     return Promise.resolve()

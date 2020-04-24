@@ -7,11 +7,8 @@
       console.log('update random from', data)
     }
     document.querySelector('.js-randomize').addEventListener('click', () => {
-      window.BoxelSetModeData({
-        mode: 'random',
-        data: {
-          someDate: new Date().toString(),
-        },
+      window.BoxelSetCurrentModeData({
+        someDate: new Date().toString(),
       })
     })
   })()

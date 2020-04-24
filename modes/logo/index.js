@@ -13,11 +13,12 @@ m.getDescription = function() {
 }
 
 m.start = function() {
-  return Promise.resolve()
+}
+
+m.update = function() {
 }
 
 m.stop = function() {
-  return Promise.resolve()
 }
 
 // m.start = function(matrix) {
