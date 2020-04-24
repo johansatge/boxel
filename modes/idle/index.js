@@ -1,5 +1,10 @@
+const { getMatrix } = require('../../helpers/matrix.js')
+
 const m = {}
 module.exports = m
+
+let waitInterval = null
+let blinkTimeout = null
 
 m.getTitle = function() {
   return 'Idle'
@@ -10,17 +15,26 @@ m.getDescription = function() {
 }
 
 m.start = function() {
-  return Promise.resolve()
+  waitInterval = setInterval(blink, 2000)
+  blink()
 }
 
 m.stop = function() {
-  return Promise.resolve()
+  if (waitInterval) {
+    clearTimeout(waitInterval)
+  }
+  if (blinkTimeout) {
+    clearTimeout(blinkTimeout)
+  }
+  getMatrix().clear().sync()
 }
 
-// m.start = function(matrix) {
-//   // do nothing for now
-// }
-
-// m.stop = function(matrix) {
-//   matrix.clear()
-// }
+function blink() {
+  const matrix = getMatrix()
+  matrix.fgColor(0xffffff)
+  matrix.setPixel(0, 31)
+  matrix.sync()
+  blinkTimeout = setTimeout(() => {
+    matrix.clear().sync()
+  }, 500)
+}

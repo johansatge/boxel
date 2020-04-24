@@ -1,6 +1,6 @@
 const express = require('express')
 const { log } = require('./log.js')
-const { getAvailableModes, isValidMode } = require('./modes.js')
+const { getAvailableModes, isValidMode, startMode } = require('./modes.js')
 const {
   registerSseClient,
   sendSseEventToClient,
@@ -42,6 +42,7 @@ async function responseHome(request, response) {
 async function responseSetCurrentMode(request, response) {
   try {
     const updatedState = await setStateCurrentMode(request.params.mode)
+    startMode(request.params.mode)
     sendSseEventToClients({ eventName: 'stateUpdate', data: updatedState })
     response.status(200).json({ error: null })
   }

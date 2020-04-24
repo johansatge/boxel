@@ -8,6 +8,10 @@ module.exports = m
 
 let matrix = null
 
+m.getMatrix = function() {
+  return matrix
+}
+
 m.initMatrix = function() {
   if (isDryRun()) {
     log('Ignoring matrix init')
