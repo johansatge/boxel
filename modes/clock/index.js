@@ -1,66 +1,48 @@
-// const chars = require('../../helpers/characters.js')
-// const colors = require('../../helpers/colors.js')
+const { getColorWhite } = require('../../helpers/colors.js')
+const { getMatrix, getMatrixFont } = require('../../helpers/matrix.js')
 
 const m = {}
 module.exports = m
+
+let cachedWaitInterval = null
 
 m.getTitle = () => {
   return 'Digital clock'
 }
 
 m.getDescription = () => {
-  return '@todo description'
+  return 'Display the current time'
 }
 
 m.start = () => {
+  cachedWaitInterval = setInterval(drawClock, 5000)
+  drawClock()
 }
 
 m.update = () => {
 }
 
 m.stop = () => {
+  if (cachedWaitInterval) {
+    clearInterval(cachedWaitInterval)
+  }
+  getMatrix().clear().sync()
 }
 
-// let ledMatrix = null
-// let timeout = null
+const drawClock = () => {
+  const date = new Date()
+  const hours = prependZero(date.getHours())
+  const minutes = prependZero(date.getMinutes())
+  const seconds = prependZero(date.getSeconds())
+  getMatrix().clear()
+  getMatrix().fgColor(getColorWhite())
+  getMatrix().font(getMatrixFont('6x9'))
+  getMatrix().drawText(`${hours}:${minutes}`, 1, 1)
+  getMatrix().font(getMatrixFont('9x18'))
+  getMatrix().drawText(seconds, 1, 12)
+  getMatrix().sync()
+}
 
-// m.start = function(matrix) {
-//   ledMatrix = matrix
-//   setTime()
-// }
-
-// m.stop = function(matrix) {
-//   matrix.clear()
-//   ledMatrix = null
-//   if (timeout) {
-//     clearTimeout(timeout)
-//     timeout = null
-//   }
-// }
-
-// function setTime() {
-//   ledMatrix.clear()
-//   const date = new Date()
-//   writeLine(ledMatrix, getChars(`${prependZero(date.getHours())}:${prependZero(date.getMinutes())}`), 2, 2)
-//   writeLine(ledMatrix, getChars(prependZero(date.getSeconds())), 2, 23)
-//   timeout = setTimeout(setTime, 1000)
-// }
-
-// function prependZero(value) {
-//   return value > 9 ? value : `0${value}`
-// }
-
-// function writeLine(matrix, chars, startX, startY) {
-//   chars.map((char) => {
-//     // const color = colors.random()
-//     const color = colors.middleGrey()
-//     char.pixels.map((pixel) => {
-//       matrix.setPixel(startX + pixel.x, startY + pixel.y, color.r, color.g, color.b)
-//     })
-//     startX += char.maxX + 1
-//   })
-// }
-
-// function getChars(text) {
-//   return String(text).split('').map((char) => chars.get(char))
-// }
+const prependZero = (value) => {
+  return value > 9 ? `${value}` : `0${value}`
+}

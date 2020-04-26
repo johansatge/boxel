@@ -2,6 +2,7 @@ const { isDryRun } = require('./system.js')
 const { LedMatrix, Font } = require('rpi-led-matrix')
 const { log } = require('./log.js')
 const path = require('path')
+const { getColorWhite } = require('./colors.js')
 
 const m = {}
 module.exports = m
@@ -36,11 +37,16 @@ m.loadMatrix = () => {
   }
 }
 
+m.getMatrixFont = (name) => {
+  const fontPath = path.join(__dirname, `../node_modules/rpi-led-matrix/fonts/${name}.bdf`)
+  return new Font(name, fontPath)
+}
+
 const showSplashscreen = () => {
   return new Promise((resolve, reject) => {
     cachedMatrix.clear()
-    cachedMatrix.fgColor(0xffffff)
-    cachedMatrix.font(new Font('6x12', getFontPath('6x12')))
+    cachedMatrix.fgColor(getColorWhite())
+    cachedMatrix.font(m.getMatrixFont('6x12'))
     cachedMatrix.drawText('Boxel', 1, 21)
     cachedMatrix.sync()
     setTimeout(() => {
@@ -50,8 +56,4 @@ const showSplashscreen = () => {
       resolve()
     }, 2000)
   })
-}
-
-const getFontPath = (fontName) => {
-  return path.join(__dirname, `../node_modules/rpi-led-matrix/fonts/${fontName}.bdf`)
 }

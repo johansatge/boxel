@@ -3,8 +3,8 @@ const { getMatrix } = require('../../helpers/matrix.js')
 const m = {}
 module.exports = m
 
-let waitInterval = null
-let blinkTimeout = null
+let cachedWaitInterval = null
+let cachedBlinkTimeout = null
 
 m.getTitle = () => {
   return 'Idle'
@@ -15,28 +15,29 @@ m.getDescription = () => {
 }
 
 m.start = () => {
-  waitInterval = setInterval(blink, 2000)
-  blink()
+  cachedWaitInterval = setInterval(drawBlink, 2000)
+  drawBlink()
 }
 
-m.update = () => {}
+m.update = () => {
+}
 
 m.stop = () => {
-  if (waitInterval) {
-    clearTimeout(waitInterval)
+  if (cachedWaitInterval) {
+    clearInterval(cachedWaitInterval)
   }
-  if (blinkTimeout) {
-    clearTimeout(blinkTimeout)
+  if (cachedBlinkTimeout) {
+    clearTimeout(cachedBlinkTimeout)
   }
   getMatrix().clear().sync()
 }
 
-const blink = () => {
+const drawBlink = () => {
   const matrix = getMatrix()
   matrix.fgColor(0xffffff)
   matrix.setPixel(0, 31)
   matrix.sync()
-  blinkTimeout = setTimeout(() => {
+  cachedBlinkTimeout = setTimeout(() => {
     matrix.clear().sync()
   }, 500)
 }

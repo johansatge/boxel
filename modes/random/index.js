@@ -1,5 +1,5 @@
 const { getMatrix } = require('../../helpers/matrix.js')
-const { getRandomColor } = require('../../helpers/colors.js')
+const { getColorRandom } = require('../../helpers/colors.js')
 
 const m = {}
 module.exports = m
@@ -28,7 +28,7 @@ const setRandomPixels = () => {
   getMatrix().clear()
   for(let y = 0; y < 32; y += 1) {
     for(let x = 0; x < 32; x += 1) {
-      getMatrix().fgColor(getRandomColor())
+      getMatrix().fgColor(getColorRandom())
       getMatrix().setPixel(x, y)
     }
   }
