@@ -6,22 +6,22 @@ module.exports = m
 let waitInterval = null
 let blinkTimeout = null
 
-m.getTitle = function() {
+m.getTitle = () => {
   return 'Idle'
 }
 
-m.getDescription = function() {
+m.getDescription = () => {
   return 'Default mode with LED screen off'
 }
 
-m.start = function() {
+m.start = () => {
   waitInterval = setInterval(blink, 2000)
   blink()
 }
 
-m.update = function() {}
+m.update = () => {}
 
-m.stop = function() {
+m.stop = () => {
   if (waitInterval) {
     clearTimeout(waitInterval)
   }
@@ -31,7 +31,7 @@ m.stop = function() {
   getMatrix().clear().sync()
 }
 
-function blink() {
+const blink = () => {
   const matrix = getMatrix()
   matrix.fgColor(0xffffff)
   matrix.setPixel(0, 31)

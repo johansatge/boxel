@@ -3,25 +3,25 @@
 const m = {}
 module.exports = m
 
-// let ledMatrix = null
-// const pixels = {}
-
-m.getTitle = function() {
+m.getTitle = () => {
   return 'Free grid'
 }
 
-m.getDescription = function() {
+m.getDescription = () => {
   return '@todo description'
 }
 
-m.start = function() {
+m.start = () => {
 }
 
-m.update = function() {
+m.update = () => {
 }
 
-m.stop = function() {
+m.stop = () => {
 }
+
+// let ledMatrix = null
+// const pixels = {}
 
 // m.start = function(matrix) {
 //   ledMatrix = matrix

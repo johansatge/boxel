@@ -4,25 +4,25 @@
 const m = {}
 module.exports = m
 
-let ledMatrix = null
-let timeout = null
-
-m.getTitle = function() {
+m.getTitle = () => {
   return 'Digital clock'
 }
 
-m.getDescription = function() {
+m.getDescription = () => {
   return '@todo description'
 }
 
-m.start = function() {
+m.start = () => {
 }
 
-m.update = function() {
+m.update = () => {
 }
 
-m.stop = function() {
+m.stop = () => {
 }
+
+// let ledMatrix = null
+// let timeout = null
 
 // m.start = function(matrix) {
 //   ledMatrix = matrix

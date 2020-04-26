@@ -46,7 +46,7 @@ m.getCurrentModeData = () => {
   return cachedState.modesData[cachedState.currentModeId] || {}
 }
 
-function writeState() {
+const writeState = () => {
   fs.writeFile(statePath, JSON.stringify(cachedState, null, 2), 'utf8')
     .then(() => {
       log('Wrote state to disk')

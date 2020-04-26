@@ -4,21 +4,21 @@
 const m = {}
 module.exports = m
 
-m.getTitle = function() {
+m.getTitle = () => {
   return 'Logo'
 }
 
-m.getDescription = function() {
+m.getDescription = () => {
   return '@todo description'
 }
 
-m.start = function() {
+m.start = () => {
 }
 
-m.update = function() {
+m.update = () => {
 }
 
-m.stop = function() {
+m.stop = () => {
 }
 
 // m.start = function(matrix) {

@@ -8,11 +8,11 @@ module.exports = m
 
 let matrix = null
 
-m.getMatrix = function() {
+m.getMatrix = () => {
   return matrix
 }
 
-m.loadMatrix = function() {
+m.loadMatrix = () => {
   if (isDryRun()) {
     log('Ignoring matrix init')
     return Promise.resolve()
@@ -55,7 +55,7 @@ m.loadMatrix = function() {
   }
 }
 
-function showSplashscreen() {
+const showSplashscreen = () => {
   return new Promise((resolve, reject) => {
     matrix.clear()
     matrix.brightness(50)
@@ -71,6 +71,6 @@ function showSplashscreen() {
   })
 }
 
-function getFontPath(fontName) {
+const getFontPath = (fontName) => {
   return path.join(__dirname, `../node_modules/rpi-led-matrix/fonts/${fontName}.bdf`)
 }

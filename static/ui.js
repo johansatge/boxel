@@ -1,6 +1,6 @@
 (() => {
 
-  window.BoxelInitUi = function() {
+  window.BoxelInitUi = () => {
     const shutdownButtonNode = document.querySelector('.js-shutdown')
     shutdownButtonNode.addEventListener('click', onShutdownRequest)
     setSpinner(true)
@@ -12,18 +12,18 @@
     })
   }
 
-  window.BoxelSetCurrentModeData = function(data) {
+  window.BoxelSetCurrentModeData = (data) => {
     setSpinner(true)
     const encodedData = encodeURIComponent(JSON.stringify(data))
     fetchAndCatchError('/setcurrentmodedata/' + encodedData)
   }
 
-  function setSpinner(isDisplayed) {
+  const setSpinner = (isDisplayed) => {
     const titleNode = document.querySelector('.js-title')
     titleNode.classList[isDisplayed ? 'add' : 'remove']('js-has-spinner')
   }
 
-  function onShutdownRequest() {
+  const onShutdownRequest = () => {
     const confirmed = window.confirm('Are you sure?')
     if (confirmed) {
       shutdownButtonNode.disabled = true
@@ -31,12 +31,12 @@
     }
   }
 
-  function onSetCurrentMode(evt) {
+  const onSetCurrentMode = (evt) => {
     setSpinner(true)
     fetchAndCatchError('/setcurrentmode/' + evt.currentTarget.dataset.mode)
   }
 
-  function onStateUpdate(evt) {
+  const onStateUpdate = (evt) => {
     setSpinner(false)
     const state = JSON.parse(evt.data)
     console.log('Received state', state)
@@ -51,7 +51,7 @@
     })
   }
 
-  function fetchAndCatchError(url) {
+  const fetchAndCatchError = (url) => {
     window.fetch(url)
       .then((response) => response.json())
       .then((json) => {
@@ -65,7 +65,7 @@
       })
   }
 
-  function onSsePing() {
+  const onSsePing = () => {
     console.log('Received ping')
   }
 

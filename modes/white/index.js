@@ -3,21 +3,21 @@
 const m = {}
 module.exports = m
 
-m.getTitle = function() {
+m.getTitle = () => {
   return 'White screen'
 }
 
-m.getDescription = function() {
+m.getDescription = () => {
   return 'Display a white screen'
 }
 
-m.start = function() {
+m.start = () => {
 }
 
-m.update = function() {
+m.update = () => {
 }
 
-m.stop = function() {
+m.stop = () => {
 }
 
 // m.start = function(matrix) {

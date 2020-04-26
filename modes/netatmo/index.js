@@ -12,21 +12,21 @@ module.exports = m
 //   password: process.env.NETATMO_PASSWORD,
 // })
 
-m.getTitle = function() {
+m.getTitle = () => {
   return 'Netatmo weather'
 }
 
-m.getDescription = function() {
+m.getDescription = () => {
   return '@todo description'
 }
 
-m.start = function() {
+m.start = () => {
 }
 
-m.update = function() {
+m.update = () => {
 }
 
-m.stop = function() {
+m.stop = () => {
 }
 
 // m.start = function(matrix) {

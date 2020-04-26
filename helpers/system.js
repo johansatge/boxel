@@ -7,22 +7,22 @@ module.exports = m
 
 let cachedUrls = null
 
-m.requestShutdown = function() {
+m.requestShutdown = () => {
   log(m.isDryRun() ? 'Ignoring shutdown command' : 'Sending shutdown command')
   if (!m.isDryRun()) {
     exec('sudo shutdown -h now')
   }
 }
 
-m.isDryRun = function() {
+m.isDryRun = () => {
   return process.argv.includes('--dry-run')
 }
 
-m.getPort = function() {
+m.getPort = () => {
   return 3030
 }
 
-m.getUrls = function() {
+m.getUrls = () => {
   if (cachedUrls !== null) {
     return cachedUrls
   }

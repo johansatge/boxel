@@ -10,11 +10,11 @@ module.exports = m
 let cachedModes = {}
 let currentStartedModeId = null
 
-m.getDefaultModeId = function() {
+m.getDefaultModeId = () => {
   return 'idle'
 }
 
-m.startCurrentMode = function() {
+m.startCurrentMode = () => {
   if (isDryRun()) {
     log(`Ignoring start mode ${getCurrentModeId()}`)
     return
@@ -28,7 +28,7 @@ m.startCurrentMode = function() {
   currentStartedModeId = getCurrentModeId()
 }
 
-m.updateCurrentMode = function() {
+m.updateCurrentMode = () => {
   if (isDryRun()) {
     log(`Ignoring update mode ${getCurrentModeId()}`)
     return
@@ -36,7 +36,7 @@ m.updateCurrentMode = function() {
   cachedModes[currentStartedModeId].update(getCurrentModeData())
 }
 
-m.loadModes = function() {
+m.loadModes = () => {
   return new Promise((resolve, reject) => {
     fs.readdir(path.join(__dirname, '../modes'), { withFileTypes: true }, (error, list) => {
       if (error) {
@@ -52,10 +52,10 @@ m.loadModes = function() {
   })
 }
 
-m.getAvailableModes = function() {
+m.getAvailableModes = () => {
   return cachedModes
 }
 
-m.isValidMode = function(modeId) {
+m.isValidMode = (modeId) => {
   return typeof modeId === 'string' && cachedModes[modeId]
 }

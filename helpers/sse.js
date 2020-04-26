@@ -6,13 +6,13 @@ module.exports = m
 
 const sseClients = {}
 
-m.startSsePing = function() {
-  setInterval(function() {
+m.startSsePing = () => {
+  setInterval(() => {
     m.sendSseEventToClients({ eventName: 'ping', data: null })
   }, 60 * 1000)
 }
 
-m.registerSseClient = function({ request, response }) {
+m.registerSseClient = ({ request, response }) => {
   response.writeHead(200, {
     'Connection': 'keep-alive',
     'Content-Type': 'text/event-stream',
@@ -28,7 +28,7 @@ m.registerSseClient = function({ request, response }) {
   return clientId
 }
 
-m.sendSseEventToClients = function({ clientId, eventName, data }) {
+m.sendSseEventToClients = ({ clientId, eventName, data }) => {
   if (clientId) {
     log(`Sending ${eventName} event to ${clientId}`)
     sendEventToClient({ clientId, eventName, data })
@@ -41,6 +41,6 @@ m.sendSseEventToClients = function({ clientId, eventName, data }) {
   }
 }
 
-function sendEventToClient({ clientId, eventName, data }) {
+const sendEventToClient = ({ clientId, eventName, data }) => {
   sseClients[clientId].write(`event:${eventName}\ndata: ${JSON.stringify(data)}\n\n`)
 }

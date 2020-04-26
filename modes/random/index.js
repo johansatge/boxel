@@ -3,23 +3,21 @@
 const m = {}
 module.exports = m
 
-let ledMatrix = null
-
-m.getTitle = function() {
+m.getTitle = () => {
   return 'Random colors'
 }
 
-m.getDescription = function() {
+m.getDescription = () => {
   return 'Display random pixels'
 }
 
-m.start = function() {
+m.start = () => {
 }
 
-m.update = function() {
+m.update = () => {
 }
 
-m.stop = function() {
+m.stop = () => {
 }
 
 // m.start = function(matrix) {
