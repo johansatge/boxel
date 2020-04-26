@@ -1,10 +1,11 @@
-const { getColorWhite } = require('../../helpers/colors.js')
+const { getColorFromHex } = require('../../helpers/colors.js')
 const { getMatrix, getMatrixFont } = require('../../helpers/matrix.js')
 
 const m = {}
 module.exports = m
 
 let cachedWaitInterval = null
+let cachedData = null
 
 m.getTitle = () => {
   return 'Digital clock'
@@ -35,12 +36,15 @@ m.getDefaultData = () => {
   }
 }
 
-m.start = () => {
-  cachedWaitInterval = setInterval(drawClock, 5000)
+m.start = (data) => {
+  cachedData = data
+  cachedWaitInterval = setInterval(drawClock, 800)
   drawClock()
 }
 
-m.update = () => {
+m.update = (data) => {
+  cachedData = data
+  drawClock()
 }
 
 m.stop = () => {
@@ -52,15 +56,25 @@ m.stop = () => {
 
 const drawClock = () => {
   const date = new Date()
-  const hours = prependZero(date.getHours())
-  const minutes = prependZero(date.getMinutes())
-  const seconds = prependZero(date.getSeconds())
+  let hours = date.getHours()
+  if (cachedData.format === 'ampm') {
+    hours = hours % 12
+    hours = hours ? hours : 12
+  }
+  const formattedHours = prependZero(hours)
+  const formattedMinutes = prependZero(date.getMinutes())
+  const formattedSeconds = prependZero(date.getSeconds())
+  const formattedTimeY = cachedData.format === 'ampm' || cachedData.withSeconds ? 1 : 12
   getMatrix().clear()
-  getMatrix().fgColor(getColorWhite())
+  getMatrix().fgColor(getColorFromHex(cachedData.color))
   getMatrix().font(getMatrixFont('6x9'))
-  getMatrix().drawText(`${hours}:${minutes}`, 1, 1)
-  getMatrix().font(getMatrixFont('9x18'))
-  getMatrix().drawText(seconds, 1, 12)
+  getMatrix().drawText(`${formattedHours}:${formattedMinutes}`, 1, formattedTimeY)
+  if (cachedData.withSeconds) {
+    getMatrix().drawText(formattedSeconds, 1, 23)
+  }
+  if (cachedData.format === 'ampm') {
+    getMatrix().drawText(hours > 12 ? 'PM' : 'AM', 19, 23)
+  }
   getMatrix().sync()
 }
 

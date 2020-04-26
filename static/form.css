@@ -84,3 +84,8 @@
   line-height: normal;
   color: #ffffff;
 }
+
+.text:focus {
+  background: linear-gradient(180deg, #de5833 0%, #ef5c34 100%);
+  box-shadow: inset 0px -1px 0px 0px #ca502e;
+}

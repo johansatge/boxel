@@ -24,23 +24,26 @@
 </div>
 <script>
   (() => {
-    window.BoxelModes.clock = {}
-    window.BoxelModes.clock.onStateUpdate = (data) => {
-      console.log('UPDATE CLOCK DATA', data)
-      // @todo update UI
+    const nodeFormat = document.querySelector('.js-clock-format')
+    const nodeSeconds = document.querySelector('.js-clock-seconds')
+    const nodeColor = document.querySelector('.js-clock-color')
+    const onStateUpdate = (data) => {
+      nodeFormat.value = data.format
+      nodeSeconds.checked = data.withSeconds
+      nodeColor.value = data.color
     }
-    const onUpdate = () => {
+    const onUiUpdate = () => {
       window.BoxelSetCurrentModeData({
         format: nodeFormat.value,
         withSeconds: nodeSeconds.checked,
         color: nodeColor.value,
       })
     }
-    const nodeFormat = document.querySelector('.js-clock-format')
-    const nodeSeconds = document.querySelector('.js-clock-seconds')
-    const nodeColor = document.querySelector('.js-clock-color')
-    nodeFormat.addEventListener('change', onUpdate)
-    nodeSeconds.addEventListener('change', onUpdate)
-    nodeColor.addEventListener('input', onUpdate)
+    nodeFormat.addEventListener('change', onUiUpdate)
+    nodeSeconds.addEventListener('change', onUiUpdate)
+    nodeColor.addEventListener('change', onUiUpdate)
+
+    window.BoxelModes.clock = {}
+    window.BoxelModes.clock.onStateUpdate = onStateUpdate
   })()
 </script>

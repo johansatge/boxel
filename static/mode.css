@@ -19,7 +19,7 @@
 .mode.js-current-mode .mode__title {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  background: linear-gradient(180deg, rgba(240,93,53,1) 0%, rgba(222,88,51,1) 100%);
+  background: linear-gradient(180deg, #ef5c34 0%, #de5833 100%);
   color: #ffffff;
 }
 

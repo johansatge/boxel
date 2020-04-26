@@ -9,8 +9,8 @@
 
 .button--orange {
   color: #ffffff;  
-  background: linear-gradient(180deg, rgba(240,93,53,1) 0%, rgba(222,88,51,1) 100%);
-  box-shadow: inset 0px -1px 0px 0px #00000017;
+  background: linear-gradient(180deg, #ef5c34 0%, #de5833 100%);
+  box-shadow: inset 0px -1px 0px 0px #ca502e;
 }
 
 .button--grey {
