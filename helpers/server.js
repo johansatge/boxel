@@ -60,7 +60,6 @@ const responseSetCurrentMode = (request, response) => {
 }
 
 const responseSetCurrentModeData = (request, response) => {
-  // @todo sanitize and process data through the current mode
   setStateCurrentModeData(JSON.parse(request.params.data))
   updateCurrentMode()
   sendStateUpdateToClients()

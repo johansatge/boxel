@@ -4,21 +4,43 @@
   </label>
   <div class="mode__form__input select js-select">
     <span class="select__text js-select-text"></span>
-    <select class="select__input js-select-input" id="clock-select">
-      <option>24H</option>
-      <option>AM/PM</option>
+    <select class="select__input js-select-input js-clock-format" id="clock-select">
+      <option value="24h">24H</option>
+      <option value="ampm">AM/PM</option>
     </select>
   </div>
   <label class="mode__form__label" for="clock-checkbox">
     Show seconds
   </label>
   <div class="mode__form__input">
-    <input type="checkbox" class="checkbox" id="clock-checkbox">
+    <input type="checkbox" class="checkbox js-clock-seconds" id="clock-checkbox">
   </div>
   <label class="mode__form__label" for="clock-color">
     Clock color
   </label>
   <div class="mode__form__input">
-    <input type="text" class="text" id="clock-color">
+    <input type="text" class="text js-clock-color" id="clock-color">
   </div>
 </div>
+<script>
+  (() => {
+    window.BoxelModes.clock = {}
+    window.BoxelModes.clock.onStateUpdate = (data) => {
+      console.log('UPDATE CLOCK DATA', data)
+      // @todo update UI
+    }
+    const onUpdate = () => {
+      window.BoxelSetCurrentModeData({
+        format: nodeFormat.value,
+        withSeconds: nodeSeconds.checked,
+        color: nodeColor.value,
+      })
+    }
+    const nodeFormat = document.querySelector('.js-clock-format')
+    const nodeSeconds = document.querySelector('.js-clock-seconds')
+    const nodeColor = document.querySelector('.js-clock-color')
+    nodeFormat.addEventListener('change', onUpdate)
+    nodeSeconds.addEventListener('change', onUpdate)
+    nodeColor.addEventListener('input', onUpdate)
+  })()
+</script>

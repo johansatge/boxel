@@ -1,9 +1,8 @@
 <button class="button button--orange js-randomize">Randomize</button>
 <script>
   (() => {
-    const m = {}
-    window.BoxelModes.random = m
-    m.onStateUpdate = function(data) {
+    window.BoxelModes.random = {}
+    window.BoxelModes.random.onStateUpdate = (data) => {
       // Nothing to do when receiving a state update
     }
     document.querySelector('.js-randomize').addEventListener('click', () => {
