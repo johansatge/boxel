@@ -1,13 +1,14 @@
 const { log } = require('./helpers/log.js')
 const { startServer } = require('./helpers/server.js')
 const { loadMatrix } = require('./helpers/matrix.js')
-const { loadState, loadModesAndStart, startCurrentMode } = require('./helpers/state.js')
+const { loadStateFromDisk, loadModesFromDisk, startCurrentMode } = require('./helpers/state.js')
 
 ;(async () => {
   try {
-    await loadState()
+    await loadModesFromDisk()
+    await loadStateFromDisk()
     await loadMatrix()
-    await loadModesAndStart()
+    startCurrentMode()
     startServer()
   }
   catch(error) {

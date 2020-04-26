@@ -35,10 +35,6 @@ m.getDefaultData = () => {
   }
 }
 
-m.getDefaultData = () => {
-  return {}
-}
-
 m.start = () => {
   cachedWaitInterval = setInterval(drawClock, 5000)
   drawClock()

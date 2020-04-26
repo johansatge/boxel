@@ -13,7 +13,7 @@ let cachedState = null
 let cachedModes = null
 let cachedRunningModeId = null
 
-m.loadModesAndStart = () => {
+m.loadModesFromDisk = () => {
   return fs.readdir(path.join(__dirname, '../modes'), { withFileTypes: true })
     .then((list) => {
       cachedModes = {}
@@ -22,7 +22,6 @@ m.loadModesAndStart = () => {
         cachedModes[entry.name] = modeModule
       })
       log(`Loaded modes ${Object.keys(cachedModes).join(', ')}`)
-      startCurrentMode()
     })
 }
 
@@ -36,18 +35,25 @@ m.getAvailableModes = () => {
   })
 }
 
-m.loadState = () => {
+m.loadStateFromDisk = () => {
   return fs.readFile(statePath, 'utf8')
-    .then((contents) => {
-      cachedState = JSON.parse(contents) // @todo sanitize data (current mode at least)
-      log('Loaded state')
-    })
+    .then((contents) => JSON.parse(contents))
     .catch((error) => {
+      log(`Could not read state, defaulted (${error.message})`)
+      return {}
+    })
+    .then((diskState) => {
       cachedState = {
-        currentModeId: 'idle',
+        currentModeId: isValidMode(diskState.currentModeId) ? diskState.currentModeId : 'idle',
         modesData: {},
       }
-      log(`Could not read state, defaulted (${error.message})`)
+      const diskModesData = typeof diskState.modesData === 'object' ? diskState.modesData : {}
+      Object.keys(cachedModes).forEach((modeId) => {
+        const diskData = diskModesData[modeId] || null
+        const defaultData = cachedModes[modeId].getDefaultData()
+        cachedState.modesData[modeId] = getModeDataErrors(modeId, diskData).length === 0 ? diskData : defaultData
+      })
+      log(`Loaded state: ${m.getStateAsJson()}`)
     })
 }
 
@@ -56,24 +62,22 @@ m.getStateAsJson = () => {
 }
 
 m.setStateCurrentModeId = (modeId) => {
-  if (typeof modeId !== 'string' || !cachedModes[modeId]) {
+  if (!isValidMode(modeId)) {
     throw new Error('Invalid mode ID')
   }
   cachedState.currentModeId = modeId
   writeState()
   log(`Set current mode ${modeId}`)
-  startCurrentMode()
+  m.startCurrentMode()
 }
 
 m.setStateCurrentModeData = (rawData) => {
   if (typeof rawData !== 'object') {
     throw new Error('Data is not an object')
   }
-  const modeDataSchema = cachedModes[cachedState.currentModeId].getDataSchema()
-  const dataValidation = new Validator().validate(rawData, modeDataSchema)
-  if (!dataValidation.valid) {
-    const errors = dataValidation.errors.map((error) => error.stack)
-    throw new Error(`Invalid data for current mode (${errors.join(', ')})`)
+  const dataErrors = getModeDataErrors(cachedState.currentModeId, rawData)
+  if (dataErrors.length > 0) {
+    throw new Error(`Invalid data for current mode (${dataErrors.join(', ')})`)
   }
   cachedState.modesData[cachedState.currentModeId] = rawData
   log(`Saved current mode data (${JSON.stringify(rawData)})`)
@@ -93,7 +97,7 @@ m.getCurrentModeData = () => {
   return cachedState.modesData[cachedState.currentModeId] || {}
 }
 
-const startCurrentMode = () => {
+m.startCurrentMode = () => {
   if (isDryRun()) {
     log(`Ignored start mode ${cachedState.currentModeId}`)
     return
@@ -105,6 +109,16 @@ const startCurrentMode = () => {
   cachedModes[cachedState.currentModeId].start(m.getCurrentModeData())
   log(`Started mode ${cachedState.currentModeId}`)
   cachedRunningModeId = cachedState.currentModeId
+}
+
+const isValidMode = (modeId) => {
+  return typeof modeId === 'string' && typeof cachedModes[modeId] === 'object'
+}
+
+const getModeDataErrors = (modeId, rawData) => {
+  const schema = cachedModes[modeId].getDataSchema()
+  const validation = new Validator().validate(rawData, schema)
+  return validation.valid ? [] : validation.errors.map((error) => error.stack)
 }
 
 const writeState = () => {
