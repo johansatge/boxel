@@ -57,6 +57,7 @@ m.stop = () => {
 const drawClock = () => {
   const date = new Date()
   let hours = date.getHours()
+  const amPm = hours > 12 ? 'PM' : 'AM'
   if (cachedData.format === 'ampm') {
     hours = hours % 12
     hours = hours ? hours : 12
@@ -73,7 +74,7 @@ const drawClock = () => {
     getMatrix().drawText(formattedSeconds, 1, 23)
   }
   if (cachedData.format === 'ampm') {
-    getMatrix().drawText(hours > 12 ? 'PM' : 'AM', 19, 23)
+    getMatrix().drawText(amPm, 19, 23)
   }
   getMatrix().sync()
 }
