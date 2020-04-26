@@ -1,12 +1,6 @@
 const express = require('express')
 const { log } = require('./log.js')
 const {
-  getAvailableModes,
-  isValidMode,
-  startCurrentMode,
-  updateCurrentMode,
-} = require('./modes.js')
-const {
   registerSseClient,
   sendSseEventToClients,
   startSsePing,
@@ -14,6 +8,8 @@ const {
 const path = require('path')
 const pkg = require('../package.json')
 const {
+  getAvailableModes,
+  isValidMode,
   getStateAsJson,
   getCurrentModeId,
   getCurrentModeData,
@@ -46,7 +42,10 @@ m.startServer = () => {
 
 const responseHome = (request, response) => {
   const modes = getAvailableModes()
-  response.status(200).render('index', { viewTitle: pkg.name, modes })
+  response.status(200).render('index', {
+    viewTitle: `${pkg.name}${isDryRun() ? ' (DRY RUN)' : ''}`,
+    modes
+  })
 }
 
 const responseSetCurrentMode = (request, response) => {
@@ -54,14 +53,12 @@ const responseSetCurrentMode = (request, response) => {
     response.status(500).json({ error: error.message })
   }
   setStateCurrentModeId(request.params.mode)
-  startCurrentMode()
   sendStateUpdateToClients()
   response.status(200).json({ error: null })
 }
 
 const responseSetCurrentModeData = (request, response) => {
   setStateCurrentModeData(JSON.parse(request.params.data))
-  updateCurrentMode()
   sendStateUpdateToClients()
   response.status(200).json({ error: null })
 }

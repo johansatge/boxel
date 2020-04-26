@@ -1,17 +1,16 @@
-const { loadModes, startCurrentMode } = require('./helpers/modes.js')
+const { log } = require('./helpers/log.js')
 const { startServer } = require('./helpers/server.js')
 const { loadMatrix } = require('./helpers/matrix.js')
-const { loadState } = require('./helpers/state.js')
+const { loadState, loadModesAndStart, startCurrentMode } = require('./helpers/state.js')
 
 ;(async () => {
   try {
     await loadState()
     await loadMatrix()
-    await loadModes()
-    startCurrentMode()
+    await loadModesAndStart()
     startServer()
   }
   catch(error) {
-    console.log(`Could not start app (${error.message})`)
+    log(`Could not start app (${error.message})`)
   }
 })()

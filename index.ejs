@@ -20,17 +20,17 @@
         <span class="header__text"><%= viewTitle %></span>
         <div class="header__spinner"></div>
       </h1>
-      <% Object.keys(modes).forEach((modeId) => { %>
-        <div class="mode js-mode" data-mode="<%= modeId %>">
+      <% modes.forEach(({ id, title, description }) => { %>
+        <div class="mode js-mode" data-mode="<%= id %>">
           <h2 class="mode__title">
-            <%= modes[modeId].getTitle() %>
+            <%= title %>
             <span class="mode__description">
-              <%= modes[modeId].getDescription() %>
+              <%= description %>
             </span>
-            <button class="button button--orange mode__set js-mode-set" data-mode="<%= modeId %>">Set</button>
+            <button class="button button--orange mode__set js-mode-set" data-mode="<%= id %>">Set</button>
           </h2>
           <div class="mode__inner">
-            <%- include('modes/' + modeId + '/ui'); %>
+            <%- include('modes/' + id + '/ui'); %>
           </div>
         </div>
       <% }) %>
