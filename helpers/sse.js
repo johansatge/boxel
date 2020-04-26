@@ -4,7 +4,7 @@ const { log } = require('./log.js')
 const m = {}
 module.exports = m
 
-const sseClients = {}
+const cachedSseClients = {}
 
 m.startSsePing = () => {
   setInterval(() => {
@@ -19,11 +19,11 @@ m.registerSseClient = ({ request, response }) => {
     'Cache-Control': 'no-cache',
   })
   const clientId = crypto.randomBytes(16).toString('hex')
-  sseClients[clientId] = response
+  cachedSseClients[clientId] = response
   log(`New SSE client: ${clientId}`)
   request.on('close', () => {
     log(`SSE client leaving: ${clientId}`)
-    delete sseClients[clientId]
+    delete cachedSseClients[clientId]
   })
   return clientId
 }
@@ -34,13 +34,13 @@ m.sendSseEventToClients = ({ clientId, eventName, data }) => {
     sendEventToClient({ clientId, eventName, data })
   }
   else {
-    log(`Sending ${eventName} event to ${Object.keys(sseClients).length} client(s)`)
-    Object.keys(sseClients).forEach((clientId) => {
+    log(`Sending ${eventName} event to ${Object.keys(cachedSseClients).length} client(s)`)
+    Object.keys(cachedSseClients).forEach((clientId) => {
       sendEventToClient({ clientId, eventName, data })
     })
   }
 }
 
 const sendEventToClient = ({ clientId, eventName, data }) => {
-  sseClients[clientId].write(`event:${eventName}\ndata: ${JSON.stringify(data)}\n\n`)
+  cachedSseClients[clientId].write(`event:${eventName}\ndata: ${JSON.stringify(data)}\n\n`)
 }

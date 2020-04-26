@@ -8,7 +8,7 @@ const m = {}
 module.exports = m
 
 let cachedModes = {}
-let currentStartedModeId = null
+let cachedCurrentModeId = null
 
 m.getDefaultModeId = () => {
   return 'idle'
@@ -19,13 +19,13 @@ m.startCurrentMode = () => {
     log(`Ignoring start mode ${getCurrentModeId()}`)
     return
   }
-  if (currentStartedModeId !== null) {
-    log(`Stopping mode ${currentStartedModeId}`)
-    cachedModes[currentStartedModeId].stop()
+  if (cachedCurrentModeId !== null) {
+    log(`Stopping mode ${cachedCurrentModeId}`)
+    cachedModes[cachedCurrentModeId].stop()
   }
   log(`Starting mode ${getCurrentModeId()}`)
   cachedModes[getCurrentModeId()].start(getCurrentModeData())
-  currentStartedModeId = getCurrentModeId()
+  cachedCurrentModeId = getCurrentModeId()
 }
 
 m.updateCurrentMode = () => {
@@ -33,7 +33,7 @@ m.updateCurrentMode = () => {
     log(`Ignoring update mode ${getCurrentModeId()}`)
     return
   }
-  cachedModes[currentStartedModeId].update(getCurrentModeData())
+  cachedModes[cachedCurrentModeId].update(getCurrentModeData())
 }
 
 m.loadModes = () => {

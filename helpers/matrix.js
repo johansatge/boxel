@@ -6,10 +6,10 @@ const path = require('path')
 const m = {}
 module.exports = m
 
-let matrix = null
+let cachedMatrix = null
 
 m.getMatrix = () => {
-  return matrix
+  return cachedMatrix
 }
 
 m.loadMatrix = () => {
@@ -21,32 +21,13 @@ m.loadMatrix = () => {
     ...LedMatrix.defaultMatrixOptions(),
     rows: 32,
     cols: 32,
-    chainLength: 1, // 2,3,4
-    brightness: 100, // range?
-    // disableHardwarePulsing: boolean;
-    // hardwareMapping: GpioMapping;
-    // inverseColors: boolean;
-    // ledRgbSequence: 'RGB' | 'BGR' | 'BRG' | 'RBG' | 'GRB' | 'GBR';
-    // multiplexing: MuxType;
-    // parallel: 1 | 2 | 3 | 4;
-    // pixelMapperConfig: string;
-    // pwmBits: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
-    // pwmDitherBits: number;
-    // pwmLsbNanoseconds: number;
-    // rowAddressType: RowAddressType;
-    // scanMode: ScanMode;
-    // showRefreshRate: boolean;
+    chainLength: 1,
   }
   const runtimeOptions = {
     ...LedMatrix.defaultRuntimeOptions(),
-    // gpioSlowdown: 1,
-    // daemon: RuntimeFlag;
-    // doGpioInit: boolean;
-    // dropPrivileges: RuntimeFlag;
-    // gpioSlowdown: 0 | 1 | 2 | 3 | 4;
   }
   try {
-    matrix = new LedMatrix(matrixOptions, runtimeOptions)
+    cachedMatrix = new LedMatrix(matrixOptions, runtimeOptions)
     log('Matrix inited')
     return showSplashscreen()
   }
@@ -57,15 +38,15 @@ m.loadMatrix = () => {
 
 const showSplashscreen = () => {
   return new Promise((resolve, reject) => {
-    matrix.clear()
-    matrix.brightness(50)
-    matrix.fgColor(0xffffff)
-    matrix.font(new Font('6x12', getFontPath('6x12')))
-    matrix.drawText('Boxel', 1, 21)
-    matrix.sync()
+    cachedMatrix.clear()
+    cachedMatrix.fgColor(0xffffff)
+    cachedMatrix.font(new Font('6x12', getFontPath('6x12')))
+    cachedMatrix.drawText('Boxel', 1, 21)
+    cachedMatrix.sync()
     setTimeout(() => {
-      matrix.clear()
-      matrix.sync()
+      cachedMatrix.clear()
+      cachedMatrix.sync()
+      log('Displayed splashscreen')
       resolve()
     }, 2000)
   })
