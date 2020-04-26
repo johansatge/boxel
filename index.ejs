@@ -12,29 +12,29 @@
   <body>
     <div class="global">
       <h1 class="title js-title">
-        <span class="title-text"><%= viewTitle %></span>
-        <div class="spinner"></div>
-        </h1>
+        <span class="title__text"><%= viewTitle %></span>
+        <div class="title__spinner"></div>
+      </h1>
       <% Object.keys(modes).forEach((modeId) => { %>
         <div class="mode js-mode" data-mode="<%= modeId %>">
-          <h2 class="mode-title">
+          <h2 class="mode__title">
             <%= modes[modeId].getTitle() %>
-            <span class="mode-description">
+            <span class="mode__description">
               <%= modes[modeId].getDescription() %>
             </span>
-            <button class="button button-orange mode-set js-mode-set" data-mode="<%= modeId %>">Set</button>
+            <button class="button button--orange mode__set js-mode-set" data-mode="<%= modeId %>">Set</button>
           </h2>
-          <div class="mode-inner">
+          <div class="mode__inner">
             <%- include('modes/' + modeId + '/ui'); %>
           </div>
         </div>
       <% }) %>
-      <div class="system">
-        <button class="button button-grey js-shutdown">Shutdown</button>
-        <a class="button button-grey" href="/viewstate">View state</a>
+      <div class="footer-buttons">
+        <button class="button button--grey js-shutdown">Shutdown</button>
+        <a class="button button--grey" href="/viewstate">View state</a>
       </div>
       <div class="footer">
-        <a class="footer-link" href="https://github.com/johansatge/boxel">Source code</a>
+        <a class="footer__link" href="https://github.com/johansatge/boxel">Source code</a>
         <br>
         Made with ♥ in Antibes
       </div>
