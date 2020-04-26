@@ -4,12 +4,10 @@
     const m = {}
     window.BoxelModes.random = m
     m.onStateUpdate = function(data) {
-      console.log('update random from', data)
+      // Nothing to do when receiving a state update
     }
     document.querySelector('.js-randomize').addEventListener('click', () => {
-      window.BoxelSetCurrentModeData({
-        someDate: new Date().toString(),
-      })
+      window.BoxelSetCurrentModeData({})
     })
   })()
 </script>

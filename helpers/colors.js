@@ -1,11 +1,15 @@
+const m = {}
+module.exports = m
+
+m.getRandomColor = () => {
+  return {
+    r: Math.floor(Math.random() * 256),
+    g: Math.floor(Math.random() * 256),
+    b: Math.floor(Math.random() * 256),
+  }
+}
+
 // module.exports = {
-//   random : () => {
-//     return {
-//       r : Math.floor(Math.random() * 256),
-//       g : Math.floor(Math.random() * 256),
-//       b : Math.floor(Math.random() * 256),
-//     }
-//   },
 //   white : () => {
 //     return {
 //       r : 255,

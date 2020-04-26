@@ -1,4 +1,5 @@
-// const colors = require('../../helpers/colors.js')
+const { getMatrix } = require('../../helpers/matrix.js')
+const { getRandomColor } = require('../../helpers/colors.js')
 
 const m = {}
 module.exports = m
@@ -12,36 +13,24 @@ m.getDescription = () => {
 }
 
 m.start = () => {
+  setRandomPixels()
 }
 
-m.update = () => {
+m.update = (data) => {
+  setRandomPixels()
 }
 
 m.stop = () => {
+  getMatrix().clear().sync()
 }
 
-// m.start = function(matrix) {
-//   ledMatrix = matrix
-//   randomize()
-// }
-
-// m.setState = function(params) {
-//   if (params.action === 'randomize') {
-//     randomize()
-//   }
-//   return Promise.resolve()
-// }
-
-// m.stop = function(matrix) {
-//   matrix.clear()
-//   ledMatrix = null
-// }
-
-// function randomize() {
-//   for(let y = 0; y < 32; y += 1) {
-//     for(let x = 0; x < 32; x += 1) {
-//       const color = colors.random()
-//       ledMatrix.setPixel(x, y, color.r, color.g, color.b)
-//     }
-//   }
-// }
+const setRandomPixels = () => {
+  getMatrix().clear()
+  for(let y = 0; y < 32; y += 1) {
+    for(let x = 0; x < 32; x += 1) {
+      getMatrix().fgColor(getRandomColor())
+      getMatrix().setPixel(x, y)
+    }
+  }
+  getMatrix().sync()
+}

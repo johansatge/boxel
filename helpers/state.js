@@ -30,11 +30,13 @@ m.getStateAsJson = () => {
 
 m.setStateCurrentModeId = (modeId) => {
   cachedState.currentModeId = modeId
+  log(`Set current mode ${modeId}`)
   writeState()
 }
 
 m.setStateCurrentModeData = (data) => {
   cachedState.modesData[cachedState.currentModeId] = data
+  log(`Saved current mode data (${JSON.stringify(data)}`)
   writeState()
 }
 

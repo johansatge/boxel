@@ -14,7 +14,7 @@ m.getMatrix = () => {
 
 m.loadMatrix = () => {
   if (isDryRun()) {
-    log('Ignoring matrix init')
+    log('Ignored matrix init')
     return Promise.resolve()
   }
   const matrixOptions = {

@@ -44,7 +44,6 @@
       const modeId = modeNode.dataset.mode
       const method = modeId === state.currentModeId ? 'add' : 'remove'
       modeNode.classList[method]('js-current-mode')
-      // @todo only update state if it changed
       if (modeId === state.currentModeId && window.BoxelModes[modeId] && window.BoxelModes[modeId].onStateUpdate) {
         window.BoxelModes[modeId].onStateUpdate(state.currentModeData)
       }

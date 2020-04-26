@@ -20,9 +20,9 @@ m.registerSseClient = ({ request, response }) => {
   })
   const clientId = crypto.randomBytes(16).toString('hex')
   cachedSseClients[clientId] = response
-  log(`New SSE client: ${clientId}`)
+  log(`Registered SSE client: ${clientId}`)
   request.on('close', () => {
-    log(`SSE client leaving: ${clientId}`)
+    log(`SSE client left: ${clientId}`)
     delete cachedSseClients[clientId]
   })
   return clientId
@@ -30,14 +30,14 @@ m.registerSseClient = ({ request, response }) => {
 
 m.sendSseEventToClients = ({ clientId, eventName, data }) => {
   if (clientId) {
-    log(`Sending ${eventName} event to ${clientId}`)
     sendEventToClient({ clientId, eventName, data })
+    log(`Sent ${eventName} event to ${clientId}`)
   }
   else {
-    log(`Sending ${eventName} event to ${Object.keys(cachedSseClients).length} client(s)`)
     Object.keys(cachedSseClients).forEach((clientId) => {
       sendEventToClient({ clientId, eventName, data })
     })
+    log(`Sent ${eventName} event to ${Object.keys(cachedSseClients).length} client(s)`)
   }
 }
 

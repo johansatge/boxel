@@ -16,21 +16,21 @@ m.getDefaultModeId = () => {
 
 m.startCurrentMode = () => {
   if (isDryRun()) {
-    log(`Ignoring start mode ${getCurrentModeId()}`)
+    log(`Ignored start mode ${getCurrentModeId()}`)
     return
   }
   if (cachedCurrentModeId !== null) {
-    log(`Stopping mode ${cachedCurrentModeId}`)
     cachedModes[cachedCurrentModeId].stop()
+    log(`Stopped mode ${cachedCurrentModeId}`)
   }
-  log(`Starting mode ${getCurrentModeId()}`)
   cachedModes[getCurrentModeId()].start(getCurrentModeData())
+  log(`Started mode ${getCurrentModeId()}`)
   cachedCurrentModeId = getCurrentModeId()
 }
 
 m.updateCurrentMode = () => {
   if (isDryRun()) {
-    log(`Ignoring update mode ${getCurrentModeId()}`)
+    log(`Ignored update mode ${getCurrentModeId()}`)
     return
   }
   cachedModes[cachedCurrentModeId].update(getCurrentModeData())
