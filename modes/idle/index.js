@@ -14,6 +14,19 @@ m.getDescription = () => {
   return 'Default mode with LED screen off'
 }
 
+m.getDataSchema = () => {
+  return {
+    type: 'object',
+    additionalProperties: false,
+    properties: {},
+    required: [],
+  }
+}
+
+m.getDefaultData = () => {
+  return {}
+}
+
 m.start = () => {
   cachedWaitInterval = setInterval(drawBlink, 2000)
   drawBlink()

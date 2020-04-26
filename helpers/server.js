@@ -9,7 +9,6 @@ const path = require('path')
 const pkg = require('../package.json')
 const {
   getAvailableModes,
-  isValidMode,
   getStateAsJson,
   getCurrentModeId,
   getCurrentModeData,
@@ -49,18 +48,25 @@ const responseHome = (request, response) => {
 }
 
 const responseSetCurrentMode = (request, response) => {
-  if (!isValidMode(request.params.mode)) {
+  try {
+    setStateCurrentModeId(request.params.mode)
+    sendStateUpdateToClients()
+    response.status(200).json({ error: null })
+  }
+  catch(error) {
     response.status(500).json({ error: error.message })
   }
-  setStateCurrentModeId(request.params.mode)
-  sendStateUpdateToClients()
-  response.status(200).json({ error: null })
 }
 
 const responseSetCurrentModeData = (request, response) => {
-  setStateCurrentModeData(JSON.parse(request.params.data))
-  sendStateUpdateToClients()
-  response.status(200).json({ error: null })
+  try {
+    setStateCurrentModeData(JSON.parse(request.params.data))
+    sendStateUpdateToClients()
+    response.status(200).json({ error: null })
+  }
+  catch(error) {
+    response.status(500).json({ error: error.message })
+  }
 }
 
 const responseShutdown = (request, response) => {

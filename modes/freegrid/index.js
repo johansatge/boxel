@@ -11,6 +11,19 @@ m.getDescription = () => {
   return '@todo description'
 }
 
+m.getDataSchema = () => {
+  return {
+    type: 'object',
+    additionalProperties: false,
+    properties: {},
+    required: [],
+  }
+}
+
+m.getDefaultData = () => {
+  return {}
+}
+
 m.start = () => {
 }
 

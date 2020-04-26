@@ -14,6 +14,31 @@ m.getDescription = () => {
   return 'Display the current time'
 }
 
+m.getDataSchema = () => {
+  return {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      format: { type: 'string', enum: ['24h', 'ampm'] },
+      withSeconds: { type: 'boolean' },
+      color: { type: 'string' },
+    },
+    required: ['format', 'withSeconds', 'color'],
+  }
+}
+
+m.getDefaultData = () => {
+  return {
+    format: '24h',
+    withSeconds: false,
+    color: 'ffffff',
+  }
+}
+
+m.getDefaultData = () => {
+  return {}
+}
+
 m.start = () => {
   cachedWaitInterval = setInterval(drawClock, 5000)
   drawClock()

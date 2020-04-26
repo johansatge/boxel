@@ -2,6 +2,7 @@ const fs = require('fs').promises
 const { log } = require('./log.js')
 const path = require('path')
 const { isDryRun } = require('./system.js')
+const { Validator } = require('jsonschema')
 
 const m = {}
 module.exports = m
@@ -35,14 +36,10 @@ m.getAvailableModes = () => {
   })
 }
 
-m.isValidMode = (modeId) => {
-  return typeof modeId === 'string' && cachedModes[modeId]
-}
-
 m.loadState = () => {
   return fs.readFile(statePath, 'utf8')
     .then((contents) => {
-      cachedState = JSON.parse(contents) // @todo sanitize data (current mode & data)
+      cachedState = JSON.parse(contents) // @todo sanitize data (current mode at least)
       log('Loaded state')
     })
     .catch((error) => {
@@ -59,15 +56,27 @@ m.getStateAsJson = () => {
 }
 
 m.setStateCurrentModeId = (modeId) => {
+  if (typeof modeId !== 'string' || !cachedModes[modeId]) {
+    throw new Error('Invalid mode ID')
+  }
   cachedState.currentModeId = modeId
   writeState()
   log(`Set current mode ${modeId}`)
   startCurrentMode()
 }
 
-m.setStateCurrentModeData = (data) => {
-  cachedState.modesData[cachedState.currentModeId] = data
-  log(`Saved current mode data (${JSON.stringify(data)})`)
+m.setStateCurrentModeData = (rawData) => {
+  if (typeof rawData !== 'object') {
+    throw new Error('Data is not an object')
+  }
+  const modeDataSchema = cachedModes[cachedState.currentModeId].getDataSchema()
+  const dataValidation = new Validator().validate(rawData, modeDataSchema)
+  if (!dataValidation.valid) {
+    const errors = dataValidation.errors.map((error) => error.stack)
+    throw new Error(`Invalid data for current mode (${errors.join(', ')})`)
+  }
+  cachedState.modesData[cachedState.currentModeId] = rawData
+  log(`Saved current mode data (${JSON.stringify(rawData)})`)
   writeState()
   if (isDryRun()) {
     log(`Ignored update mode ${cachedState.currentModeId}`)

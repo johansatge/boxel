@@ -12,6 +12,19 @@ m.getDescription = () => {
   return 'Display random pixels'
 }
 
+m.getDataSchema = () => {
+  return {
+    type: 'object',
+    additionalProperties: false,
+    properties: {},
+    required: [],
+  }
+}
+
+m.getDefaultData = () => {
+  return {}
+}
+
 m.start = () => {
   setRandomPixels()
 }
