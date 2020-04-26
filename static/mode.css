@@ -1,0 +1,72 @@
+.mode {
+  margin: 0 5px 10px 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #0000000d;
+  background: #ffffff;
+}
+.mode.js-current-mode {
+  box-shadow: 0 0 20px #0000000d;
+}
+
+.mode__title {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #333333;
+  padding: 9px 8px 13px 15px;
+  border-radius: 5px;
+}
+.mode.js-current-mode .mode__title {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background: linear-gradient(180deg, rgba(240,93,53,1) 0%, rgba(222,88,51,1) 100%);
+  color: #ffffff;
+}
+
+.mode__description {
+  font-size: 14px;
+  color: #ffffff;
+  font-style: italic;
+  display: none;
+}
+.mode.js-current-mode .mode__description {
+  display: block;
+}
+
+.mode__set {
+  float: right;
+}
+.mode.js-current-mode .mode__set {
+  display: none;
+}
+
+.mode__inner {
+  background: #ffffff;
+  border-top: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 15px 15px 15px 15px;
+  display: none;
+  color: #333333;
+}
+.mode.js-current-mode .mode__inner {
+  display: block;
+}
+
+.mode__form {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 0;
+  grid-row-gap: 10px;
+  align-items: center;
+}
+
+.mode__form__label {
+  justify-self: stretch;
+  cursor: pointer;
+}
+
+.mode__form__input {
+  justify-self: end;
+  line-height: 0;
+}

@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 110'><text y='90px' font-size='90px'>🔌</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-    <link href="/static/styles.css" rel="stylesheet">
+    <link href="/static/base.css" rel="stylesheet">
+    <link href="/static/button.css" rel="stylesheet">
+    <link href="/static/form.css" rel="stylesheet">
+    <link href="/static/header.css" rel="stylesheet">
+    <link href="/static/mode.css" rel="stylesheet">
+    <link href="/static/footer.css" rel="stylesheet">
     <script>window.BoxelModes = {}</script>
   </head>
   <body>
     <div class="global">
-      <h1 class="title js-title">
-        <span class="title__text"><%= viewTitle %></span>
-        <div class="title__spinner"></div>
+      <h1 class="header js-header">
+        <span class="header__text"><%= viewTitle %></span>
+        <div class="header__spinner"></div>
       </h1>
       <% Object.keys(modes).forEach((modeId) => { %>
         <div class="mode js-mode" data-mode="<%= modeId %>">

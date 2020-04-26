@@ -10,6 +10,10 @@
     document.querySelectorAll('.js-mode-set').forEach((node) => {
       node.addEventListener('click', onSetCurrentMode)
     })
+    document.querySelectorAll('.js-select').forEach((node) => {
+      setSelect(node)
+      node.querySelector('.js-select-input').addEventListener('change', onSelectChange)
+    })
   }
 
   window.BoxelSetCurrentModeData = (data) => {
@@ -18,9 +22,18 @@
     fetchAndCatchError('/setcurrentmodedata/' + encodedData)
   }
 
+  const setSelect = (node) => {
+    const currentText = node.querySelector('.js-select-input option:checked').innerText
+    node.querySelector('.js-select-text').innerText = currentText
+  }
+
+  const onSelectChange = (evt) => {
+    setSelect(evt.currentTarget.parentNode)
+  }
+
   const setSpinner = (isDisplayed) => {
-    const titleNode = document.querySelector('.js-title')
-    titleNode.classList[isDisplayed ? 'add' : 'remove']('js-has-spinner')
+    const headerNode = document.querySelector('.js-header')
+    headerNode.classList[isDisplayed ? 'add' : 'remove']('js-has-spinner')
   }
 
   const onShutdownRequest = () => {

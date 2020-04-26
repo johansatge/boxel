@@ -1,0 +1,20 @@
+.button {
+  display: inline-block;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 7px 14px 7px 14px;
+  border-radius: 4px;
+}
+
+.button--orange {
+  color: #ffffff;  
+  background: linear-gradient(180deg, rgba(240,93,53,1) 0%, rgba(222,88,51,1) 100%);
+  box-shadow: inset 0px -1px 0px 0px #00000017;
+}
+
+.button--grey {
+  color: #ffffff;
+  background: linear-gradient(180deg, #3f3f3f 0%, #333333 100%);
+  box-shadow: inset 0px -1px 0px 0px #202020;
+}
