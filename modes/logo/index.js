@@ -1,5 +1,7 @@
-// const jimp = require('jimp')
-// const path = require('path')
+const fs = require('fs').promises
+const { PNG } = require('pngjs')
+const path = require('path')
+const { getMatrix } = require('../../helpers/matrix.js')
 
 const m = {}
 module.exports = m
@@ -26,25 +28,45 @@ m.getDefaultData = () => {
 }
 
 m.start = () => {
+  const logoPath = path.join(__dirname, 'logo.png')
+  loadLogo(logoPath).then(({width, height, pixels}) => {
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        const idx = (width * y + x) << 2
+        const color = {
+          r: pixels[idx],
+          g: pixels[idx + 1],
+          b: pixels[idx + 2],
+        }
+        getMatrix().fgColor(color)
+        getMatrix().setPixel(x, y)
+      }
+    }
+    getMatrix().sync()
+  })
+  .catch((error) => {
+    console.log(error)
+  })
 }
 
 m.update = () => {
 }
 
 m.stop = () => {
+  getMatrix().clear().sync()
 }
 
-// m.start = function(matrix) {
-//   jimp.read(path.join(__dirname, 'logo.png')).then((image) => {
-//     for(let x = 0; x < image.bitmap.width; x += 1) {
-//       for(let y = 0; y < image.bitmap.height; y += 1) {
-//         const pixel = jimp.intToRGBA(image.getPixelColor(x, y))
-//         matrix.setPixel(x, y, pixel.r, pixel.g, pixel.b)
-//       }
-//     }
-//   })
-// }
-
-// m.stop = function(matrix) {
-//   matrix.clear()
-// }
+const loadLogo = (logoPath) => {
+  return fs.readFile(logoPath)
+    .then((buffer) => {
+      return new Promise((resolve, reject) => {
+        new PNG().parse(buffer, (error, result) => {
+          error ? reject(error) : resolve({
+            width: result.width,
+            height: result.height,
+            pixels: result.data,
+          })
+        })
+      })
+    })
+}
