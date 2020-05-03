@@ -11,7 +11,7 @@ It can remote-controlled through a local HTTP server to display various data.
 
 ## Material
 
-<img src="makingof/material.png" width="100%" alt="needed material">
+<img src="makingof/material.jpg" width="100%" alt="needed material">
 
 * Raspberry Pi with a 40 pin GPIO header
 * 32x32 LED matrix and its DC cable
