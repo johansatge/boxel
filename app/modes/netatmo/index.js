@@ -2,6 +2,7 @@ const fetch = require('node-fetch')
 const credentials = require('../../.netatmo.json')
 const { getMatrix, getMatrixFont } = require('../../helpers/matrix.js')
 const { getColorWhite } = require('../../helpers/colors.js')
+const { log } = require('../../helpers/log.js')
 
 const cachedAccessToken = {
   value: null,
@@ -66,7 +67,7 @@ const getDataAndDraw = () => {
     getMatrix().sync()
   })
   .catch((error) => {
-    console.log('ERROR', error.message)
+    log(`Could not fetch Netatmo data (${error.message})`)
   })
 }
 
@@ -97,6 +98,7 @@ const getStationsData = () => {
         exteriorTemp: exteriorModule ? exteriorModule['dashboard_data']['Temperature'] : -1,
         exteriorHumidity: exteriorModule ? exteriorModule['dashboard_data']['Humidity'] : -1,
       }
+      log(`Fetched station data: ${JSON.stringify(stats, null, 2)}`)
       return stats
     })
 }

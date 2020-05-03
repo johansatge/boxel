@@ -4,10 +4,10 @@ Boxel is a wooden box that contains a Raspberry Pi and a 32x32 LED matrix.
 
 A local HTTP server allows any device on the same network to act as a remote controller to choose and configure among several modes: digital clock, weather stats and forecast, digital photo frame, and so on.
 
-* 📸 [Making-of & pictures](media)
-* 🛠️ [Material](#material)
-* 💾 [Software installation](#software-installation)
-* 💡 [Credits](#credits)
+* ###📸 [Making-of & pictures](media)
+* ###🛠️ [Material](#material)
+* ###💾 [Software installation](#software-installation)
+* ###💡 [Credits](#credits)
 
 ## Material
 
@@ -47,14 +47,14 @@ node app/index.js --dry-run
 
 * Use [Raspberry Pi Imager](https://www.raspberrypi.org/downloads/) to install the latest Raspbian on the SD card (tested version: `10 Buster`)
 * From the GUI (`startx`), configure:
-  * The user (`pi`), date, location
+  * The user (`pi`), current date & time, location
   * The wifi
   * Enable SSH & [configure a key](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) if needed
 * Disable on-board sound in `/boot/config.txt` by setting `dtparam=audio=off`
 
-#### Node JS
+#### Node.js
 
-Install Node JS LTS (tested version: `node 12.16.2` / `npm 6.14.4`)
+Install Node.js LTS (tested version: `node 12.16.2` / `npm 6.14.4`)
 
 ```
 curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
@@ -63,7 +63,7 @@ sudo apt-get install nodejs
 
 #### Project installation
 
-On the dev machine, sync the app:
+From the dev machine, sync the app:
 
 ```bash
 sh sync.sh
