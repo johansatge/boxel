@@ -23,7 +23,7 @@ It can be remote-controlled through a local HTTP server, to display various data
 * USB Wi-Fi dongle
 * A few wooden planks, screws, small shelf brackets
 
-## App installation
+## Software installation
 
 ### On the dev machine
 
