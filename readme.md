@@ -13,7 +13,7 @@ It can be remote-controlled through a local HTTP server, to display various data
 
 <img src="media/material.jpg" width="100%" alt="needed material">
 
-* Raspberry Pi with a 40 pin GPIO header
+* Raspberry Pi with a 40 pin GPIO header (tested with a `Pi 2 Model B Rev 1.1`)
 * 32x32 LED matrix and its DC cable
 * 14 female to female jumper wires
 * DC to female 2.1mm Jack adapter
@@ -65,20 +65,41 @@ sudo apt-get install nodejs
 
 On the dev machine, sync the app:
 
-```
+```bash
 sh sync.sh
 ```
 
 On the Pi, install the dependencies:
 
-```
+```bash
 cd /home/pi/boxel-app
 npm install
 ```
 
-On the Pi, start the app:
+Create a state file and make sure it's writable:
 
+```bash
+touch /home/pi/boxel-app/.state.json
+chmod 777 /home/pi/boxel-app/.state.json
+# Todo: check what user is node using to give proper r/w permissions
 ```
+
+Create a file to expose Netatmo credentials:
+
+```bash
+touch /home/pi/boxel-app/.netatmo.json
+# The file looks like this:
+# {
+#   "clientId": "aaaa",
+#   "clientSecret": "bbbb",
+#   "username": "cccc",
+#   "password": "dddd"
+# }
+```
+
+Finally, start the app:
+
+```bash
 sudo node /home/pi/boxel-app/index.js
 ```
 

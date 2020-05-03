@@ -1,23 +1,23 @@
-// const netatmo = require('netatmo')
-// const chars = require('../../helpers/characters.js')
-// const colors = require('../../helpers/colors.js')
+const fetch = require('node-fetch')
+const credentials = require('../../.netatmo.json')
+const { getMatrix, getMatrixFont } = require('../../helpers/matrix.js')
+const { getColorWhite } = require('../../helpers/colors.js')
+
+const cachedAccessToken = {
+  value: null,
+  expireTimeSeconds: 0,
+}
+let cachedRefreshInterval = null
 
 const m = {}
 module.exports = m
-
-// const api = new netatmo({
-//   client_id: process.env.NETATMO_CLIENT_ID,
-//   client_secret: process.env.NETATMO_CLIENT_SECRET,
-//   username: process.env.NETATMO_USERNAME,
-//   password: process.env.NETATMO_PASSWORD,
-// })
 
 m.getTitle = () => {
   return 'Netatmo weather'
 }
 
 m.getDescription = () => {
-  return '@todo description'
+  return 'Weather information from a Netatmo station'
 }
 
 m.getDataSchema = () => {
@@ -34,77 +34,101 @@ m.getDefaultData = () => {
 }
 
 m.start = () => {
+  getDataAndDraw()
+  cachedRefreshInterval = setInterval(getDataAndDraw, 1000 * 60 * 2)
 }
 
 m.update = () => {
 }
 
 m.stop = () => {
+  if (cachedRefreshInterval) {
+    clearInterval(cachedRefreshInterval)
+  }
+  getMatrix().clear().sync()
 }
 
-// m.start = function(matrix) {
-//   let translateX = 0
-//   let translateY = 0
-//   getStats()
-//     .then((stats) => {
-//       matrix.clear()
-//       writeBorder(matrix, colors.middleGrey())
-//       writeLine(matrix, getChars(stats.interiorTemp + '°'), 2, 2)
-//       writeLine(matrix, getChars(stats.interiorHumidity + '%'), 2, 11)
-//       const interiorCo2 = getChars(stats.interiorCo2)
-//       writeLine(matrix, interiorCo2.concat(chars.getCO2()), 2, 20)
-//     })
-//     .catch((error) => {
-//       // @todo handle error
-//     })
-// }
+const getDataAndDraw = () => {
+  getAccessToken()
+  .then(getStationsData)
+  .then((data) => {
+    getMatrix().clear()
+    getMatrix().fgColor(getColorWhite())
+    getMatrix().font(getMatrixFont('4x6'))
+    getMatrix().drawText('in', 1, 2)
+    getMatrix().drawText('out', 1, 10)
+    getMatrix().drawText('ppm', 1, 25)
+    getMatrix().font(getMatrixFont('5x7'))
+    getMatrix().drawText(`${Math.round(data.interiorTemp)}°`, 14, 1)
+    getMatrix().drawText(`${Math.round(data.exteriorTemp)}°`, 14, 9)
+    getMatrix().font(getMatrixFont('4x6'))
+    getMatrix().drawText(`${Math.round(data.interiorCo2)}`, 14, 25)
+    getMatrix().sync()
+  })
+  .catch((error) => {
+    console.log('ERROR', error.message)
+  })
+}
 
-// m.stop = function(matrix) {
-//   matrix.clear()
-// }
+const getStationsData = () => {
+  const body = {
+    access_token: cachedAccessToken.value,
+  }
+  return fetch('https://api.netatmo.net/api/getstationsdata', {
+    method: 'post',
+    body: Object.keys(body).map((param) => `${param}=${encodeURIComponent(body[param])}`).join('&'),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json.status !== 'ok' || !Array.isArray(json.body.devices) || json.body.devices.length === 0) {
+        throw new Error('Netatmo response error')
+      }
+      const station = json.body.devices[0]
+      const exteriorModule = station['modules'].length > 0 ? station['modules'][0] : null
+      const stats = {
+        interiorTemp: station['dashboard_data']['Temperature'],
+        interiorHumidity: station['dashboard_data']['Humidity'],
+        interiorCo2: station['dashboard_data']['CO2'],
+        interiorNoise: station['dashboard_data']['Noise'],
+        interiorPressure: station['dashboard_data']['Pressure'],
+        exteriorTemp: exteriorModule ? exteriorModule['dashboard_data']['Temperature'] : -1,
+        exteriorHumidity: exteriorModule ? exteriorModule['dashboard_data']['Humidity'] : -1,
+      }
+      return stats
+    })
+}
 
-// function getChars(text) {
-//   return String(text).split('').map((char) => chars.get(char))
-// }
+const getAccessToken = () => {
+  if (cachedAccessToken.expireTimeSeconds > nowSeconds()) {
+    return Promise.resolve(cachedAccessToken.value)
+  }
+  const body = {
+    client_id: credentials.clientId,
+    client_secret: credentials.clientSecret,
+    username: credentials.username,
+    password: credentials.password,
+    scope: 'read_station',
+    grant_type: 'password',
+  }
+  return fetch('https://api.netatmo.net/oauth2/token', {
+    method: 'post',
+    body: Object.keys(body).map((param) => `${param}=${encodeURIComponent(body[param])}`).join('&'),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      // Node the OAuth "refresh_token" mechanism isn't implemented (not worth it for now)
+      // When the token expires after 3h, we regenerate one from scratch
+      cachedAccessToken.value = json.access_token
+      cachedAccessToken.expireTimeSeconds = nowSeconds() + json.expires_in
+    })
+}
 
-// function writeLine(matrix, chars, startX, startY) {
-//   chars.map((char) => {
-//     // const color = colors.random()
-//     const color = colors.middleGrey()
-//     char.pixels.map((pixel) => {
-//       matrix.setPixel(startX + pixel.x, startY + pixel.y, color.r, color.g, color.b)
-//     })
-//     startX += char.maxX + 1
-//   })
-// }
-
-// function writeBorder(matrix, color) {
-//   for(let pos = 0; pos < 32; pos += 1) {
-//     matrix.setPixel(pos, 0, color.r, color.g, color.b)
-//     matrix.setPixel(pos, 31, color.r, color.g, color.b)
-//     matrix.setPixel(0, pos, color.r, color.g, color.b)
-//     matrix.setPixel(31, pos, color.r, color.g, color.b)
-//   }
-// }
-
-// function getStats() {
-//   return new Promise((resolve, reject) => {
-//     api.getStationsData((error, devices) => {
-//       if (error) {
-//         return reject(error)
-//       }
-//       if (!devices[0] || !devices[0]['modules'] || !devices[0]['modules'][0]) {
-//         return reject(new Error('Unable to extract data from API response'))
-//       }
-//       const station = devices[0]
-//       const exteriorModule = station['modules'].length > 0 ? station['modules'][0] : null
-//       resolve({
-//         interiorTemp: station['dashboard_data']['Temperature'],
-//         interiorHumidity: station['dashboard_data']['Humidity'],
-//         interiorCo2: station['dashboard_data']['CO2'],
-//         exteriorTemp: exteriorModule ? exteriorModule['dashboard_data']['Temperature'] : -1,
-//         exteriorHumidity: exteriorModule ? exteriorModule['dashboard_data']['Humidity'] : -1,
-//       })
-//     })
-//   })
-// }
+const nowSeconds = () => {
+  return Math.floor(new Date().getTime() / 1000)
+}

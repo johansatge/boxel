@@ -5,4 +5,5 @@ rsync app/ pi@192.168.1.6:/home/pi/boxel-app \
   --recursive \
   --exclude=.DS_Store \
   --exclude=node_modules \
-  --exclude=.state.json
+  --exclude=.state.json \
+  --exclude=.netatmo.json

@@ -28,6 +28,7 @@
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "jsonschema": "^1.2.6",
+    "node-fetch": "^2.6.0",
     "pngjs": "^5.0.0",
     "rpi-led-matrix": "^1.9.0"
   }

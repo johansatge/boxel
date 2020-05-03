@@ -1,3 +1,2 @@
-.env
-.remote-sync.json
 .state.json
+.netatmo.json
