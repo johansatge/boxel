@@ -1,8 +1,8 @@
-# Boxel
+<img src="makingof/boxel.jpg" width="100%" alt="boxel">
 
-Boxel is a wooden box containing a Raspberry Pi and a 32x32 LED matrix.
+Boxel is a wooden box that contains a Raspberry Pi and a 32x32 LED matrix.
 
-It can remote-controlled through a local HTTP server to display various data.
+It can remote-controlled through a local HTTP server, to display various data.
 
 * [Material](#material)
 * [Making-of & pictures](makingof)
