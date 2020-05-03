@@ -1,5 +1,5 @@
 const express = require('express')
-const { log } = require('./log.js')
+const { log, getLogs } = require('./log.js')
 const {
   registerSseClient,
   sendSseEventToClients,
@@ -31,6 +31,7 @@ m.startServer = () => {
   app.get('/setcurrentmodedata/:data', responseSetCurrentModeData)
   app.get('/sse', responseSse)
   app.get('/viewstate', responseViewState)
+  app.get('/viewlogs', responseViewLogs)
   app.use('/static', express.static(path.join(__dirname, '../static')))
 
   app.listen(getPort(), () => {
@@ -76,6 +77,10 @@ const responseShutdown = (request, response) => {
 
 const responseViewState = (request, response) => {
   response.status(200).type('application/json').send(getStateAsJson())
+}
+
+const responseViewLogs = (request, response) => {
+  response.status(200).type('text/plain').send(getLogs())
 }
 
 const responseSse = (request, response) => {
