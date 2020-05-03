@@ -11,7 +11,7 @@ m.getTitle = () => {
 }
 
 m.getDescription = () => {
-  return '@todo description'
+  return 'Display a static 32x32 PNG logo'
 }
 
 m.getDataSchema = () => {

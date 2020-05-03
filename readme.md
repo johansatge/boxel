@@ -4,10 +4,10 @@ Boxel is a wooden box that contains a Raspberry Pi and a 32x32 LED matrix.
 
 A local HTTP server allows any device on the same network to act as a remote controller to choose and configure among several modes: digital clock, weather stats and forecast, digital photo frame, and so on.
 
-* ###📸 [Making-of & pictures](media)
-* ###🛠️ [Material](#material)
-* ###💾 [Software installation](#software-installation)
-* ###💡 [Credits](#credits)
+* ### 📸 [Making-of & pictures](media)
+* ### 🛠️ [Material](#material)
+* ### 💾 [Software installation](#software-installation)
+* ### 💡 [Credits](#credits)
 
 ## Material
 
