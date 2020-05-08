@@ -11446,16 +11446,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{364.90234375, 40.20703125}</string>
-							<string>{-14.207031250000114, 305.421875}</string>
+							<string>{364.90234374999977, 40.207031250000142}</string>
+							<string>{125.27734375000009, 320.01171875000045}</string>
 						</array>
 						<array>
-							<string>{304.19921875, 339.8828125}</string>
-							<string>{310.64062500000011, 336.68359375}</string>
+							<string>{164.71484374999949, 325.29296875000023}</string>
+							<string>{310.64062499999989, 336.68359375000034}</string>
 						</array>
 						<array>
-							<string>{619.359375, 465.31640625}</string>
-							<string>{716.47656250000011, 102.94140625}</string>
+							<string>{619.35937499999977, 465.31640625000034}</string>
+							<string>{716.47656249999989, 102.94140625000023}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -11472,9 +11472,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{144.99609375, 322.65234375}</string>
-						<string>{465, 401}</string>
-						<string>{538.61328125, 102.984375}</string>
+						<string>{144.99609374999977, 322.65234375000034}</string>
+						<string>{464.99999999999977, 401.00000000000023}</string>
+						<string>{538.61328124999977, 102.98437500000006}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -11577,7 +11577,7 @@
 					<key>flipped</key>
 					<false/>
 					<key>frame</key>
-					<string>{{147, 243}, {294, 135}}</string>
+					<string>{{147, 243}, {294, 132}}</string>
 					<key>hidden</key>
 					<false/>
 					<key>identifier</key>
@@ -11591,16 +11591,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{353.25390625, 266.1640625}</string>
-							<string>{104.01171874999994, 338.1015625}</string>
+							<string>{353.25390624999977, 266.16406250000028}</string>
+							<string>{110.23046875000017, 347.91406250000045}</string>
 						</array>
 						<array>
-							<string>{190.73046875, 376.046875}</string>
-							<string>{308.90234375000011, 394.546875}</string>
+							<string>{184.51171874999972, 366.23437500000034}</string>
+							<string>{308.90234374999989, 394.54687500000006}</string>
 						</array>
 						<array>
-							<string>{398.41796875, 309.4140625}</string>
-							<string>{372.94921875000011, 243.734375}</string>
+							<string>{398.41796874999994, 309.41406250000034}</string>
+							<string>{372.94921874999994, 243.73437500000017}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -11617,9 +11617,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{147.37109375, 357.07421875}</string>
-						<string>{353.66015625, 351.98046875}</string>
-						<string>{441.37109375, 242.5703125}</string>
+						<string>{147.37109374999994, 357.0742187500004}</string>
+						<string>{353.66015625000011, 351.98046875000023}</string>
+						<string>{441.37109375, 242.57031250000011}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -11736,16 +11736,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{381.42578125, 247.43359375}</string>
-							<string>{130.01562499999994, 412.875}</string>
+							<string>{381.42578124999966, 247.43359375000006}</string>
+							<string>{130.01562499999943, 412.87500000000023}</string>
 						</array>
 						<array>
-							<string>{169.4296875, 439}</string>
-							<string>{280.39453125, 460.74609375}</string>
+							<string>{169.4296874999996, 439}</string>
+							<string>{280.39453124999966, 460.74609375000017}</string>
 						</array>
 						<array>
-							<string>{359.60546875, 354.64453125}</string>
-							<string>{352.27734375000011, 203.234375}</string>
+							<string>{359.60546874999955, 354.64453125000011}</string>
+							<string>{352.27734374999977, 203.23437500000011}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -11762,9 +11762,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{149.72265625, 425.9375}</string>
-						<string>{320, 407.6953125}</string>
-						<string>{440.73828125, 207.4453125}</string>
+						<string>{149.72265624999943, 425.93750000000023}</string>
+						<string>{319.99999999999966, 407.69531250000023}</string>
+						<string>{440.73828124999977, 207.44531250000011}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -11881,16 +11881,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{442.5390625, 218.3828125}</string>
-							<string>{106.71484374999994, 443.0859375}</string>
+							<string>{442.53906249999977, 218.38281249999957}</string>
+							<string>{106.71484374999955, 443.08593749999977}</string>
 						</array>
 						<array>
-							<string>{189.48828125, 477.28125}</string>
-							<string>{429.79687500000011, 521}</string>
+							<string>{189.48828124999983, 477.28124999999943}</string>
+							<string>{429.79687499999983, 520.99999999999966}</string>
 						</array>
 						<array>
-							<string>{609.296875, 349.75}</string>
-							<string>{640.69921875000011, 171.46484375}</string>
+							<string>{609.29687499999977, 349.74999999999955}</string>
+							<string>{640.69921874999989, 171.46484374999957}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -11907,9 +11907,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{148.1015625, 460.18359375}</string>
-						<string>{519.546875, 435.375}</string>
-						<string>{538.12890625, 171.30078125}</string>
+						<string>{148.10156249999972, 460.18359375000011}</string>
+						<string>{519.54687499999966, 435.37499999999966}</string>
+						<string>{538.12890624999977, 171.30078124999957}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -12026,20 +12026,20 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{331.78125, 256.11328125}</string>
-							<string>{43.687499999999943, 493.57421875}</string>
+							<string>{331.78124999999943, 256.11328124999994}</string>
+							<string>{43.687499999998863, 493.57421875000006}</string>
 						</array>
 						<array>
-							<string>{243.09375, 503.90234375}</string>
-							<string>{428.03125000000011, 558.859375}</string>
+							<string>{243.09374999999966, 503.90234374999994}</string>
+							<string>{428.03124999999972, 558.85937499999977}</string>
 						</array>
 						<array>
-							<string>{636.75781249999989, 430.84375}</string>
-							<string>{721.33203125000011, 250.91796875}</string>
+							<string>{636.75781249999955, 430.84374999999994}</string>
+							<string>{721.33203124999989, 250.91796875000017}</string>
 						</array>
 						<array>
-							<string>{599.16015625, 37.17578125}</string>
-							<string>{465.68750000000011, 37.781250000000114}</string>
+							<string>{599.16015624999966, 37.175781249999886}</string>
+							<string>{465.68749999999966, 37.781250000000028}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -12058,10 +12058,10 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{143.390625, 498.73828125}</string>
-						<string>{532.39453125, 494.8515625}</string>
-						<string>{660.24609375, 144.046875}</string>
-						<string>{466.078125, 88.44140625}</string>
+						<string>{143.39062499999932, 498.73828125000006}</string>
+						<string>{532.39453124999966, 494.85156249999972}</string>
+						<string>{660.24609374999977, 144.04687499999994}</string>
+						<string>{466.07812499999966, 88.441406249999829}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -12178,16 +12178,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{316.10546875, 209.35546875}</string>
-							<string>{40.49609375, 188.2109375}</string>
+							<string>{316.10546874999977, 209.35546874999955}</string>
+							<string>{40.496093750000114, 188.2109374999996}</string>
 						</array>
 						<array>
-							<string>{331.37109375, 142.015625}</string>
-							<string>{429.19140624999989, 34.179687500000114}</string>
+							<string>{331.37109375000006, 142.01562499999966}</string>
+							<string>{429.19140624999977, 34.179687499999716}</string>
 						</array>
 						<array>
-							<string>{620.37890625, 36.875}</string>
-							<string>{621.73828125000011, 138.73828125000011}</string>
+							<string>{620.37890624999989, 36.874999999999659}</string>
+							<string>{621.73828125000023, 138.73828124999989}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -12204,9 +12204,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{185.93359375, 165.11328125}</string>
-						<string>{524.78515625, 35.52734375}</string>
-						<string>{538.984375, 138.07421875}</string>
+						<string>{185.93359375000034, 165.11328124999983}</string>
+						<string>{524.78515624999989, 35.527343749999659}</string>
+						<string>{538.984375, 138.07421874999977}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -12323,16 +12323,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{567.34765625, 252.15234375}</string>
-							<string>{158.43359374999994, 342.890625}</string>
+							<string>{567.34765625, 252.15234375000011}</string>
+							<string>{158.43359374999943, 342.89062500000023}</string>
 						</array>
 						<array>
-							<string>{217.27734375, 353.6875}</string>
-							<string>{481.50781250000011, 471.85546875}</string>
+							<string>{217.27734375000023, 353.68750000000017}</string>
+							<string>{481.50781250000006, 471.85546875000028}</string>
 						</array>
 						<array>
-							<string>{637.3671875, 401.38671875}</string>
-							<string>{637.37890625000011, 242.23828125}</string>
+							<string>{637.36718750000023, 401.38671875000028}</string>
+							<string>{637.37890625000011, 242.23828125000017}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -12349,9 +12349,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{187.85546875, 348.2890625}</string>
-						<string>{559.4375, 436.62109375}</string>
-						<string>{538.0703125, 242.4921875}</string>
+						<string>{187.85546874999989, 348.28906250000017}</string>
+						<string>{559.43750000000011, 436.62109375000006}</string>
+						<string>{538.0703125, 242.49218750000023}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -12468,16 +12468,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{379.60546875, 438.1015625}</string>
-							<string>{161.44921874999994, 373.8671875}</string>
+							<string>{379.60546874999983, 438.10156250000011}</string>
+							<string>{161.44921874999943, 373.86718750000011}</string>
 						</array>
 						<array>
-							<string>{209.47265625, 401}</string>
-							<string>{349.31250000000011, 431.67578125}</string>
+							<string>{209.4726562499992, 401.00000000000011}</string>
+							<string>{349.31249999999955, 431.67578125000006}</string>
 						</array>
 						<array>
-							<string>{421.1875, 370.32421875}</string>
-							<string>{386.74218750000011, 278.01953125}</string>
+							<string>{421.18749999999966, 370.32421875}</string>
+							<string>{386.74218749999977, 278.01953124999994}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -12494,9 +12494,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{185.4609375, 387.43359375}</string>
-						<string>{385.25, 401}</string>
-						<string>{440.19140625, 276.90625}</string>
+						<string>{185.46093749999949, 387.43359375000028}</string>
+						<string>{385.24999999999966, 401.00000000000011}</string>
+						<string>{440.1914062499996, 276.90624999999994}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -12613,16 +12613,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{412.5859375, 290.27734375}</string>
-							<string>{115.58984374999994, 420.24609375}</string>
+							<string>{412.58593750000034, 290.27734375000034}</string>
+							<string>{115.58984375000045, 420.24609375000034}</string>
 						</array>
 						<array>
-							<string>{259.75390625, 486.58984375}</string>
-							<string>{387.82812500000011, 471.94140625}</string>
+							<string>{259.75390625000045, 486.58984375000045}</string>
+							<string>{387.82812500000057, 471.94140625000023}</string>
 						</array>
 						<array>
-							<string>{580.390625, 374.86328125}</string>
-							<string>{596.74609375000011, 279.91796875}</string>
+							<string>{580.39062500000057, 374.86328125}</string>
+							<string>{596.74609375000068, 279.91796875000045}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -12639,9 +12639,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{187.671875, 453.41796875}</string>
-						<string>{484.109375, 423.40234375}</string>
-						<string>{537.8984375, 278.25390625}</string>
+						<string>{187.6718749999996, 453.41796875000045}</string>
+						<string>{484.10937500000034, 423.40234375000023}</string>
+						<string>{537.89843750000045, 278.25390625000011}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -12758,16 +12758,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{360.96875, 291.05078125}</string>
-							<string>{153.87499999999994, 480.63671875}</string>
+							<string>{360.96875000000023, 291.05078124999983}</string>
+							<string>{153.87499999999977, 480.63671874999994}</string>
 						</array>
 						<array>
-							<string>{219.8125, 501.83203125}</string>
-							<string>{392.75000000000011, 553.00390625}</string>
+							<string>{219.8125, 501.83203124999972}</string>
+							<string>{392.75000000000028, 553.00390624999977}</string>
 						</array>
 						<array>
-							<string>{373.42968749999989, 159.98046875}</string>
-							<string>{414.65234375000011, 170.6171875}</string>
+							<string>{373.42968750000011, 159.98046874999966}</string>
+							<string>{414.65234375000034, 170.61718749999977}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -12784,9 +12784,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{186.84375, 491.234375}</string>
-						<string>{383.08984375, 356.4921875}</string>
-						<string>{440.6953125, 172.0625}</string>
+						<string>{186.84375000000017, 491.23437499999983}</string>
+						<string>{383.08984375000034, 356.49218749999983}</string>
+						<string>{440.69531250000006, 172.06249999999955}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -12903,16 +12903,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{337.67578125, 294.76953125}</string>
-							<string>{152.61718749999994, 520.76171875}</string>
+							<string>{337.67578125000017, 294.76953124999977}</string>
+							<string>{152.61718750000017, 520.76171875000011}</string>
 						</array>
 						<array>
-							<string>{220.1484375, 534.40234375}</string>
-							<string>{311.83593750000011, 561.078125}</string>
+							<string>{220.14843750000011, 534.40234375000023}</string>
+							<string>{311.83593750000011, 561.07812499999977}</string>
 						</array>
 						<array>
-							<string>{366.390625, 476.3359375}</string>
-							<string>{257.99609375000011, 133.63281250000011}</string>
+							<string>{366.39062500000034, 476.33593750000011}</string>
+							<string>{257.99609375000028, 133.63281249999994}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -12929,9 +12929,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{186.3828125, 527.58203125}</string>
-						<string>{339.11328125, 518.70703125}</string>
-						<string>{440.51171875, 136.73046875}</string>
+						<string>{186.38281250000011, 527.58203124999989}</string>
+						<string>{339.11328125000011, 518.70703125}</string>
+						<string>{440.51171875000023, 136.73046874999977}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -13048,12 +13048,12 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{416.53515625, 337.31640625}</string>
-							<string>{71.76171875, 315.515625}</string>
+							<string>{416.53515624999989, 337.31640624999983}</string>
+							<string>{71.761718749999829, 315.51562499999949}</string>
 						</array>
 						<array>
-							<string>{230.03515625, 222.078125}</string>
-							<string>{367.23437500000011, 313.6484375}</string>
+							<string>{230.03515625, 222.07812499999972}</string>
+							<string>{367.23437499999994, 313.64843749999983}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -13068,8 +13068,8 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{150.8984375, 268.796875}</string>
-						<string>{441.1953125, 314.40625}</string>
+						<string>{150.89843749999983, 268.79687499999977}</string>
+						<string>{441.19531250000006, 314.40624999999983}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -13186,16 +13186,16 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{455.5859375, 290.83203125}</string>
-							<string>{144.859375, 266.47265625}</string>
+							<string>{455.58593749999977, 290.83203124999989}</string>
+							<string>{144.85937499999989, 266.47265624999972}</string>
 						</array>
 						<array>
-							<string>{224.9296875, 301.01171875}</string>
-							<string>{300.28906250000011, 287.80078125}</string>
+							<string>{224.92968749999972, 301.01171874999989}</string>
+							<string>{300.28906249999983, 287.80078125000011}</string>
 						</array>
 						<array>
-							<string>{400.8828125, 349.60546875}</string>
-							<string>{441.0390625, 348.33203125}</string>
+							<string>{400.88281249999989, 349.60546875}</string>
+							<string>{441.03906249999989, 348.33203125000011}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -13212,9 +13212,9 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{184.89453125, 283.7421875}</string>
-						<string>{350.5859375, 318.703125}</string>
-						<string>{441.0390625, 348.33203125}</string>
+						<string>{184.89453124999983, 283.74218749999994}</string>
+						<string>{350.58593749999989, 318.70312499999966}</string>
+						<string>{441.03906249999989, 348.33203125000011}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -13331,24 +13331,24 @@
 					<key>modelControlPoints</key>
 					<array>
 						<array>
-							<string>{496.17578125, 189.21875}</string>
-							<string>{129.09765625, 203.29296875}</string>
+							<string>{496.17578124999989, 189.21874999999994}</string>
+							<string>{128.3789062499994, 208.99609374999946}</string>
 						</array>
 						<array>
-							<string>{169.49609375, 229.12109375}</string>
-							<string>{246.66796875, 241.0078125}</string>
+							<string>{170.21484374999977, 223.41796875}</string>
+							<string>{246.66796875000006, 241.00781249999966}</string>
 						</array>
 						<array>
-							<string>{367.60546875, 155.8359375}</string>
-							<string>{405.98437499999989, 25.589843750000114}</string>
+							<string>{367.60546874999977, 155.83593749999977}</string>
+							<string>{405.98437499999977, 25.58984375}</string>
 						</array>
 						<array>
-							<string>{657.5859375, 3.51953125}</string>
-							<string>{742.10156250000011, 157.58984375}</string>
+							<string>{657.5859375, 3.5195312499997726}</string>
+							<string>{742.1015625, 157.58984374999977}</string>
 						</array>
 						<array>
-							<string>{659.09375, 344.26171875}</string>
-							<string>{538.19921875, 313.24609375}</string>
+							<string>{659.09374999999977, 344.26171874999966}</string>
+							<string>{538.19921874999977, 313.24609374999989}</string>
 						</array>
 					</array>
 					<key>modelControlPointsIndependent</key>
@@ -13369,11 +13369,11 @@
 					</array>
 					<key>modelPoints</key>
 					<array>
-						<string>{149.296875, 216.20703125}</string>
-						<string>{307.13671875, 198.421875}</string>
-						<string>{531.78515625, 14.5546875}</string>
-						<string>{700.59765625, 250.92578125}</string>
-						<string>{538.19921875, 313.24609375}</string>
+						<string>{149.2968749999996, 216.20703124999972}</string>
+						<string>{307.1367187499996, 198.42187499999989}</string>
+						<string>{531.78515624999989, 14.554687499999829}</string>
+						<string>{700.59765624999977, 250.92578124999943}</string>
+						<string>{538.19921874999977, 313.24609374999989}</string>
 					</array>
 					<key>opacity</key>
 					<real>1</real>
@@ -13433,108 +13433,6 @@
 					<integer>0</integer>
 					<key>title</key>
 					<string>Bezier Shape</string>
-					<key>userSetTitle</key>
-					<false/>
-				</dict>
-				<dict>
-					<key>adjustmentRatioX</key>
-					<real>0.0</real>
-					<key>adjustmentRatioY</key>
-					<real>0.0</real>
-					<key>className</key>
-					<string>Image</string>
-					<key>constrainAspectRatio</key>
-					<false/>
-					<key>contentFilterSpecs</key>
-					<array/>
-					<key>fillAngle</key>
-					<integer>0</integer>
-					<key>fillColor</key>
-					<string>1.000000:1.000000:1.000000:1.000000</string>
-					<key>fillGradientElements</key>
-					<array/>
-					<key>fillShadowBlur</key>
-					<real>3</real>
-					<key>fillShadowColor</key>
-					<string>0.000000:0.000000:0.000000:0.333000</string>
-					<key>fillShadowHidden</key>
-					<true/>
-					<key>fillShadowOffsetX</key>
-					<real>2</real>
-					<key>fillShadowOffsetY</key>
-					<real>2</real>
-					<key>fillType</key>
-					<integer>5</integer>
-					<key>frame</key>
-					<string>{{683, 409}, {246, 378}}</string>
-					<key>hidden</key>
-					<false/>
-					<key>identifier</key>
-					<string>75B304C2-18B2-40F4-973A-F25B67412485</string>
-					<key>imageAnchorRatio</key>
-					<string>{0.5, 0.5}</string>
-					<key>imageIdentifier</key>
-					<string>8BA6AA0C-0D39-4F20-8A0C-BF6ADBDEE9FC</string>
-					<key>imageType</key>
-					<integer>0</integer>
-					<key>locked</key>
-					<false/>
-					<key>opacity</key>
-					<real>1</real>
-					<key>rotationAngle</key>
-					<integer>0</integer>
-					<key>rotationHandleRadius</key>
-					<real>100</real>
-					<key>scaleImage</key>
-					<true/>
-					<key>stroke1Color</key>
-					<string></string>
-					<key>stroke1Enabled</key>
-					<false/>
-					<key>stroke2Color</key>
-					<string></string>
-					<key>stroke2Enabled</key>
-					<false/>
-					<key>strokeColor</key>
-					<string>0.000000:0.000000:0.000000:1.000000</string>
-					<key>strokeLineCap</key>
-					<integer>1</integer>
-					<key>strokeLineJoin</key>
-					<integer>1</integer>
-					<key>strokeLineWidth</key>
-					<real>1</real>
-					<key>strokeShadowBlur</key>
-					<real>3</real>
-					<key>strokeShadowColor</key>
-					<string>0.000000:0.000000:0.000000:0.333000</string>
-					<key>strokeShadowHidden</key>
-					<true/>
-					<key>strokeShadowOffsetX</key>
-					<real>2</real>
-					<key>strokeShadowOffsetY</key>
-					<real>2</real>
-					<key>strokeType</key>
-					<integer>3</integer>
-					<key>textAlign</key>
-					<integer>2</integer>
-					<key>textAppearanceType</key>
-					<integer>0</integer>
-					<key>textDrawOnPath</key>
-					<false/>
-					<key>textShadowBlur</key>
-					<real>5</real>
-					<key>textShadowColor</key>
-					<string>0.000000:0.000000:0.000000:0.333000</string>
-					<key>textShadowHidden</key>
-					<true/>
-					<key>textShadowOffsetX</key>
-					<real>0.0</real>
-					<key>textShadowOffsetY</key>
-					<real>0.0</real>
-					<key>textVerticalAlign</key>
-					<integer>0</integer>
-					<key>title</key>
-					<string>Image</string>
 					<key>userSetTitle</key>
 					<false/>
 				</dict>
@@ -13665,10 +13563,7 @@
 		</dict>
 	</array>
 	<key>image_ref_counts</key>
-	<dict>
-		<key>8BA6AA0C-0D39-4F20-8A0C-BF6ADBDEE9FC</key>
-		<integer>1</integer>
-	</dict>
+	<dict/>
 	<key>version</key>
 	<integer>8</integer>
 </dict>
