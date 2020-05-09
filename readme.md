@@ -1,3 +1,5 @@
+<center><img src="media/boxel.png" width="100%" alt="boxel"></center>
+
 <img src="media/boxel.jpg" width="100%" alt="boxel">
 
 Boxel is a wooden box that contains a Raspberry Pi and a 32x32 LED matrix.
