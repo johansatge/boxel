@@ -30,6 +30,10 @@ I could not find the original wiring schema that was used for this project, so h
 
 <img src="media/wiring.png" width="100%" alt="wiring">
 
+|Matrix|R0|G0|B0|Ground|R1|G1|B1|A|B|C|D|CLK|STB|OE|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|GPIO|23|13|26|6|24|21|19|15|16|18|22|11|7|12|
+
 ## Software installation
 
 ### On the dev machine
