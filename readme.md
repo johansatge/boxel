@@ -1,4 +1,4 @@
-<center><img src="media/boxel.png" alt="boxel"></center>
+<center><img src="media/boxel.png" width="100%" alt="boxel"></center>
 
 <img src="media/boxel.jpg" width="100%" alt="boxel">
 
