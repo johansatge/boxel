@@ -18,8 +18,7 @@
 
   window.BoxelApplyModeAction = (action, data = null) => {
     setSpinner(true)
-    const encodedData = encodeURIComponent(JSON.stringify(data))
-    fetchAndCatchError('/applycurrentmodeaction/' + action + '/' + encodedData)
+    fetchAndCatchError('/applycurrentmodeaction', { action, data })
   }
 
   let errorMessageTimeout = null
@@ -60,7 +59,7 @@
 
   const onSetCurrentMode = (evt) => {
     setSpinner(true)
-    fetchAndCatchError('/setcurrentmode/' + evt.currentTarget.dataset.mode)
+    fetchAndCatchError('/setcurrentmode', { mode: evt.currentTarget.dataset.mode })
   }
 
   const onStateUpdate = (evt) => {
@@ -77,8 +76,18 @@
     })
   }
 
-  const fetchAndCatchError = (url) => {
-    window.fetch(url)
+  const fetchAndCatchError = (url, body = null) => {
+    const params = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+    if (body) {
+      params.body = JSON.stringify(body)
+    }
+    window.fetch(url, params)
       .then((response) => response.json())
       .then((json) => {
         if (json.error) {

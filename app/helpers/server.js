@@ -24,11 +24,14 @@ m.startServer = () => {
   const app = express()
   app.set('view engine', 'ejs')
   app.set('views', path.join(__dirname, '..'))
+  app.use(express.json({
+    limit: '800kb',
+  }))
 
   app.get('/', responseHome)
-  app.get('/shutdown', responseShutdown)
-  app.get('/setcurrentmode/:mode', responseSetCurrentMode)
-  app.get('/applycurrentmodeaction/:action/:data', responseApplyCurrentModeAction)
+  app.post('/shutdown', responseShutdown)
+  app.post('/setcurrentmode', responseSetCurrentMode)
+  app.post('/applycurrentmodeaction', responseApplyCurrentModeAction)
   app.get('/sse', responseSse)
   app.get('/viewstate', responseViewState)
   app.get('/viewlogs', responseViewLogs)
@@ -50,7 +53,7 @@ const responseHome = (request, response) => {
 
 const responseSetCurrentMode = (request, response) => {
   try {
-    setStateCurrentModeId(request.params.mode)
+    setStateCurrentModeId(request.body.mode)
     sendStateUpdateToClients()
     response.status(200).json({ error: null })
   }
@@ -61,7 +64,7 @@ const responseSetCurrentMode = (request, response) => {
 
 const responseApplyCurrentModeAction = (request, response) => {
   try {
-    applyCurrentModeAction(request.params.action, JSON.parse(request.params.data))
+    applyCurrentModeAction(request.body.action, request.body.data)
     sendStateUpdateToClients()
     response.status(200).json({ error: null })
   }

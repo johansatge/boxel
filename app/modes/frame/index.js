@@ -75,7 +75,6 @@ const drawFrame = () => {
     return
   }
   loadPixelsFromBase64(cachedData.base64image).then((pixels) => {
-    // @todo fail gracefully if > 32x32 or image error
     pixels.forEach((pixel) => {
       getMatrix().fgColor({ r: pixel.r, g: pixel.g, b: pixel.b})
       getMatrix().setPixel(pixel.x, pixel.y)
