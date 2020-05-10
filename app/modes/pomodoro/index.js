@@ -2,9 +2,8 @@ const { getColorWhite, getColorRed, getColorGreen } = require('../../helpers/col
 const { getMatrix, getMatrixFont, clearMatrixAndSync } = require('../../helpers/matrix.js')
 const { isDryRun } = require('../../helpers/system.js')
 const JsonValidator = require('jsonschema').Validator
-const fs = require('fs').promises
-const { PNG } = require('pngjs')
 const path = require('path')
+const { loadPixelsFromPng } = require('../../helpers/image.js')
 
 const m = {}
 module.exports = m
@@ -34,19 +33,18 @@ m.applyModeAction = (action, rawData) => {
       throw new Error(`Invalid pomodoro data (${dataErrors})`)
     }
     cachedData = rawData
+    stopPomodoro()
     drawPomodoro()
     return cachedData
   }
   if (action === 'restart') {
     cachedStartTime = Date.now()
-    cachedWaitInterval = setInterval(drawPomodoro, 5000) // @todo longer timer
+    cachedWaitInterval = setInterval(drawPomodoro, 800)
     drawPomodoro()
     return cachedData
   }
   if (action === 'stop') {
-    clearInterval(cachedWaitInterval)
-    cachedWaitInterval = null
-    cachedStartTime = null
+    stopPomodoro()
     drawPomodoro()
     return cachedData
   }
@@ -82,38 +80,51 @@ const getSanitizedData = (rawData) => {
   }
 }
 
+const stopPomodoro = () => {
+  clearInterval(cachedWaitInterval)
+  cachedWaitInterval = null
+  cachedStartTime = null
+}
+
 const drawPomodoro = () => {
   if (isDryRun()) {
     return
   }
+  const currentTimer = getCurrentTimer()
+  if (currentTimer === null) {
+    stopPomodoro()
+    drawPomodoro()
+    return
+  }
   getMatrix().clear()
-  const imagePath = path.join(__dirname, 'tomato.png')
   const imageX = 7
   const imageY = 2
-  loadImage(imagePath).then(({width, height, pixels}) => {
-    for (let y = 0; y < height; y += 1) {
-      for (let x = 0; x < width; x += 1) {
-        const idx = (width * y + x) << 2
-        const color = {
-          r: pixels[idx],
-          g: pixels[idx + 1],
-          b: pixels[idx + 2],
-        }
-        getMatrix().fgColor(color)
-        getMatrix().setPixel(imageX + x, imageY + y)
-      }
-    }
+  const imagePath = path.join(__dirname, 'tomato.png')
+  loadPixelsFromPng(imagePath).then((pixels) => {
+    pixels.forEach((pixel) => {
+      getMatrix().fgColor({ r: pixel.r, g: pixel.g, b: pixel.b})
+      getMatrix().setPixel(imageX + pixel.x, imageY + pixel.y)
+    })
     getMatrix().font(getMatrixFont('6x9'))
     if (cachedStartTime === null) {
       getMatrix().fgColor(getColorWhite())
       getMatrix().drawText('Stop', 3, 22)
     }
     else {
-      getMatrix().fgColor(getColorRed())
-      getMatrix().drawText('00:00', 1, 22) // @otodo compute current state
+      getMatrix().fgColor(currentTimer.color)
+      getMatrix().drawText(currentTimer.text, 1, 22)
     }
     getMatrix().sync()
   })
+}
+
+const getCurrentTimer = () => {
+  // @todo compute timer
+  // @todo return null if the timer has expired (4 works + 3 breaks)
+  return {
+    text: '00:00',
+    color: getColorRed(),
+  }
 }
 
 const loadImage = (imagePath) => {

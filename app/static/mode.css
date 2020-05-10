@@ -53,6 +53,10 @@
   display: block;
 }
 
+.mode__buttons {
+  margin: 10px 0 0 0;
+}
+
 .mode__form {
   display: grid;
   grid-template-columns: auto auto;

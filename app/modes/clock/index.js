@@ -19,6 +19,7 @@ m.getDescription = () => {
 
 m.startMode = (rawData) => {
   cachedData = getSanitizedData(rawData)
+  // @todo for better precision, compute the next timeout after drawing
   cachedWaitInterval = setInterval(drawClock, 800)
   drawClock()
   return cachedData
