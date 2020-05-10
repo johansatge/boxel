@@ -6,7 +6,7 @@ const JsonValidator = require('jsonschema').Validator
 const m = {}
 module.exports = m
 
-let cachedWaitInterval = null
+let cachedDrawTimeout = null
 let cachedData = null
 
 m.getTitle = () => {
@@ -19,8 +19,6 @@ m.getDescription = () => {
 
 m.startMode = (rawData) => {
   cachedData = getSanitizedData(rawData)
-  // @todo for better precision, compute the next timeout after drawing
-  cachedWaitInterval = setInterval(drawClock, 800)
   drawClock()
   return cachedData
 }
@@ -39,9 +37,9 @@ m.applyModeAction = (action, rawData) => {
 }
 
 m.stopMode = () => {
-  if (cachedWaitInterval) {
-    clearInterval(cachedWaitInterval)
-    cachedWaitInterval = null
+  if (cachedDrawTimeout) {
+    clearTimeout(cachedDrawTimeout)
+    cachedDrawTimeout = null
   }
   clearMatrixAndSync()
 }
@@ -95,4 +93,5 @@ const drawClock = () => {
     getMatrix().drawText(amPm, 19, 23)
   }
   getMatrix().sync()
+  cachedDrawTimeout = setTimeout(drawClock, 1000 - new Date().getMilliseconds())
 }
