@@ -21,6 +21,7 @@ m.startMode = (rawData) => {
   cachedData = getSanitizedData(rawData)
   cachedWaitInterval = setInterval(drawClock, 800)
   drawClock()
+  return cachedData
 }
 
 m.applyModeAction = (action, rawData) => {

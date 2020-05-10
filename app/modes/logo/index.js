@@ -38,6 +38,7 @@ m.startMode = (rawData) => {
   .catch((error) => {
     console.log(error)
   })
+  return {}
 }
 
 m.applyModeAction = (action, rawData) => {

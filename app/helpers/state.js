@@ -83,7 +83,8 @@ m.startCurrentMode = () => {
     cachedModes[cachedRunningModeId].stopMode()
     log(`Stopped mode ${cachedRunningModeId}`)
   }
-  cachedModes[cachedState.currentModeId].startMode(m.getCurrentModeData())
+  const initialData = cachedModes[cachedState.currentModeId].startMode(m.getCurrentModeData())
+  cachedState.modesData[cachedState.currentModeId] = initialData
   log(`Started mode ${cachedState.currentModeId}`)
   cachedRunningModeId = cachedState.currentModeId
 }

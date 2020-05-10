@@ -25,6 +25,7 @@ m.getDescription = () => {
 m.startMode = (rawData) => {
   getDataAndDraw()
   cachedRefreshInterval = setInterval(getDataAndDraw, 1000 * 60 * 2)
+  return {}
 }
 
 m.applyModeAction = (action, rawData) => {

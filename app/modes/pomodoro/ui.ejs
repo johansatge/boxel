@@ -1,0 +1,46 @@
+<div class="mode__form">
+  <label class="mode__form__label" for="duration-select">
+    Duration
+  </label>
+  <div class="mode__form__input select js-select">
+    <span class="select__text js-select-text"></span>
+    <select class="select__input js-select-input js-pomodoro-duration" id="duration-select">
+      <option value="10">10min</option>
+      <option value="15">15min</option>
+      <option value="20">20min</option>
+      <option value="25">25min</option>
+    </select>
+  </div>
+  <label class="mode__form__label" for="break-duration-select">
+    Break duration
+  </label>
+  <div class="mode__form__input select js-select">
+    <span class="select__text js-select-text"></span>
+    <select class="select__input js-select-input js-pomodoro-break-duration" id="break-duration-select">
+      <option value="3">3min</option>
+      <option value="4">4min</option>
+      <option value="5">5min</option>
+    </select>
+  </div>
+</div>
+<script>
+  (() => {
+    const nodeDuration = document.querySelector('.js-pomodoro-duration')
+    const nodeBreakDuration = document.querySelector('.js-pomodoro-break-duration')
+    const onStateUpdate = (data) => {
+      nodeDuration.value = data.duration
+      nodeBreakDuration.value = data.breakDuration
+    }
+    const onUiUpdate = () => {
+      window.BoxelApplyModeAction('setSettings', {
+        duration: parseInt(nodeDuration.value),
+        breakDuration: parseInt(nodeBreakDuration.value),
+      })
+    }
+    nodeDuration.addEventListener('change', onUiUpdate)
+    nodeBreakDuration.addEventListener('change', onUiUpdate)
+
+    window.BoxelModes.pomodoro = {}
+    window.BoxelModes.pomodoro.onStateUpdate = onStateUpdate
+  })()
+</script>

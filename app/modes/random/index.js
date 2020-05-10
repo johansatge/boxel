@@ -15,6 +15,7 @@ m.getDescription = () => {
 
 m.startMode = (rawData) => {
   setRandomPixels()
+  return {}
 }
 
 m.applyModeAction = (action, rawData) => {
