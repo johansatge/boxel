@@ -1,12 +1,33 @@
-<button class="button button--orange js-random-randomize">Randomize</button>
+<div class="mode__form">
+  <label class="mode__form__label" for="random-checkbox">
+    Animate
+  </label>
+  <div class="mode__form__input">
+    <input type="checkbox" class="checkbox js-random-animate" id="random-checkbox">
+  </div>
+</div>
+<div class="mode__buttons">
+  <button class="button button--orange js-random-randomize">Randomize</button>
+</div>
 <script>
   (() => {
-    window.BoxelModes.random = {}
-    window.BoxelModes.random.onStateUpdate = (data) => {
-      // Nothing to do when receiving a state update
+    const nodeRandomize = document.querySelector('.js-random-randomize')
+    const nodeAnimate = document.querySelector('.js-random-animate')
+    const onStateUpdate = (data) => {
+      nodeAnimate.checked = data.withAnimation
     }
-    document.querySelector('.js-random-randomize').addEventListener('click', () => {
+    const onUiUpdate = () => {
+      window.BoxelApplyModeAction('setSettings', {
+        withAnimation: nodeAnimate.checked,
+      })
+    }
+    const onUiRandomize = () => {
       window.BoxelApplyModeAction('randomizePixels')
-    })
+    }
+    nodeAnimate.addEventListener('change', onUiUpdate)
+    nodeRandomize.addEventListener('click', onUiRandomize)
+
+    window.BoxelModes.random = {}
+    window.BoxelModes.random.onStateUpdate = onStateUpdate
   })()
 </script>
