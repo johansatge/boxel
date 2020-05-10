@@ -31,7 +31,7 @@ A local HTTP server allows any device on the same network to act as a remote con
 
 I could not find the original wiring schema that was used for this project, so here is the current one that works (the matrix must be powered with its own cable)
 
-<img src="media/wiring.png" width="50%" alt="wiring">
+<img src="media/wiring.png" width="75%" alt="wiring">
 
 |Matrix|R0|G0|B0|Ground|R1|G1|B1|A|B|C|D|CLK|STB|OE|
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
