@@ -1,0 +1,12 @@
+.error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: #ee5b33;
+  z-index: 3;
+  color: #ffffff;
+  display: none;
+}

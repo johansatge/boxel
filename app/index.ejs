@@ -7,6 +7,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 110'><text y='90px' font-size='90px'>🔌</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link href="/static/base.css" rel="stylesheet">
+    <link href="/static/error.css" rel="stylesheet">
     <link href="/static/button.css" rel="stylesheet">
     <link href="/static/form.css" rel="stylesheet">
     <link href="/static/header.css" rel="stylesheet">
@@ -15,6 +16,9 @@
     <script>window.BoxelModes = {}</script>
   </head>
   <body>
+    <div class="error js-error">
+      Some error message
+    </div>
     <div class="global">
       <h1 class="header js-header">
         <span class="header__text"><%= viewTitle %></span>

@@ -63,6 +63,9 @@
     })
   }
 
+  let errorMessageTimeout = null
+  const errorMessageNode = document.querySelector('.js-error')
+
   const fetchAndCatchError = (url) => {
     window.fetch(url)
       .then((response) => response.json())
@@ -73,7 +76,16 @@
       })
       .catch((error) => {
         setSpinner(false)
-        console.warn(`Error when requesting ${url}`, error)
+        document.querySelector
+        errorMessageNode.innerText = error.message
+        errorMessageNode.style.display = 'block'
+        if (errorMessageTimeout !== null) {
+          clearTimeout(errorMessageTimeout)
+          errorMessageTimeout = null
+        }
+        errorMessageTimeout = setTimeout(() => {
+          errorMessageNode.style.display = 'none'
+        }, 3000)
       })
   }
 
