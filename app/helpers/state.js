@@ -1,8 +1,6 @@
 const fs = require('fs').promises
 const { log } = require('./log.js')
 const path = require('path')
-const { isDryRun } = require('./system.js')
-const { Validator } = require('jsonschema')
 
 const m = {}
 module.exports = m
@@ -44,15 +42,9 @@ m.loadStateFromDisk = () => {
     })
     .then((diskState) => {
       cachedState = {
-        currentModeId: isValidMode(diskState.currentModeId) ? diskState.currentModeId : 'idle',
-        modesData: {},
+        currentModeId: isValidMode(diskState.currentModeId) ? diskState.currentModeId : 'clock',
+        modesData: diskState.modesData,
       }
-      const diskModesData = typeof diskState.modesData === 'object' ? diskState.modesData : {}
-      Object.keys(cachedModes).forEach((modeId) => {
-        const diskData = diskModesData[modeId] || null
-        const defaultData = cachedModes[modeId].getDefaultData()
-        cachedState.modesData[modeId] = getModeDataErrors(modeId, diskData).length === 0 ? diskData : defaultData
-      })
       log(`Loaded state: ${m.getStateAsJson()}`)
     })
 }
@@ -71,22 +63,11 @@ m.setStateCurrentModeId = (modeId) => {
   m.startCurrentMode()
 }
 
-m.setStateCurrentModeData = (rawData) => {
-  if (typeof rawData !== 'object') {
-    throw new Error('Data is not an object')
-  }
-  const dataErrors = getModeDataErrors(cachedState.currentModeId, rawData)
-  if (dataErrors.length > 0) {
-    throw new Error(`Invalid data for current mode (${dataErrors.join(', ')})`)
-  }
+m.applyCurrentModeAction = (action, rawData) => {
+  const updatedModeData = cachedModes[cachedRunningModeId].applyModeAction(action, rawData)
   cachedState.modesData[cachedState.currentModeId] = rawData
   log(`Saved current mode data (${JSON.stringify(rawData)})`)
   writeState()
-  if (isDryRun()) {
-    log(`Ignored update mode ${cachedState.currentModeId}`)
-    return
-  }
-  cachedModes[cachedRunningModeId].update(m.getCurrentModeData())
 }
 
 m.getCurrentModeId = () => {
@@ -98,27 +79,17 @@ m.getCurrentModeData = () => {
 }
 
 m.startCurrentMode = () => {
-  if (isDryRun()) {
-    log(`Ignored start mode ${cachedState.currentModeId}`)
-    return
-  }
   if (cachedRunningModeId !== null) {
-    cachedModes[cachedRunningModeId].stop()
+    cachedModes[cachedRunningModeId].stopMode()
     log(`Stopped mode ${cachedRunningModeId}`)
   }
-  cachedModes[cachedState.currentModeId].start(m.getCurrentModeData())
+  cachedModes[cachedState.currentModeId].startMode(m.getCurrentModeData())
   log(`Started mode ${cachedState.currentModeId}`)
   cachedRunningModeId = cachedState.currentModeId
 }
 
 const isValidMode = (modeId) => {
   return typeof modeId === 'string' && typeof cachedModes[modeId] === 'object'
-}
-
-const getModeDataErrors = (modeId, rawData) => {
-  const schema = cachedModes[modeId].getDataSchema()
-  const validation = new Validator().validate(rawData, schema)
-  return validation.valid ? [] : validation.errors.map((error) => error.stack)
 }
 
 const writeState = () => {

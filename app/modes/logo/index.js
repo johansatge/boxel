@@ -1,7 +1,8 @@
 const fs = require('fs').promises
 const { PNG } = require('pngjs')
 const path = require('path')
-const { getMatrix } = require('../../helpers/matrix.js')
+const { getMatrix, clearMatrix } = require('../../helpers/matrix.js')
+const { isDryRun } = require('../../helpers/system.js')
 
 const m = {}
 module.exports = m
@@ -14,20 +15,10 @@ m.getDescription = () => {
   return 'Display a static 32x32 PNG logo'
 }
 
-m.getDataSchema = () => {
-  return {
-    type: 'object',
-    additionalProperties: false,
-    properties: {},
-    required: [],
+m.startMode = (rawData) => {
+  if (isDryRun()) {
+    return
   }
-}
-
-m.getDefaultData = () => {
-  return {}
-}
-
-m.start = () => {
   const logoPath = path.join(__dirname, 'logo.png')
   loadLogo(logoPath).then(({width, height, pixels}) => {
     for (let y = 0; y < height; y += 1) {
@@ -49,11 +40,13 @@ m.start = () => {
   })
 }
 
-m.update = () => {
+m.applyModeAction = (action, rawData) => {
+  // This mode doesn't accept actions
+  return null
 }
 
-m.stop = () => {
-  getMatrix().clear().sync()
+m.stopMode = () => {
+  clearMatrix()
 }
 
 const loadLogo = (logoPath) => {

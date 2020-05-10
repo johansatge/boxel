@@ -1,8 +1,9 @@
 const fetch = require('node-fetch')
 const credentials = require('../../.netatmo.json')
-const { getMatrix, getMatrixFont } = require('../../helpers/matrix.js')
+const { getMatrix, getMatrixFont, clearMatrix } = require('../../helpers/matrix.js')
 const { getColorWhite } = require('../../helpers/colors.js')
 const { log } = require('../../helpers/log.js')
+const { isDryRun } = require('../../helpers/system.js')
 
 const cachedAccessToken = {
   value: null,
@@ -21,38 +22,30 @@ m.getDescription = () => {
   return 'Weather information from a Netatmo station'
 }
 
-m.getDataSchema = () => {
-  return {
-    type: 'object',
-    additionalProperties: false,
-    properties: {},
-    required: [],
-  }
-}
-
-m.getDefaultData = () => {
-  return {}
-}
-
-m.start = () => {
+m.startMode = (rawData) => {
   getDataAndDraw()
   cachedRefreshInterval = setInterval(getDataAndDraw, 1000 * 60 * 2)
 }
 
-m.update = () => {
+m.applyModeAction = (action, rawData) => {
+  // This mode doesn't accept actions
+  return null
 }
 
-m.stop = () => {
+m.stopMode = () => {
   if (cachedRefreshInterval) {
     clearInterval(cachedRefreshInterval)
   }
-  getMatrix().clear().sync()
+  clearMatrix()
 }
 
 const getDataAndDraw = () => {
   getAccessToken()
   .then(getStationsData)
   .then((data) => {
+    if (isDryRun()) {
+      return
+    }
     getMatrix().clear()
     getMatrix().fgColor(getColorWhite())
     getMatrix().font(getMatrixFont('4x6'))

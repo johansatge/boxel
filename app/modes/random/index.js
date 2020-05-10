@@ -1,5 +1,6 @@
-const { getMatrix } = require('../../helpers/matrix.js')
+const { getMatrix, clearMatrix } = require('../../helpers/matrix.js')
 const { getColorRandom } = require('../../helpers/colors.js')
+const { isDryRun } = require('../../helpers/system.js')
 
 const m = {}
 module.exports = m
@@ -12,32 +13,26 @@ m.getDescription = () => {
   return 'Display random pixels'
 }
 
-m.getDataSchema = () => {
-  return {
-    type: 'object',
-    additionalProperties: false,
-    properties: {},
-    required: [],
+m.startMode = (rawData) => {
+  setRandomPixels()
+}
+
+m.applyModeAction = (action, rawData) => {
+  if (action === 'randomizePixels') {
+    setRandomPixels()
+    return {}
   }
+  throw new Error('Invalid random action')
 }
 
-m.getDefaultData = () => {
-  return {}
-}
-
-m.start = () => {
-  setRandomPixels()
-}
-
-m.update = (data) => {
-  setRandomPixels()
-}
-
-m.stop = () => {
-  getMatrix().clear().sync()
+m.stopMode = () => {
+  clearMatrix()
 }
 
 const setRandomPixels = () => {
+  if (isDryRun()) {
+    return
+  }
   getMatrix().clear()
   for(let y = 0; y < 32; y += 1) {
     for(let x = 0; x < 32; x += 1) {

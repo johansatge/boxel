@@ -116,6 +116,13 @@ Finally, start the app:
 sudo node /home/pi/boxel-app/index.js
 ```
 
+Or alternatively, start the app on the dev machine in dry run mode.
+This will start the server but prevent the app from connecting to the matrix:
+
+```bash
+node index.js --dry-run
+```
+
 ## Credits
 
 * [hzeller/rpi-rgb-led-matrix](https://github.com/hzeller/rpi-rgb-led-matrix)

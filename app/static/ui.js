@@ -16,10 +16,10 @@
     })
   }
 
-  window.BoxelSetCurrentModeData = (data) => {
+  window.BoxelApplyModeAction = (action, data = null) => {
     setSpinner(true)
     const encodedData = encodeURIComponent(JSON.stringify(data))
-    fetchAndCatchError('/setcurrentmodedata/' + encodedData)
+    fetchAndCatchError('/applycurrentmodeaction/' + action + '/' + encodedData)
   }
 
   const setSelect = (node) => {

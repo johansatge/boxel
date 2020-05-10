@@ -12,6 +12,6 @@ const { loadStateFromDisk, loadModesFromDisk, startCurrentMode } = require('./he
     startServer()
   }
   catch(error) {
-    log(`Could not start app (${error.message})`)
+    log(`Could not start app (${error.message} ${error.stack})`)
   }
 })()

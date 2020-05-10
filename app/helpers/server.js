@@ -13,7 +13,7 @@ const {
   getCurrentModeId,
   getCurrentModeData,
   setStateCurrentModeId,
-  setStateCurrentModeData,
+  applyCurrentModeAction,
 } = require('./state.js')
 const { requestShutdown, isDryRun, getUrls, getPort } = require('./system.js')
 
@@ -28,7 +28,7 @@ m.startServer = () => {
   app.get('/', responseHome)
   app.get('/shutdown', responseShutdown)
   app.get('/setcurrentmode/:mode', responseSetCurrentMode)
-  app.get('/setcurrentmodedata/:data', responseSetCurrentModeData)
+  app.get('/applycurrentmodeaction/:action/:data', responseApplyCurrentModeAction)
   app.get('/sse', responseSse)
   app.get('/viewstate', responseViewState)
   app.get('/viewlogs', responseViewLogs)
@@ -59,9 +59,9 @@ const responseSetCurrentMode = (request, response) => {
   }
 }
 
-const responseSetCurrentModeData = (request, response) => {
+const responseApplyCurrentModeAction = (request, response) => {
   try {
-    setStateCurrentModeData(JSON.parse(request.params.data))
+    applyCurrentModeAction(request.params.action, JSON.parse(request.params.data))
     sendStateUpdateToClients()
     response.status(200).json({ error: null })
   }

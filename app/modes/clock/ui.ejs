@@ -33,7 +33,7 @@
       nodeColor.value = data.color
     }
     const onUiUpdate = () => {
-      window.BoxelSetCurrentModeData({
+      window.BoxelApplyModeAction('setSettings', {
         format: nodeFormat.value,
         withSeconds: nodeSeconds.checked,
         color: nodeColor.value,

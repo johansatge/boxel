@@ -1,5 +1,7 @@
 const { getColorFromHex } = require('../../helpers/colors.js')
-const { getMatrix, getMatrixFont } = require('../../helpers/matrix.js')
+const { getMatrix, getMatrixFont, clearMatrix } = require('../../helpers/matrix.js')
+const { isDryRun } = require('../../helpers/system.js')
+const JsonValidator = require('jsonschema').Validator
 
 const m = {}
 module.exports = m
@@ -15,8 +17,34 @@ m.getDescription = () => {
   return 'Display the current time'
 }
 
-m.getDataSchema = () => {
-  return {
+m.startMode = (rawData) => {
+  cachedData = getSanitizedData(rawData)
+  cachedWaitInterval = setInterval(drawClock, 800)
+  drawClock()
+}
+
+m.applyModeAction = (action, rawData) => {
+  if (action === 'setSettings') {
+    const dataErrors = getDataErrors(rawData)
+    if (dataErrors !== null) {
+      throw new Error(`Invalid clock data (${dataErrors})`)
+    }
+    cachedData = rawData
+    drawClock()
+    return cachedData
+  }
+  throw new Error('Invalid clock action')
+}
+
+m.stopMode = () => {
+  if (cachedWaitInterval) {
+    clearInterval(cachedWaitInterval)
+  }
+  clearMatrix()
+}
+
+const getDataErrors = (rawData) => {
+  const schema = {
     type: 'object',
     additionalProperties: false,
     properties: {
@@ -26,35 +54,22 @@ m.getDataSchema = () => {
     },
     required: ['format', 'withSeconds', 'color'],
   }
+  const validation = new JsonValidator().validate(rawData, schema)
+  return validation.valid ? null : validation.errors.map((error) => error.message).join(', ')
 }
 
-m.getDefaultData = () => {
-  return {
+const getSanitizedData = (rawData) => {
+  return getDataErrors(rawData) === null ? rawData : {
     format: '24h',
     withSeconds: false,
     color: 'ffffff',
   }
 }
 
-m.start = (data) => {
-  cachedData = data
-  cachedWaitInterval = setInterval(drawClock, 800)
-  drawClock()
-}
-
-m.update = (data) => {
-  cachedData = data
-  drawClock()
-}
-
-m.stop = () => {
-  if (cachedWaitInterval) {
-    clearInterval(cachedWaitInterval)
-  }
-  getMatrix().clear().sync()
-}
-
 const drawClock = () => {
+  if (isDryRun()) {
+    return
+  }
   const date = new Date()
   let hours = date.getHours()
   const amPm = hours > 12 ? 'PM' : 'AM'

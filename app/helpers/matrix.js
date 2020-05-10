@@ -50,6 +50,13 @@ m.getMatrixFont = (name) => {
   return new Font(name, fontPath)
 }
 
+m.clearMatrix = () => {
+  if (isDryRun()) {
+    return
+  }
+  cachedMatrix.clear().sync()
+}
+
 const showSplashscreen = () => {
   return new Promise((resolve, reject) => {
     cachedMatrix.clear()
