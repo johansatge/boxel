@@ -16,8 +16,7 @@ m.loadModesFromDisk = () => {
     .then((list) => {
       cachedModes = {}
       list.filter((entry) => entry.isDirectory() && !entry.name.match(/^\./)).forEach((entry) => {
-        const modeModule = require(path.join(__dirname, '../modes', entry.name, '/index.js'))
-        cachedModes[entry.name] = modeModule
+        cachedModes[entry.name] = require(path.join(__dirname, '../modes', entry.name, '/index.js'))
       })
       log(`Loaded modes ${Object.keys(cachedModes).join(', ')}`)
     })
@@ -58,8 +57,6 @@ m.setStateCurrentModeId = (modeId) => {
     throw new Error('Invalid mode ID')
   }
   cachedState.currentModeId = modeId
-  writeState()
-  log(`Set current mode ${modeId}`)
   m.startCurrentMode()
 }
 
@@ -87,6 +84,7 @@ m.startCurrentMode = () => {
   cachedState.modesData[cachedState.currentModeId] = initialData
   log(`Started mode ${cachedState.currentModeId}`)
   cachedRunningModeId = cachedState.currentModeId
+  writeState()
 }
 
 const isValidMode = (modeId) => {

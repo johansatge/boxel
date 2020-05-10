@@ -1,6 +1,6 @@
 const { getColorFromHex } = require('../../helpers/colors.js')
 const { getMatrix, getMatrixFont, clearMatrixAndSync } = require('../../helpers/matrix.js')
-const { isDryRun } = require('../../helpers/system.js')
+const { isDryRun, withZero } = require('../../helpers/system.js')
 const JsonValidator = require('jsonschema').Validator
 
 const m = {}
@@ -80,9 +80,9 @@ const drawClock = () => {
     hours = hours % 12
     hours = hours ? hours : 12
   }
-  const formattedHours = prependZero(hours)
-  const formattedMinutes = prependZero(date.getMinutes())
-  const formattedSeconds = prependZero(date.getSeconds())
+  const formattedHours = withZero(hours)
+  const formattedMinutes = withZero(date.getMinutes())
+  const formattedSeconds = withZero(date.getSeconds())
   const formattedTimeY = cachedData.format === 'ampm' || cachedData.withSeconds ? 1 : 12
   getMatrix().clear()
   getMatrix().fgColor(getColorFromHex(cachedData.color))
@@ -95,8 +95,4 @@ const drawClock = () => {
     getMatrix().drawText(amPm, 19, 23)
   }
   getMatrix().sync()
-}
-
-const prependZero = (value) => {
-  return value > 9 ? `${value}` : `0${value}`
 }

@@ -1,6 +1,6 @@
 const { getColorWhite, getColorRed, getColorGreen } = require('../../helpers/colors.js')
 const { getMatrix, getMatrixFont, clearMatrixAndSync } = require('../../helpers/matrix.js')
-const { isDryRun } = require('../../helpers/system.js')
+const { isDryRun, withZero } = require('../../helpers/system.js')
 const JsonValidator = require('jsonschema').Validator
 const path = require('path')
 const { loadPixelsFromPng } = require('../../helpers/image.js')
@@ -8,9 +8,9 @@ const { loadPixelsFromPng } = require('../../helpers/image.js')
 const m = {}
 module.exports = m
 
-let cachedWaitInterval = null
+let cachedDrawTimeout = null
 let cachedData = null
-let cachedStartTime = null
+let cachedStartTimeMs = null
 
 m.getTitle = () => {
   return 'Pomodoro'
@@ -38,8 +38,7 @@ m.applyModeAction = (action, rawData) => {
     return cachedData
   }
   if (action === 'restart') {
-    cachedStartTime = Date.now()
-    cachedWaitInterval = setInterval(drawPomodoro, 800)
+    cachedStartTimeMs = Date.now()
     drawPomodoro()
     return cachedData
   }
@@ -52,9 +51,9 @@ m.applyModeAction = (action, rawData) => {
 }
 
 m.stopMode = () => {
-  if (cachedWaitInterval) {
-    clearInterval(cachedWaitInterval)
-    cachedWaitInterval = null
+  if (cachedDrawTimeout) {
+    clearTimeout(cachedDrawTimeout)
+    cachedDrawTimeout = null
   }
   clearMatrixAndSync()
 }
@@ -81,9 +80,9 @@ const getSanitizedData = (rawData) => {
 }
 
 const stopPomodoro = () => {
-  clearInterval(cachedWaitInterval)
-  cachedWaitInterval = null
-  cachedStartTime = null
+  clearTimeout(cachedDrawTimeout)
+  cachedDrawTimeout = null
+  cachedStartTimeMs = null
 }
 
 const drawPomodoro = () => {
@@ -91,7 +90,7 @@ const drawPomodoro = () => {
     return
   }
   const currentTimer = getCurrentTimer()
-  if (currentTimer === null) {
+  if (currentTimer === null && cachedStartTimeMs !== null) {
     stopPomodoro()
     drawPomodoro()
     return
@@ -106,38 +105,44 @@ const drawPomodoro = () => {
       getMatrix().setPixel(imageX + pixel.x, imageY + pixel.y)
     })
     getMatrix().font(getMatrixFont('6x9'))
-    if (cachedStartTime === null) {
+    if (cachedStartTimeMs === null) {
       getMatrix().fgColor(getColorWhite())
-      getMatrix().drawText('Stop', 3, 22)
+      getMatrix().drawText('Ready', 1, 22)
+      getMatrix().sync()
     }
     else {
       getMatrix().fgColor(currentTimer.color)
       getMatrix().drawText(currentTimer.text, 1, 22)
+      getMatrix().sync()
+      cachedDrawTimeout = setTimeout(drawPomodoro, 1000 - new Date().getMilliseconds())
     }
-    getMatrix().sync()
   })
 }
 
 const getCurrentTimer = () => {
-  // @todo compute timer
-  // @todo return null if the timer has expired (4 works + 3 breaks)
-  return {
-    text: '00:00',
-    color: getColorRed(),
+  const durationMs = cachedData.duration * 60 * 1000
+  const breakDurationMs = cachedData.breakDuration * 60 * 1000 
+  const now = Date.now()
+  const periods = [
+    { type: 'work', start: 0, stop: durationMs },
+    { type: 'break', start: durationMs, stop: durationMs + breakDurationMs },
+    { type: 'work', start: durationMs + breakDurationMs, stop: durationMs * 2 + breakDurationMs },
+    { type: 'break', start: durationMs * 2 + breakDurationMs, stop: durationMs * 2 + breakDurationMs * 2 },
+    { type: 'work', start: durationMs * 2 + breakDurationMs * 2, stop: durationMs * 3 + breakDurationMs * 2 },
+    { type: 'break', start: durationMs * 3 + breakDurationMs * 2, stop: durationMs * 3 + breakDurationMs * 3 },
+    { type: 'work', start: durationMs * 3 + breakDurationMs * 3, stop: durationMs * 4 + breakDurationMs * 3 },
+  ]
+  const currentPeriod = periods.find((period) => {
+    return now >= cachedStartTimeMs + period.start && now < cachedStartTimeMs + period.stop
+  })
+  if (!currentPeriod) {
+    return null
   }
-}
-
-const loadImage = (imagePath) => {
-  return fs.readFile(imagePath)
-    .then((buffer) => {
-      return new Promise((resolve, reject) => {
-        new PNG().parse(buffer, (error, result) => {
-          error ? reject(error) : resolve({
-            width: result.width,
-            height: result.height,
-            pixels: result.data,
-          })
-        })
-      })
-    })
+  const totalRemainingSeconds = Math.round((currentPeriod.stop + cachedStartTimeMs - now) / 1000)
+  const remainingMinutes = Math.floor(totalRemainingSeconds / 60)
+  const remainingSeconds = Math.floor(totalRemainingSeconds % 60)
+  return {
+    text: `${withZero(remainingMinutes)}:${withZero(remainingSeconds)}`,
+    color: currentPeriod.type === 'work' ? getColorRed() : getColorGreen(),
+  }
 }

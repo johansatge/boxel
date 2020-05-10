@@ -4,12 +4,21 @@ const { PNG } = require('pngjs')
 const m = {}
 module.exports = m
 
+const cachedImages = {}
+
 m.loadPixelsFromPng = (imagePath) => {
+  if (cachedImages[imagePath]) {
+    return Promise.resolve(cachedImages[imagePath])
+  }
   return fs.readFile(imagePath)
     .then((buffer) => {
       return new Promise((resolve, reject) => {
         new PNG().parse(buffer, (error, result) => {
-          error ? reject(error) : resolve(parsePixels(result.data, result.width, result.height))
+          if (error) {
+            return reject(error)
+          }
+          cachedImages[imagePath] = parsePixels(result.data, result.width, result.height)
+          resolve(cachedImages[imagePath])
         })
       })
     })
@@ -31,5 +40,3 @@ const parsePixels = (rawPixels, width, height) => {
   }
   return pixels
 }
-
-
