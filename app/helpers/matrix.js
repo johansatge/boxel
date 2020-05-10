@@ -24,6 +24,9 @@ m.loadMatrix = () => {
     cols: 32,
     chainLength: 1,
     parallel: 1,
+    pwmLsbNanoseconds: 65, // The default "130" doesn't work well
+                           // Having a smaller value is needed to avoid flickering
+                           // when displaying full images
   }
   const runtimeOptions = {
     ...LedMatrix.defaultRuntimeOptions(),
