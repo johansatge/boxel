@@ -23,10 +23,14 @@
     </select>
   </div>
 </div>
+<button class="button button--orange js-pomodoro-restart">Restart</button>
+<button class="button button--orange js-pomodoro-stop">Stop</button>
 <script>
   (() => {
     const nodeDuration = document.querySelector('.js-pomodoro-duration')
     const nodeBreakDuration = document.querySelector('.js-pomodoro-break-duration')
+    const nodeRestart = document.querySelector('.js-pomodoro-restart')
+    const nodeStop = document.querySelector('.js-pomodoro-stop')
     const onStateUpdate = (data) => {
       nodeDuration.value = data.duration
       nodeBreakDuration.value = data.breakDuration
@@ -37,8 +41,16 @@
         breakDuration: parseInt(nodeBreakDuration.value),
       })
     }
+    const onUiRestart = () => {
+      window.BoxelApplyModeAction('restart')
+    }
+    const onUiStop = () => {
+      window.BoxelApplyModeAction('stop')
+    }
     nodeDuration.addEventListener('change', onUiUpdate)
     nodeBreakDuration.addEventListener('change', onUiUpdate)
+    nodeRestart.addEventListener('click', onUiRestart)
+    nodeStop.addEventListener('click', onUiStop)
 
     window.BoxelModes.pomodoro = {}
     window.BoxelModes.pomodoro.onStateUpdate = onStateUpdate

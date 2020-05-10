@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const credentials = require('../../.netatmo.json')
-const { getMatrix, getMatrixFont, clearMatrix } = require('../../helpers/matrix.js')
+const { getMatrix, getMatrixFont, clearMatrixAndSync } = require('../../helpers/matrix.js')
 const { getColorWhite } = require('../../helpers/colors.js')
 const { log } = require('../../helpers/log.js')
 const { isDryRun } = require('../../helpers/system.js')
@@ -36,8 +36,9 @@ m.applyModeAction = (action, rawData) => {
 m.stopMode = () => {
   if (cachedRefreshInterval) {
     clearInterval(cachedRefreshInterval)
+    cachedRefreshInterval = null
   }
-  clearMatrix()
+  clearMatrixAndSync()
 }
 
 const getDataAndDraw = () => {

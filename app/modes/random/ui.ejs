@@ -1,11 +1,11 @@
-<button class="button button--orange js-randomize">Randomize</button>
+<button class="button button--orange js-random-randomize">Randomize</button>
 <script>
   (() => {
     window.BoxelModes.random = {}
     window.BoxelModes.random.onStateUpdate = (data) => {
       // Nothing to do when receiving a state update
     }
-    document.querySelector('.js-randomize').addEventListener('click', () => {
+    document.querySelector('.js-random-randomize').addEventListener('click', () => {
       window.BoxelApplyModeAction('randomizePixels')
     })
   })()

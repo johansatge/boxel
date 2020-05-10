@@ -39,40 +39,18 @@ m.getColorWhite = () => {
   }
 }
 
-// module.exports = {
-//   white : () => {
-//     return {
-//       r : 255,
-//       g : 255,
-//       b : 255,
-//     }
-//   },
-//   lightGrey : () => {
-//     return {
-//       r : 200,
-//       g : 200,
-//       b : 200,
-//     }
-//   },
-//   middleGrey : () => {
-//     return {
-//       r : 127,
-//       g : 127,
-//       b : 127,
-//     }
-//   },
-//   deepGrey : () => {
-//     return {
-//       r : 40,
-//       g : 40,
-//       b : 40,
-//     }
-//   },
-//   orange : () => {
-//     return {
-//       r : 255,
-//       g : 57,
-//       b : 28,
-//     }
-//   },
-// }
+m.getColorRed = () => {
+  return {
+    r: 225,
+    g: 26,
+    b: 32,
+  }
+}
+
+m.getColorGreen = () => {
+  return {
+    r: 0,
+    g: 120,
+    b: 54,
+  }
+}

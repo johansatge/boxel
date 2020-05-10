@@ -1,5 +1,5 @@
 const { getColorFromHex } = require('../../helpers/colors.js')
-const { getMatrix, getMatrixFont, clearMatrix } = require('../../helpers/matrix.js')
+const { getMatrix, getMatrixFont, clearMatrixAndSync } = require('../../helpers/matrix.js')
 const { isDryRun } = require('../../helpers/system.js')
 const JsonValidator = require('jsonschema').Validator
 
@@ -40,8 +40,9 @@ m.applyModeAction = (action, rawData) => {
 m.stopMode = () => {
   if (cachedWaitInterval) {
     clearInterval(cachedWaitInterval)
+    cachedWaitInterval = null
   }
-  clearMatrix()
+  clearMatrixAndSync()
 }
 
 const getDataErrors = (rawData) => {

@@ -50,7 +50,7 @@ m.getMatrixFont = (name) => {
   return new Font(name, fontPath)
 }
 
-m.clearMatrix = () => {
+m.clearMatrixAndSync = () => {
   if (isDryRun()) {
     return
   }

@@ -1,4 +1,4 @@
-const { getMatrix, clearMatrix } = require('../../helpers/matrix.js')
+const { getMatrix, clearMatrixAndSync } = require('../../helpers/matrix.js')
 const { getColorRandom } = require('../../helpers/colors.js')
 const { isDryRun } = require('../../helpers/system.js')
 
@@ -27,7 +27,7 @@ m.applyModeAction = (action, rawData) => {
 }
 
 m.stopMode = () => {
-  clearMatrix()
+  clearMatrixAndSync()
 }
 
 const setRandomPixels = () => {

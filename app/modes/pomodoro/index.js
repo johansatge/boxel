@@ -1,12 +1,17 @@
-const { getMatrix, getMatrixFont, clearMatrix } = require('../../helpers/matrix.js')
+const { getColorWhite, getColorRed, getColorGreen } = require('../../helpers/colors.js')
+const { getMatrix, getMatrixFont, clearMatrixAndSync } = require('../../helpers/matrix.js')
 const { isDryRun } = require('../../helpers/system.js')
 const JsonValidator = require('jsonschema').Validator
+const fs = require('fs').promises
+const { PNG } = require('pngjs')
+const path = require('path')
 
 const m = {}
 module.exports = m
 
 let cachedWaitInterval = null
 let cachedData = null
+let cachedStartTime = null
 
 m.getTitle = () => {
   return 'Pomodoro'
@@ -18,13 +23,11 @@ m.getDescription = () => {
 
 m.startMode = (rawData) => {
   cachedData = getSanitizedData(rawData)
-  cachedWaitInterval = setInterval(drawPomodoro, 1000)
   drawPomodoro()
   return cachedData
 }
 
 m.applyModeAction = (action, rawData) => {
-  return null
   if (action === 'setSettings') {
     const dataErrors = getDataErrors(rawData)
     if (dataErrors !== null) {
@@ -34,14 +37,28 @@ m.applyModeAction = (action, rawData) => {
     drawPomodoro()
     return cachedData
   }
+  if (action === 'restart') {
+    cachedStartTime = Date.now()
+    cachedWaitInterval = setInterval(drawPomodoro, 5000) // @todo longer timer
+    drawPomodoro()
+    return cachedData
+  }
+  if (action === 'stop') {
+    clearInterval(cachedWaitInterval)
+    cachedWaitInterval = null
+    cachedStartTime = null
+    drawPomodoro()
+    return cachedData
+  }
   throw new Error('Invalid pomodoro action')
 }
 
 m.stopMode = () => {
   if (cachedWaitInterval) {
     clearInterval(cachedWaitInterval)
+    cachedWaitInterval = null
   }
-  clearMatrix()
+  clearMatrixAndSync()
 }
 
 const getDataErrors = (rawData) => {
@@ -69,26 +86,47 @@ const drawPomodoro = () => {
   if (isDryRun()) {
     return
   }
-  // const date = new Date()
-  // let hours = date.getHours()
-  // const amPm = hours > 12 ? 'PM' : 'AM'
-  // if (cachedData.format === 'ampm') {
-  //   hours = hours % 12
-  //   hours = hours ? hours : 12
-  // }
-  // const formattedHours = prependZero(hours)
-  // const formattedMinutes = prependZero(date.getMinutes())
-  // const formattedSeconds = prependZero(date.getSeconds())
-  // const formattedTimeY = cachedData.format === 'ampm' || cachedData.withSeconds ? 1 : 12
-  // getMatrix().clear()
-  // getMatrix().fgColor(getColorFromHex(cachedData.color))
-  // getMatrix().font(getMatrixFont('6x9'))
-  // getMatrix().drawText(`${formattedHours}:${formattedMinutes}`, 1, formattedTimeY)
-  // if (cachedData.withSeconds) {
-  //   getMatrix().drawText(formattedSeconds, 1, 23)
-  // }
-  // if (cachedData.format === 'ampm') {
-  //   getMatrix().drawText(amPm, 19, 23)
-  // }
-  // getMatrix().sync()
+  getMatrix().clear()
+  const imagePath = path.join(__dirname, 'tomato.png')
+  const imageX = 7
+  const imageY = 2
+  loadImage(imagePath).then(({width, height, pixels}) => {
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        const idx = (width * y + x) << 2
+        const color = {
+          r: pixels[idx],
+          g: pixels[idx + 1],
+          b: pixels[idx + 2],
+        }
+        getMatrix().fgColor(color)
+        getMatrix().setPixel(imageX + x, imageY + y)
+      }
+    }
+    getMatrix().font(getMatrixFont('6x9'))
+    if (cachedStartTime === null) {
+      getMatrix().fgColor(getColorWhite())
+      getMatrix().drawText('Stop', 3, 22)
+    }
+    else {
+      getMatrix().fgColor(getColorRed())
+      getMatrix().drawText('00:00', 1, 22) // @otodo compute current state
+    }
+    getMatrix().sync()
+  })
+}
+
+const loadImage = (imagePath) => {
+  return fs.readFile(imagePath)
+    .then((buffer) => {
+      return new Promise((resolve, reject) => {
+        new PNG().parse(buffer, (error, result) => {
+          error ? reject(error) : resolve({
+            width: result.width,
+            height: result.height,
+            pixels: result.data,
+          })
+        })
+      })
+    })
 }
