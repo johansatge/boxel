@@ -88,7 +88,12 @@
       params.body = JSON.stringify(body)
     }
     window.fetch(url, params)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`${response.statusText} (${response.status})`)
+        }
+        return response.json()
+      })
       .then((json) => {
         if (json.error) {
           throw new Error(json.error)
