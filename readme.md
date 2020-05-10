@@ -9,6 +9,7 @@ A local HTTP server allows any device on the same network to act as a remote con
 * 📸 **[Making-of & pictures](media)**
 * 🛠️ **[Material](#material)**
 * 🔌 **[Wiring](#wiring)**
+* 🎛️ **[Available modes](#available-modes)**
 * 💾 **[Software installation](#software-installation)**
 * 💡 **[Credits](#credits)**
 
@@ -35,6 +36,13 @@ I could not find the original wiring schema that was used for this project, so h
 |Matrix|R0|G0|B0|Ground|R1|G1|B1|A|B|C|D|CLK|STB|OE|
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 |GPIO|23|13|26|6|24|21|19|15|16|18|22|11|7|12|
+
+## Available modes
+
+* Digital clock
+* Netatmo weather report
+* Pomodoro
+* Random pixels
 
 ## Software installation
 
