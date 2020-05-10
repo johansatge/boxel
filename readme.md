@@ -43,6 +43,7 @@ I could not find the original wiring schema that was used for this project, so h
 * Netatmo weather report ([source](app/modes/netatmo))
 * Pomodoro ([source](app/modes/pomodoro))
 * Random pixels ([source](app/modes/random))
+* Digital frame ([source](app/modes/frame))
 
 ## Software installation
 

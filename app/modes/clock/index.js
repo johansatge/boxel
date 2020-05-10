@@ -27,13 +27,13 @@ m.applyModeAction = (action, rawData) => {
   if (action === 'setSettings') {
     const dataErrors = getDataErrors(rawData)
     if (dataErrors !== null) {
-      throw new Error(`Invalid clock data (${dataErrors})`)
+      throw new Error(`Invalid data (${dataErrors})`)
     }
     cachedData = rawData
     drawClock()
     return cachedData
   }
-  throw new Error('Invalid clock action')
+  throw new Error('Invalid action')
 }
 
 m.stopMode = () => {

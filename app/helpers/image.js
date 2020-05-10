@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const fs = require('fs').promises
 const { PNG } = require('pngjs')
 
@@ -5,6 +6,21 @@ const m = {}
 module.exports = m
 
 const cachedImages = {}
+
+m.loadPixelsFromBase64 = (base64) => {
+  return new Promise((resolve, reject) => {
+    base64 = base64.replace('data:image/png;base64,', '')
+    const buffer = Buffer.from(base64, 'base64')
+    new PNG().parse(buffer, (error, result) => {
+      if (error) {
+        return reject(error)
+      }
+      const hash = crypto.createHash('sha1').update(base64).digest('hex')
+      cachedImages[hash] = parsePixels(result.data, result.width, result.height)
+      resolve(cachedImages[hash])
+    })
+  })
+}
 
 m.loadPixelsFromPng = (imagePath) => {
   if (cachedImages[imagePath]) {

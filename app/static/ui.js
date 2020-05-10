@@ -22,6 +22,20 @@
     fetchAndCatchError('/applycurrentmodeaction/' + action + '/' + encodedData)
   }
 
+  let errorMessageTimeout = null
+  window.BoxelShowError = (error) => {
+    const errorMessageNode = document.querySelector('.js-error')
+    errorMessageNode.innerText = error.message
+    errorMessageNode.style.display = 'block'
+    if (errorMessageTimeout !== null) {
+      clearTimeout(errorMessageTimeout)
+      errorMessageTimeout = null
+    }
+    errorMessageTimeout = setTimeout(() => {
+      errorMessageNode.style.display = 'none'
+    }, 3000)
+  }
+
   const setSelect = (node) => {
     const currentText = node.querySelector('.js-select-input option:checked').innerText
     node.querySelector('.js-select-text').innerText = currentText
@@ -63,9 +77,6 @@
     })
   }
 
-  let errorMessageTimeout = null
-  const errorMessageNode = document.querySelector('.js-error')
-
   const fetchAndCatchError = (url) => {
     window.fetch(url)
       .then((response) => response.json())
@@ -76,16 +87,7 @@
       })
       .catch((error) => {
         setSpinner(false)
-        document.querySelector
-        errorMessageNode.innerText = error.message
-        errorMessageNode.style.display = 'block'
-        if (errorMessageTimeout !== null) {
-          clearTimeout(errorMessageTimeout)
-          errorMessageTimeout = null
-        }
-        errorMessageTimeout = setTimeout(() => {
-          errorMessageNode.style.display = 'none'
-        }, 3000)
+        window.BoxelShowError(error)
       })
   }
 

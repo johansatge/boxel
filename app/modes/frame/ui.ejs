@@ -1,0 +1,55 @@
+<div class="mode__form">
+  <label class="mode__form__label" for="frame-upload">
+    Upload
+  </label>
+  <div class="mode__form__input">
+    <input id="frame-upload" type="file" class="js-frame-upload">
+  </div>
+</div>
+<img class="mode__image js-frame-image">
+<div class="mode__buttons js-frame-buttons">
+  <button class="button button--orange js-frame-delete">Delete</button>
+</div>
+<script>
+  (() => {
+    const nodeUpload = document.querySelector('.js-frame-upload')
+    const nodeDelete = document.querySelector('.js-frame-delete')
+    const nodeButtons = document.querySelector('.js-frame-buttons')
+    const nodeImage = document.querySelector('.js-frame-image')
+    const onStateUpdate = (data) => {
+      if (data.base64image !== null) {
+        nodeImage.src = data.base64image
+        nodeImage.style.display = 'block'
+        nodeButtons.style.display = 'block'
+      }
+      else {
+        nodeImage.style.display = 'none'
+        nodeButtons.style.display = 'none'
+      }
+    }
+    const onUiUpdate = () => {
+      const reader = new FileReader()
+      const file = nodeUpload.files.length > 0 ? nodeUpload.files[0] : null
+      if (file) {
+        if (file.type !== 'image/png') {
+          window.BoxelShowError(new Error('Invalid file type (PNG only)'))
+          return
+        }
+        reader.onload = () => {
+          window.BoxelApplyModeAction('setImage', {
+            base64image: reader.result,
+          })
+        }
+        reader.readAsDataURL(nodeUpload.files[0])
+      }
+    }
+    const onUiDelete = () => {
+      window.BoxelApplyModeAction('deleteImage')
+    }
+    nodeUpload.addEventListener('change', onUiUpdate)
+    nodeDelete.addEventListener('click', onUiDelete)
+
+    window.BoxelModes.frame = {}
+    window.BoxelModes.frame.onStateUpdate = onStateUpdate
+  })()
+</script>

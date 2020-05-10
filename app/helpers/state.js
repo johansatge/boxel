@@ -62,8 +62,8 @@ m.setStateCurrentModeId = (modeId) => {
 
 m.applyCurrentModeAction = (action, rawData) => {
   const updatedModeData = cachedModes[cachedRunningModeId].applyModeAction(action, rawData)
-  cachedState.modesData[cachedState.currentModeId] = rawData
-  log(`Saved current mode data (${JSON.stringify(rawData)})`)
+  cachedState.modesData[cachedState.currentModeId] = updatedModeData
+  log(`Saved current mode data (${JSON.stringify(updatedModeData)})`)
   writeState()
 }
 

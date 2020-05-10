@@ -23,7 +23,7 @@ m.applyModeAction = (action, rawData) => {
     setRandomPixels()
     return {}
   }
-  throw new Error('Invalid random action')
+  throw new Error('Invalid action')
 }
 
 m.stopMode = () => {
