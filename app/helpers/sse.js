@@ -34,10 +34,13 @@ m.sendSseEventToClients = ({ clientId, eventName, data }) => {
     log(`Sent ${eventName} event to ${clientId}`)
   }
   else {
-    Object.keys(cachedSseClients).forEach((clientId) => {
+    const cachedSseClientsList = Object.keys(cachedSseClients)
+    cachedSseClientsList.forEach((clientId) => {
       sendEventToClient({ clientId, eventName, data })
     })
-    log(`Sent ${eventName} event to ${Object.keys(cachedSseClients).length} client(s)`)
+    if (cachedSseClientsList.length > 0) {
+      log(`Sent ${eventName} event to ${Object.keys(cachedSseClients).length} client(s)`)
+    }
   }
 }
 
