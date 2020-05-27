@@ -30,7 +30,7 @@ m.startMode = (rawData) => {
 
 m.applyModeAction = (action, rawData) => {
   // This mode doesn't accept actions
-  return null
+  throw new Error('Invalid action')
 }
 
 m.stopMode = () => {
