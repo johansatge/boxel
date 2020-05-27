@@ -13,10 +13,13 @@ m.loadPixelsFromBase64 = (base64) => {
     const buffer = Buffer.from(base64, 'base64')
     new PNG().parse(buffer, (error, result) => {
       if (error) {
-        return reject(error)
+        return reject(new Error('IMAGE READ ERROR'))
       }
       const hash = crypto.createHash('sha1').update(base64).digest('hex')
       cachedImages[hash] = parsePixels(result.data, result.width, result.height)
+      if (result.width !== 32 || result.height !== 32) {
+        return reject(new Error('WRONG IMAGE SIZE'))
+      }
       resolve(cachedImages[hash])
     })
   })

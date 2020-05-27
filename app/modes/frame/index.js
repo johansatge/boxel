@@ -1,4 +1,4 @@
-const { getColorWhite, getColorRed, getColorGreen } = require('../../helpers/colors.js')
+const { getColorRed } = require('../../helpers/colors.js')
 const { getMatrix, getMatrixFont, clearMatrixAndSync } = require('../../helpers/matrix.js')
 const { isDryRun, withZero } = require('../../helpers/system.js')
 const JsonValidator = require('jsonschema').Validator
@@ -74,11 +74,22 @@ const drawFrame = () => {
     getMatrix().sync()
     return
   }
-  loadPixelsFromBase64(cachedData.base64image).then((pixels) => {
-    pixels.forEach((pixel) => {
-      getMatrix().fgColor({ r: pixel.r, g: pixel.g, b: pixel.b})
-      getMatrix().setPixel(pixel.x, pixel.y)
+  loadPixelsFromBase64(cachedData.base64image)
+    .then((pixels) => {
+      pixels.forEach((pixel) => {
+        getMatrix().fgColor({ r: pixel.r, g: pixel.g, b: pixel.b})
+        getMatrix().setPixel(pixel.x, pixel.y)
+      })
+      getMatrix().sync()
     })
-    getMatrix().sync()
-  })
+    .catch((error) => {
+      let errorY = 2
+      getMatrix().fgColor(getColorRed())
+      getMatrix().font(getMatrixFont('5x7'))
+      error.message.split(' ').forEach((line) => {
+        getMatrix().drawText(line, 2, errorY)
+        errorY += 9
+      })
+      getMatrix().sync()
+    })
 }
