@@ -11,7 +11,6 @@
       node.addEventListener('click', onSetCurrentMode)
     })
     document.querySelectorAll('.js-select').forEach((node) => {
-      setSelect(node)
       node.querySelector('.js-select-input').addEventListener('change', onSelectChange)
     })
   }
@@ -35,13 +34,13 @@
     }, 3000)
   }
 
-  const setSelect = (node) => {
+  window.BoxelUpdateSelectUi = (node) => {
     const currentText = node.querySelector('.js-select-input option:checked').innerText
     node.querySelector('.js-select-text').innerText = currentText
   }
 
   const onSelectChange = (evt) => {
-    setSelect(evt.currentTarget.parentNode)
+    window.BoxelUpdateSelectUi(evt.currentTarget.parentNode)
   }
 
   const setSpinner = (isDisplayed) => {

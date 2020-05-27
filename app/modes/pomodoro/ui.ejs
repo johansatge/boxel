@@ -34,8 +34,10 @@
     const nodeRestart = document.querySelector('.js-pomodoro-restart')
     const nodeStop = document.querySelector('.js-pomodoro-stop')
     const onStateUpdate = (data) => {
-      nodeDuration.value = data.duration
-      nodeBreakDuration.value = data.breakDuration
+      nodeDuration.value = String(data.duration)
+      window.BoxelUpdateSelectUi(nodeDuration.parentNode)
+      nodeBreakDuration.value = String(data.breakDuration)
+      window.BoxelUpdateSelectUi(nodeBreakDuration.parentNode)
     }
     const onUiUpdate = () => {
       window.BoxelApplyModeAction('setSettings', {

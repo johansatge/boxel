@@ -29,6 +29,7 @@
     const nodeColor = document.querySelector('.js-clock-color')
     const onStateUpdate = (data) => {
       nodeFormat.value = data.format
+      window.BoxelUpdateSelectUi(nodeFormat.parentNode)
       nodeSeconds.checked = data.withSeconds
       nodeColor.value = data.color
     }
