@@ -43,6 +43,16 @@ m.startServer = () => {
   })
 }
 
+/**
+ * (GET)
+ * Display the main UI (header, available modes)
+ * Note at this point the UI is not dynamic yet
+ * (its state is fetched by the client when it connects through SSE)
+ *
+ * @param {Object} request - Express HTTP request
+ * @param {Object} response - Express HTTP response
+ * @return {undefined}
+ */
 const responseHome = (request, response) => {
   const modes = getAvailableModes()
   response.status(200).render('index', {
@@ -51,6 +61,15 @@ const responseHome = (request, response) => {
   })
 }
 
+/**
+ * (POST)
+ * Set the current mode when a user clicks on a "set" button in the UI
+ * Then, send the updated state to all the connected SSE clients
+ *
+ * @param {Object} request - Express HTTP request
+ * @param {Object} response - Express HTTP response
+ * @return {undefined}
+ */
 const responseSetCurrentMode = (request, response) => {
   try {
     setStateCurrentModeId(request.body.mode)
@@ -62,6 +81,15 @@ const responseSetCurrentMode = (request, response) => {
   }
 }
 
+/**
+ * (POST)
+ * Apply an action to the current mode when the user interacts with the UI
+ * Then, send the updated state to all the connected SSE clients
+ *
+ * @param {Object} request - Express HTTP request
+ * @param {Object} response - Express HTTP response
+ * @return {undefined}
+ */
 const responseApplyCurrentModeAction = (request, response) => {
   try {
     applyCurrentModeAction(request.body.action, request.body.data)
@@ -73,24 +101,65 @@ const responseApplyCurrentModeAction = (request, response) => {
   }
 }
 
+/**
+ * (POST)
+ * Try to shutdown the device when a user clicks on the "Shutdown" button in the UI, and confirms
+ *
+ * @param {Object} request - Express HTTP request
+ * @param {Object} response - Express HTTP response
+ * @return {undefined}
+ */
 const responseShutdown = (request, response) => {
   requestShutdown()
   response.status(200).json({ error: null })
 }
 
+/**
+ * (GET)
+ * Return the state as a JSON object (to be displayed properly by the browser)
+ *
+ * @param {Object} request - Express HTTP request
+ * @param {Object} response - Express HTTP response
+ * @return {undefined}
+ */
 const responseViewState = (request, response) => {
   response.status(200).type('application/json').send(getStateAsJson())
 }
 
+/**
+ * (GET)
+ * Return the app logs (plain text)
+ *
+ * @param {Object} request - Express HTTP request
+ * @param {Object} response - Express HTTP response
+ * @return {undefined}
+ */
 const responseViewLogs = (request, response) => {
   response.status(200).type('text/plain').send(getLogs())
 }
 
+/**
+ * (GET)
+ * Start an SSE connection
+ * - Register the SSE client for future updates
+ * - Send it the current state
+ *
+ * @param {Object} request - Express HTTP request
+ * @param {Object} response - Express HTTP response
+ * @return {undefined}
+ */
 const responseSse = (request, response) => {
   const clientId = registerSseClient({ request, response })
   sendStateUpdateToClients(clientId)
 }
 
+/**
+ * Send a state update to the connected SSE clients, or a specific client
+ *
+ * @param {string} clientId - The ID of the client (generated when it was registered)
+ *                            Or null to send the state to all clients
+ * @return {undefined}
+ */
 const sendStateUpdateToClients = (clientId = null) => {
   const data = {
     currentModeId: getCurrentModeId(),

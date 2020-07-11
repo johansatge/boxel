@@ -11,6 +11,7 @@ A local HTTP server allows any device on the same network to act as a remote con
 * 🔌 **[Wiring](#wiring)**
 * 🎛️ **[Available modes](#available-modes)**
 * 💾 **[Software installation](#software-installation)**
+* ⚠️ **[Todos and known issues](#todos-and-known-issues)**
 * 💡 **[Credits](#credits)**
 
 ## Material
@@ -131,6 +132,25 @@ This will start the server but prevent the app from connecting to the matrix:
 ```bash
 node index.js --dry-run
 ```
+
+## Todos and known issues
+
+### Todos
+
+* [ ] Add a brightness menu
+  * A slider somewhere in the UI (in the header?)
+  * When the slider is used, store the requested brightness in the app state, and forward it to the matrix
+* [ ] In the `frame` mode, if the uploaded image is not 32x32:
+  * Crop it to a square format
+  * Resize/resample it to 32x32 (client-side)
+* [ ] Add a sleep button in the header to turn off the matrix without shutting down the Raspberry
+  * Easy alternative/first step: add an `idle` mode that does nothing
+
+### Known issues
+
+* Enabling and disabling modes is synchronous (it was easier to implement)
+* It means the activation workflow of a mode is limited: it's not possible to validate the input data asynchronously, for instance
+* The `netatmo` mode may break the display if the mode is changed while it's processing (see comment in the code)
 
 ## Credits
 

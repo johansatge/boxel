@@ -42,6 +42,9 @@ m.stopMode = () => {
 }
 
 const getDataAndDraw = () => {
+  // If the mode is stopped while the promise chain is running,
+  // the display will break (2 modes acting at the same time on the matrix)
+  // Todo: cancel the pending promises when stopping the netatmo mode 
   getAccessToken()
   .then(getStationsData)
   .then((data) => {
